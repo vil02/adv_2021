@@ -22,6 +22,12 @@ class TestSolutionA(unittest.TestCase):
             sol.solve_a(gu.read_to_string('data_adv_2021_01_p.txt')),
             1548)
 
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(
+            sol.solve_a(gu.read_to_string('data_adv_2021_01_m.txt')),
+            1448)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -38,6 +44,11 @@ class TestSolutionB(unittest.TestCase):
             sol.solve_b(gu.read_to_string('data_adv_2021_01_p.txt')),
             1589)
 
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(
+            sol.solve_b(gu.read_to_string('data_adv_2021_01_m.txt')),
+            1471)
 
 if __name__ == '__main__':
     unittest.main()
