@@ -50,5 +50,6 @@ class TestSolutionB(unittest.TestCase):
             sol.solve_b(gu.read_to_string('data_adv_2021_01_m.txt')),
             1471)
 
+
 if __name__ == '__main__':
     unittest.main()
