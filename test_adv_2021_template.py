@@ -6,6 +6,8 @@ import unittest
 # import adv_2021_template as sol
 # import general_utils as gu
 
+# _DATA_P = gu.read_to_string('data_adv_2021_template_p.txt')
+
 
 class TestSolutionA(unittest.TestCase):
     """

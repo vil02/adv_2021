@@ -14,6 +14,9 @@ _TEST_STR = \
     "down 8\n" \
     "forward 2"
 
+_DATA_P = gu.read_to_string('data_adv_2021_02_p.txt')
+_DATA_M = gu.read_to_string('data_adv_2021_02_m.txt')
+
 
 class TestSolutionA(unittest.TestCase):
     """
@@ -27,15 +30,11 @@ class TestSolutionA(unittest.TestCase):
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(
-            sol.solve_a(gu.read_to_string('data_adv_2021_02_p.txt')),
-            1524750)
+        self.assertEqual(sol.solve_a(_DATA_P), 1524750)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(
-            sol.solve_a(gu.read_to_string('data_adv_2021_02_m.txt')),
-            1507611)
+        self.assertEqual(sol.solve_a(_DATA_M), 1507611)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -50,15 +49,11 @@ class TestSolutionB(unittest.TestCase):
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(
-            sol.solve_b(gu.read_to_string('data_adv_2021_02_p.txt')),
-            1592426537)
+        self.assertEqual(sol.solve_b(_DATA_P), 1592426537)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(
-            sol.solve_b(gu.read_to_string('data_adv_2021_02_m.txt')),
-            1880593125)
+        self.assertEqual(sol.solve_b(_DATA_M), 1880593125)
 
 
 if __name__ == '__main__':
