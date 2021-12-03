@@ -57,9 +57,9 @@ class TestSolutionB(unittest.TestCase):
         """tests calculate_gamma agains the example data"""
         self.assertEqual(sol.calculate_oxygen(_TEST_DATA), 23)
 
-    def test_calculate_c02(self):
+    def test_calculate_co2(self):
         """tests calculate_epsilon agains the example data"""
-        self.assertEqual(sol.calculate_c02(_TEST_DATA), 10)
+        self.assertEqual(sol.calculate_co2(_TEST_DATA), 10)
 
     def test_example_data(self):
         """tests solution function agains the example data"""

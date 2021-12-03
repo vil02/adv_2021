@@ -49,7 +49,7 @@ def calculate_oxygen(in_str_list):
     return int(cur_str_list[0], 2)
 
 
-def calculate_c02(in_str_list):
+def calculate_co2(in_str_list):
     """returns the CO2 scrubber rating from part b"""
     cur_pos = 0
     cur_str_list = in_str_list
@@ -63,4 +63,4 @@ def calculate_c02(in_str_list):
 def solve_b(in_str):
     """solution function for part b"""
     str_list = in_str.split()
-    return calculate_oxygen(str_list)*calculate_c02(str_list)
+    return calculate_oxygen(str_list)*calculate_co2(str_list)
