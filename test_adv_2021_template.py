@@ -19,13 +19,16 @@ class TestSolutionA(unittest.TestCase):
     #
     # def test_data_p(self):
     #     """test agains full data"""
-    #     pass
+    #     self.assertEqual(sol.solve_a(_DATA_P), -1)
 
 
 class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+    # def test_data_p(self):
+    #     """test agains full data"""
+    #     self.assertEqual(sol.solve_b(_DATA_P), -1)
 
 
 if __name__ == '__main__':
