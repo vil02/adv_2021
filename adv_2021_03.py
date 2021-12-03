@@ -3,27 +3,36 @@ solution of adv_2021_template
 """
 
 
-def count_most_common(in_str_list, in_pos):
-    number_of_ones = sum(1 for _ in in_str_list if _[in_pos] == '1')
-    res = '1'
-    if 2*number_of_ones <= len(in_str_list):
+def _count_ones(in_str_list, in_pos):
+    return sum(1 for _ in in_str_list if _[in_pos] == '1')
+
+
+def calculate_gamma(in_str_list):
+    """returns the value of gamma"""
+    def get_bit(in_pos):
         res = '0'
-    return res, number_of_ones
+        if 2*_count_ones(in_str_list, in_pos) > len(in_str_list):
+            res = '1'
+        return res
+    res_bits = ''.join(get_bit(_) for _ in range(len(in_str_list[0])))
+    return int(res_bits, 2)
+
+
+def calculate_epsilon(in_str_list):
+    """returns the value of epsilon"""
+    gamma_val = calculate_gamma(in_str_list)
+    assert gamma_val >= 0
+    gamma_bin_str = bin(gamma_val)
+    assert gamma_bin_str.startswith('0b')
+    gamma_bin_str = gamma_bin_str[2:]
+    flip_dict = {'0': '1', '1': '0'}
+    return int(''.join(flip_dict[_] for _ in gamma_bin_str), 2)
 
 
 def solve_a(in_str):
     """solution function for part a"""
-    def flip(in_char):
-        res = '0'
-        if in_char == '0':
-            res = '1'
-        return res
     str_list = in_str.split()
-    gamma_bits = [count_most_common(str_list, _)[0] for _ in range(len(str_list[0]))]
-    gamma = int(''.join(gamma_bits), 2)
-    other_bits = [flip(_) for _ in gamma_bits]
-    other = int(''.join(other_bits), 2)
-    return gamma*other
+    return calculate_gamma(str_list)*calculate_epsilon(str_list)
 
 
 def get_oxygen(in_str_list):
