@@ -36,7 +36,7 @@ class TestSolutionA(unittest.TestCase):
         self.assertEqual(sol.calculate_epsilon(_TEST_DATA), 9)
 
     def test_example_data(self):
-        """tests part a solution agains the example data"""
+        """tests solution function agains the example data"""
         self.assertEqual(sol.solve_a('\n'.join(_TEST_DATA)), 198)
 
     def test_data_p(self):
@@ -57,7 +57,7 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.calculate_c02(_TEST_DATA), 10)
 
     def test_example_data(self):
-        """tests part a solution agains the example data"""
+        """tests solution function agains the example data"""
         self.assertEqual(sol.solve_b('\n'.join(_TEST_DATA)), 230)
 
     def test_data_p(self):

@@ -1,5 +1,5 @@
 """
-solution of adv_2021_template
+solution of adv_2021_03
 """
 
 
@@ -41,27 +41,23 @@ def solve_a(in_str):
 def calculate_oxygen(in_str_list):
     """returns the oxygen generator rating from part b"""
     cur_pos = 0
-    cur_str_list = [_ for _ in in_str_list]
-    while True:
+    cur_str_list = in_str_list
+    while len(cur_str_list) != 1:
         most_common = _find_most_common(cur_str_list, cur_pos)
         cur_str_list = [_ for _ in cur_str_list if _[cur_pos] == most_common]
-        if len(cur_str_list) == 1:
-            return int(cur_str_list[0], 2)
-        else:
-            cur_pos += 1
+        cur_pos += 1
+    return int(cur_str_list[0], 2)
 
 
 def calculate_c02(in_str_list):
     """returns the CO2 scrubber rating from part b"""
     cur_pos = 0
-    cur_str_list = [_ for _ in in_str_list]
-    while True:
+    cur_str_list = in_str_list
+    while len(cur_str_list) != 1:
         most_common = _find_most_common(cur_str_list, cur_pos)
         cur_str_list = [_ for _ in cur_str_list if _[cur_pos] != most_common]
-        if len(cur_str_list) == 1:
-            return int(cur_str_list[0], 2)
-        else:
-            cur_pos += 1
+        cur_pos += 1
+    return int(cur_str_list[0], 2)
 
 
 def solve_b(in_str):
