@@ -43,18 +43,26 @@ class TestSolutionA(unittest.TestCase):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_DATA_P), 3009600)
 
-#
-# class TestSolutionB(unittest.TestCase):
-#     """
-#     unit tests for part b
-#     """
-#     def test_basic(self):
-#         """test agains the example data"""
-#         self.assertEqual(sol.solve_b(_TEST_DATA), 230)
-#
-#     def test_data_p(self):
-#         """test agains full data"""
-#         self.assertEqual(sol.solve_b(_DATA_P), 6940518)
+
+class TestSolutionB(unittest.TestCase):
+    """
+    unit tests for part b
+    """
+    def test_calculate_oxygen(self):
+        """tests calculate_gamma agains the example data"""
+        self.assertEqual(sol.calculate_oxygen(_TEST_DATA), 23)
+
+    def test_calculate_c02(self):
+        """tests calculate_epsilon agains the example data"""
+        self.assertEqual(sol.calculate_c02(_TEST_DATA), 10)
+
+    def test_example_data(self):
+        """tests part a solution agains the example data"""
+        self.assertEqual(sol.solve_b('\n'.join(_TEST_DATA)), 230)
+
+    def test_data_p(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_DATA_P), 6940518)
 
 
 if __name__ == '__main__':
