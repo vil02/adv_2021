@@ -1,29 +1,32 @@
 """
 solution of adv_2021_04
 """
-import itertools
+
+
+def _board_size():
+    return 5
 
 
 def _parse_input(in_str):
     def proc_square(in_lines):
-        assert len(in_lines) == 5
+        assert len(in_lines) == _board_size()
         res = []
         for cur_line in in_lines:
             cur_line_res = []
             for cur_num in cur_line.split(' '):
                 if cur_num != ' ' and cur_num != '':
                     cur_line_res.append((int(cur_num), False))
-            assert(len(cur_line_res)) == 5
+            assert(len(cur_line_res)) == _board_size()
             res.append(cur_line_res)
         return res
     lines = in_str.splitlines()
     lines = [_ for _ in lines if len(_) > 1]
     numbers = [int(_) for _ in lines[0].split(',')]
     lines = lines[1:]
-    assert len(lines) % 5 == 0
+    assert len(lines) % _board_size() == 0
     res = []
-    for start_num in range(0, len(lines), 5):
-        res.append(proc_square(lines[start_num:start_num+5]))
+    for start_num in range(0, len(lines), _board_size()):
+        res.append(proc_square(lines[start_num:start_num+_board_size()]))
     # print(res)
     return numbers, res
 
@@ -46,10 +49,11 @@ def check_if_wins(in_square):
         return all(_[1] for _ in in_square[in_row_num])
 
     def is_col_marked(in_col_num):
-        cur_col = [in_square[_][in_col_num] for _ in range(5)]
+        cur_col = [in_square[_][in_col_num] for _ in range(_board_size())]
         return all(_[1] for _ in cur_col)
-    return any(is_row_marked(_) for _ in range(5)) or \
-        any(is_col_marked(_) for _ in range(5))
+    return any(is_row_marked(_) for _ in range(_board_size())) or \
+        any(is_col_marked(_) for _ in range(_board_size()))
+
 
 def find_winning(in_data):
     res = None

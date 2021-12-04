@@ -22,7 +22,6 @@ class TestSolutionA(unittest.TestCase):
         """test agains the example data"""
         self.assertEqual(sol.solve_a(_DATA_SMALL), 4512)
 
-
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_DATA_P), 54275)
