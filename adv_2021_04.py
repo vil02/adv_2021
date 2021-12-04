@@ -19,8 +19,7 @@ def parse_input(in_str):
             assert(len(cur_line_res)) == _board_size()
             res.append(cur_line_res)
         return res
-    lines = in_str.splitlines()
-    lines = [_ for _ in lines if len(_) > 1]
+    lines = [_ for _ in in_str.splitlines() if _]
     numbers = [int(_) for _ in lines[0].split(',')]
     lines = lines[1:]
     assert len(lines) % _board_size() == 0
