@@ -7,7 +7,8 @@ def _board_size():
     return 5
 
 
-def _parse_input(in_str):
+def parse_input(in_str):
+    """parses the input of the puzzle"""
     def proc_square(in_lines):
         assert len(in_lines) == _board_size()
         res = []
@@ -77,12 +78,16 @@ def count_score(in_data, in_num):
     return count_unmarked_sum(in_data)*in_num
 
 
+def _single_step(in_data, in_num):
+    res_data = [mark(_, in_num) for _ in in_data]
+    return res_data, find_winning(res_data)
+
+
 def solve_a(in_str):
     """solution function for part a"""
-    numbers, data = _parse_input(in_str)
+    numbers, data = parse_input(in_str)
     for cur_num in numbers:
-        data = [mark(_, cur_num) for _ in data]
-        winner = find_winning(data)
+        data, winner = _single_step(data, cur_num)
         if winner is not None:
             return count_score(winner, cur_num)
     return -2
@@ -90,11 +95,10 @@ def solve_a(in_str):
 
 def solve_b(in_str):
     """solution function for part b"""
-    numbers, data = _parse_input(in_str)
+    numbers, data = parse_input(in_str)
     last_winner_score = None
     for cur_num in numbers:
-        data = [mark(_, cur_num) for _ in data]
-        winner = find_winning(data)
+        data, winner = _single_step(data, cur_num)
         if winner is not None:
             last_winner_score = count_score(winner, cur_num)
         data = [_ for _ in data if not is_winning(_)]

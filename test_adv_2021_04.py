@@ -14,10 +14,13 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
-    # def test_basic(self):
-    #     """test agains the example data"""
-    #     pass
-    #
+    def test_parse_input(self):
+        """basic test of sol.parse_input"""
+        numbers, data = sol.parse_input(_DATA_SMALL)
+        self.assertTrue(numbers)
+        self.assertIn(','.join(str(_) for _ in numbers), _DATA_SMALL)
+        self.assertEqual(len(data), 3)
+
     def test_data_small(self):
         """test agains the example data"""
         self.assertEqual(sol.solve_a(_DATA_SMALL), 4512)
