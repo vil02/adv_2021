@@ -89,7 +89,7 @@ def solve_a(in_str):
         data, winner = _single_step(data, cur_num)
         if winner is not None:
             return count_score(winner, cur_num)
-    return -2
+    return None
 
 
 def solve_b(in_str):
