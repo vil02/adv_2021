@@ -58,7 +58,7 @@ def _visit_points(in_data, in_all_points_fun):
     return visited_points
 
 
-def _count_safe_points(in_data):
+def _count_unsafe_points(in_data):
     return sum(1 for _ in in_data.values() if _ > 1)
 
 
@@ -67,9 +67,10 @@ def solve_a(in_str):
     data = _pars_input(in_str)
     data = [(x_1, y_1, x_2, y_2)
             for (x_1, y_1, x_2, y_2) in data if x_1 == x_2 or y_1 == y_2]
-    return _count_safe_points(_visit_points(data, all_points_a))
+    return _count_unsafe_points(_visit_points(data, all_points_a))
 
 
 def solve_b(in_str):
     """solution function for part b"""
-    return _count_safe_points(_visit_points(_pars_input(in_str), all_points_b))
+    return _count_unsafe_points(_visit_points(
+        _pars_input(in_str), all_points_b))
