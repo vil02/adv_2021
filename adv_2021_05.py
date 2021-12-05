@@ -1,5 +1,5 @@
 """
-solution of adv_2021_template
+solution of adv_2021_05
 """
 import itertools
 
@@ -17,19 +17,21 @@ def _pars_input(in_str):
 
 
 def all_points_a(x_1, y_1, x_2, y_2):
-    def my_range(a, b):
-        if a < b:
-            res = range(a, b+1)
-        else:
-            res = range(b, a+1)
-        return res
+    """
+    returns all of the points on a vertical/horisonal line with ends
+    (x_1, y_2), (x_2, y_2)
+    """
+    def my_range(in_a, in_b):
+        return range(min(in_a, in_b), max(in_a, in_b)+1)
     assert x_1 == x_2 or y_1 == y_2
-    res = list(itertools.product(my_range(x_1, x_2), my_range(y_1, y_2)))
-    # print(x_1, y_1, x_2, y_2, res)
-    return res
+    return list(itertools.product(my_range(x_1, x_2), my_range(y_1, y_2)))
 
 
 def all_points_b(x_1, y_1, x_2, y_2):
+    """
+    returns all of the points on a vertical/horisonal/diagonal line with ends
+    (x_1, y_2), (x_2, y_2)
+    """
     def sgn(in_val):
         return 1 if in_val >= 1 else -1
     if x_1 == x_2 or y_1 == y_2:
@@ -40,10 +42,24 @@ def all_points_b(x_1, y_1, x_2, y_2):
         if x_2 < x_1:
             x_1, x_2 = x_2, x_1
             y_1, y_2 = y_2, y_1
-        for (num, cur_x) in enumerate(range(x_1, x_2+1)):
-            res.append((cur_x, y_1+num*sgn(y_2+1-y_1)))
+        res = [(cur_x, y_1+num*sgn(y_2+1-y_1))
+               for (num, cur_x) in enumerate(range(x_1, x_2+1))]
     return res
 
+
+def _visit_points(in_data, in_all_points_fun):
+    visited_points = {}
+    for _ in in_data:
+        for cur_point in in_all_points_fun(*_):
+            if cur_point in visited_points:
+                visited_points[cur_point] += 1
+            else:
+                visited_points[cur_point] = 1
+    return visited_points
+
+
+def _count_safe_points(in_data):
+    return sum(1 for _ in in_data.values() if _ > 1)
 
 
 def solve_a(in_str):
@@ -51,26 +67,9 @@ def solve_a(in_str):
     data = _pars_input(in_str)
     data = [(x_1, y_1, x_2, y_2)
             for (x_1, y_1, x_2, y_2) in data if x_1 == x_2 or y_1 == y_2]
-    visited_points = {}
-    for _ in data:
-        new_points = all_points_a(*_)
-        for cur_point in new_points:
-            if cur_point in visited_points:
-                visited_points[cur_point] += 1
-            else:
-                visited_points[cur_point] = 1
-    return sum(1 for val in visited_points.values() if val > 1)
+    return _count_safe_points(_visit_points(data, all_points_a))
 
 
 def solve_b(in_str):
     """solution function for part b"""
-    data = _pars_input(in_str)
-    visited_points = {}
-    for _ in data:
-        new_points = all_points_b(*_)
-        for cur_point in new_points:
-            if cur_point in visited_points:
-                visited_points[cur_point] += 1
-            else:
-                visited_points[cur_point] = 1
-    return sum(1 for val in visited_points.values() if val > 1)
+    return _count_safe_points(_visit_points(_pars_input(in_str), all_points_b))

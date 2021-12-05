@@ -21,8 +21,6 @@ class TestSolutionA(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_DATA_P), 4873)
-        # not 3223
-        # not 9811
 
 
 class TestSolutionB(unittest.TestCase):
