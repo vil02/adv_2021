@@ -1,6 +1,7 @@
 """
 solution of adv_2021_07
 """
+import statistics
 
 
 def parse_input(in_str):
@@ -41,7 +42,9 @@ def find_minimal_fuel_usage(in_position_list, in_cost_fun):
 
 def solve_a(in_str):
     """solution function for part a"""
-    return find_minimal_fuel_usage(parse_input(in_str), calculate_total_fuel_a)
+    position_list = parse_input(in_str)
+    return calculate_total_fuel_a(
+        position_list, statistics.median(position_list))
 
 
 def solve_b(in_str):
