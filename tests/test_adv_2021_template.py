@@ -3,23 +3,21 @@ test for adv_2021_template
 """
 
 import unittest
-# import adv_2021_template as sol
 # import general_utils as gu
+# import solutions.adv_2021_template as sol
 
-# _DATA_P = gu.read_to_string('data_adv_2021_template_p.txt')
+
+# def _data_p():
+#     return gu.read_input('template', 'p')
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
-    # def test_basic(self):
-    #     """test agains the example data"""
-    #     pass
-    #
     # def test_data_p(self):
     #     """test agains full data"""
-    #     self.assertEqual(sol.solve_a(_DATA_P), -1)
+    #     self.assertEqual(sol.solve_a(_data_p()), -1)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -28,7 +26,7 @@ class TestSolutionB(unittest.TestCase):
     """
     # def test_data_p(self):
     #     """test agains full data"""
-    #     self.assertEqual(sol.solve_b(_DATA_P), -1)
+    #     self.assertEqual(sol.solve_b(_data_p()), -1)
 
 
 if __name__ == '__main__':

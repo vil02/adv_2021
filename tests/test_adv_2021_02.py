@@ -3,8 +3,9 @@ test for adv_2021_02
 """
 
 import unittest
-import adv_2021_02 as sol
 import general_utils as gu
+import solutions.adv_2021_02 as sol
+
 
 _TEST_STR = \
     "forward 5\n" \
@@ -14,8 +15,13 @@ _TEST_STR = \
     "down 8\n" \
     "forward 2"
 
-_DATA_P = gu.read_to_string('data_adv_2021_02_p.txt')
-_DATA_M = gu.read_to_string('data_adv_2021_02_m.txt')
+
+def _data_p():
+    return gu.read_input(2, 'p')
+
+
+def _data_m():
+    return gu.read_input(2, 'm')
 
 
 class TestSolutionA(unittest.TestCase):
@@ -30,11 +36,11 @@ class TestSolutionA(unittest.TestCase):
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_P), 1524750)
+        self.assertEqual(sol.solve_a(_data_p()), 1524750)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_M), 1507611)
+        self.assertEqual(sol.solve_a(_data_m()), 1507611)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -49,11 +55,11 @@ class TestSolutionB(unittest.TestCase):
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_P), 1592426537)
+        self.assertEqual(sol.solve_b(_data_p()), 1592426537)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_M), 1880593125)
+        self.assertEqual(sol.solve_b(_data_m()), 1880593125)
 
 
 if __name__ == '__main__':

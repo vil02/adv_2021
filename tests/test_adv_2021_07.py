@@ -3,12 +3,20 @@ test for adv_2021_07
 """
 
 import unittest
-import adv_2021_07 as sol
 import general_utils as gu
+import solutions.adv_2021_07 as sol
 
-_DATA_SMALL = '16,1,2,0,4,2,7,1,2,14'
-_DATA_P = gu.read_to_string('data_adv_2021_07_p.txt')
-_DATA_M = gu.read_to_string('data_adv_2021_07_m.txt')
+
+def _data_small():
+    return '16,1,2,0,4,2,7,1,2,14'
+
+
+def _data_p():
+    return gu.read_input(7, 'p')
+
+
+def _data_m():
+    return gu.read_input(7, 'm')
 
 
 class TestSolutionA(unittest.TestCase):
@@ -18,19 +26,19 @@ class TestSolutionA(unittest.TestCase):
     def test_parse_input(self):
         """test parse_input agains the example data"""
         self.assertEqual(
-            sol.parse_input(_DATA_SMALL), [16, 1, 2, 0, 4, 2, 7, 1, 2, 14])
+            sol.parse_input(_data_small()), [16, 1, 2, 0, 4, 2, 7, 1, 2, 14])
 
     def test_data_small(self):
         """test agains the example data"""
-        self.assertEqual(sol.solve_a(_DATA_SMALL), 37)
+        self.assertEqual(sol.solve_a(_data_small()), 37)
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_P), 328262)
+        self.assertEqual(sol.solve_a(_data_p()), 328262)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_M), 335271)
+        self.assertEqual(sol.solve_a(_data_m()), 335271)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -39,15 +47,15 @@ class TestSolutionB(unittest.TestCase):
     """
     def test_data_small(self):
         """test agains the example data"""
-        self.assertEqual(sol.solve_b(_DATA_SMALL), 168)
+        self.assertEqual(sol.solve_b(_data_small()), 168)
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_P), 90040997)
+        self.assertEqual(sol.solve_b(_data_p()), 90040997)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_M), 95851339)
+        self.assertEqual(sol.solve_b(_data_m()), 95851339)
 
 
 if __name__ == '__main__':

@@ -3,13 +3,20 @@ test for adv_2021_05
 """
 
 import unittest
-import adv_2021_05 as sol
 import general_utils as gu
+import solutions.adv_2021_05 as sol
 
 
-_DATA_SMALL, _DATA_P, _DATA_M = [
-    gu.read_to_string(f'data_adv_2021_05_{_}.txt') for
-    _ in ['small', 'p', 'm']]
+def _data_small():
+    return gu.read_input(5, 'small')
+
+
+def _data_p():
+    return gu.read_input(5, 'p')
+
+
+def _data_m():
+    return gu.read_input(5, 'm')
 
 
 class TestSolutionA(unittest.TestCase):
@@ -18,15 +25,15 @@ class TestSolutionA(unittest.TestCase):
     """
     def test_data_small(self):
         """test agains example data"""
-        self.assertEqual(sol.solve_a(_DATA_SMALL), 5)
+        self.assertEqual(sol.solve_a(_data_small()), 5)
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_P), 4873)
+        self.assertEqual(sol.solve_a(_data_p()), 4873)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_a(_DATA_M), 3990)
+        self.assertEqual(sol.solve_a(_data_m()), 3990)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -35,15 +42,15 @@ class TestSolutionB(unittest.TestCase):
     """
     def test_data_small(self):
         """test agains example data"""
-        self.assertEqual(sol.solve_b(_DATA_SMALL), 12)
+        self.assertEqual(sol.solve_b(_data_small()), 12)
 
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_P), 19472)
+        self.assertEqual(sol.solve_b(_data_p()), 19472)
 
     def test_data_m(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_DATA_M), 21305)
+        self.assertEqual(sol.solve_b(_data_m()), 21305)
 
 
 if __name__ == '__main__':
