@@ -8,6 +8,7 @@ import general_utils as gu
 
 _DATA_SMALL = '16,1,2,0,4,2,7,1,2,14'
 _DATA_P = gu.read_to_string('data_adv_2021_07_p.txt')
+_DATA_M = gu.read_to_string('data_adv_2021_07_m.txt')
 
 
 class TestSolutionA(unittest.TestCase):
@@ -27,6 +28,10 @@ class TestSolutionA(unittest.TestCase):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_DATA_P), 328262)
 
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_a(_DATA_M), 335271)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -39,6 +44,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_DATA_P), 90040997)
+
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_DATA_M), 95851339)
 
 
 if __name__ == '__main__':
