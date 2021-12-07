@@ -7,13 +7,8 @@ import general_utils as gu
 import solutions.adv_2021_02 as sol
 
 
-_TEST_STR = \
-    "forward 5\n" \
-    "down 5\n" \
-    "forward 8\n" \
-    "up 3\n" \
-    "down 8\n" \
-    "forward 2"
+def _data_small():
+    return gu.read_input(2, 'small')
 
 
 def _data_p():
@@ -30,9 +25,7 @@ class TestSolutionA(unittest.TestCase):
     """
     def test_basic(self):
         """test agains the example data"""
-        self.assertEqual(
-            sol.solve_a(_TEST_STR),
-            150)
+        self.assertEqual(sol.solve_a(_data_small()), 150)
 
     def test_data_p(self):
         """test agains full data"""
@@ -49,9 +42,7 @@ class TestSolutionB(unittest.TestCase):
     """
     def test_basic(self):
         """test agains the example data"""
-        self.assertEqual(
-            sol.solve_b(_TEST_STR),
-            900)
+        self.assertEqual(sol.solve_b(_data_small()), 900)
 
     def test_data_p(self):
         """test agains full data"""
