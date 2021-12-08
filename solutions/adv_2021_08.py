@@ -66,7 +66,6 @@ def find_pemutation(in_str_list):
 
 def get_value(in_str_list):
     """returns a displayed number"""
-    print(in_str_list,  '-----')
     digit_list = [str(_display_numbers().index(_)) for _ in in_str_list]
     return int(''.join(digit_list))
 
