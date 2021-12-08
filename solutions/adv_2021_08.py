@@ -57,11 +57,14 @@ def apply_permutation(in_perm_data, in_str_list):
 def find_pemutation(in_str_list):
     """finds pemutation of the wires"""
     all_chars = list(set(''.join(_display_numbers())))
+    res = None
     for cur_perm in itertools.permutations(all_chars):
         perm_data = dict(zip(cur_perm, all_chars))
         cur_displays = apply_permutation(perm_data, in_str_list)
         if set(cur_displays) == _display_numbers_set():
-            return perm_data
+            res = perm_data
+            break
+    return res
 
 
 def get_value(in_str_list):
