@@ -29,13 +29,8 @@ def parse_input_b(in_str):
     return [proc_single_line(_) for _ in in_str.splitlines()]
 
 
-def solve_single_line(in_part_a, in_part_b):
-    """solves single line fro part b"""
-    def apply_permutation(in_perm_data, in_str_list):
-        def proc_single_str(in_str):
-            return ''.join(sorted(in_perm_data[_] for _ in in_str))
-        return [proc_single_str(_) for _ in in_str_list]
-    d_digits = [
+def _display_numbers():
+    return [
         "abcefg",
         "cf",
         "acdeg",
@@ -47,17 +42,39 @@ def solve_single_line(in_part_a, in_part_b):
         "abcdefg",
         "abcdfg"]
 
-    def get_value(in_str_list):
-        digit_list = [str(d_digits.index(_)) for _ in in_str_list]
-        return int(''.join(digit_list))
-    all_chars = list(set(''.join(d_digits)))
-    d_digits_set = set(d_digits)
+
+def _display_numbers_set():
+    return set(_display_numbers())
+
+
+def apply_permutation(in_perm_data, in_str_list):
+    """applies given permutation"""
+    def proc_single_str(in_str):
+        return ''.join(sorted(in_perm_data[_] for _ in in_str))
+    return [proc_single_str(_) for _ in in_str_list]
+
+
+def find_pemutation(in_str_list):
+    """finds pemutation of the wires"""
+    all_chars = list(set(''.join(_display_numbers())))
     for cur_perm in itertools.permutations(all_chars):
         perm_data = dict(zip(cur_perm, all_chars))
-        cur_displays = apply_permutation(perm_data, in_part_a)
-        if set(cur_displays) == d_digits_set:
-            cur_displays = apply_permutation(perm_data, in_part_b)
-            return get_value(cur_displays)
+        cur_displays = apply_permutation(perm_data, in_str_list)
+        if set(cur_displays) == _display_numbers_set():
+            return perm_data
+
+
+def get_value(in_str_list):
+    """returns a displayed number"""
+    print(in_str_list,  '-----')
+    digit_list = [str(_display_numbers().index(_)) for _ in in_str_list]
+    return int(''.join(digit_list))
+
+
+def solve_single_line(in_part_a, in_part_b):
+    """solves single line from part b"""
+    cur_displays = apply_permutation(find_pemutation(in_part_a), in_part_b)
+    return get_value(cur_displays)
 
 
 def solve_b(in_str):
