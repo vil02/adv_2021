@@ -1,1 +1,0 @@
-"activate" test for adv_2021_08 part b
