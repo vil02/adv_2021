@@ -98,4 +98,5 @@ def solve_b(in_str):
     data = parse_input(in_str)
     basins = get_all_basins(data)
     basins.sort(key=len)
+    assert len(basins) >= 3
     return len(basins[-1])*len(basins[-2])*len(basins[-3])
