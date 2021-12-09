@@ -13,8 +13,9 @@ def parse_input(in_str):
     return res
 
 
-def is_pos_valid(in_data, in_row, in_col):
-    """checks if the position (in_row, in_col) is valid"""
+def is_pos_valid(in_data, in_pos):
+    """checks if the position in_pos is valid"""
+    in_row, in_col = in_pos
     return 0 <= in_row < len(in_data) and 0 <= in_col < len(in_data[in_row])
 
 
@@ -23,31 +24,30 @@ def get_value(in_data, in_pos):
     return in_data[in_pos[0]][in_pos[1]]
 
 
-def get_small_neighours(in_data, in_row, in_col):
+def get_small_neighours(in_data, in_pos):
     """returns the list of neighbouring positions (no diagonal)"""
+    in_row, in_col = in_pos
     search_range = [
         (in_row-1, in_col),
         (in_row+1, in_col),
         (in_row, in_col-1),
         (in_row, in_col+1)]
-    return [(row, col) for
-            (row, col) in search_range
-            if is_pos_valid(in_data, row, col)]
+    return [_ for _ in search_range if is_pos_valid(in_data, _)]
 
 
-def get_adjacent_values(in_data, in_row, in_col):
+def get_adjacent_values(in_data, in_pos):
     """returns all of the values in the neighbouring cells (no diagonal)"""
     return [get_value(in_data, _)
-            for _ in get_small_neighours(in_data, in_row, in_col)]
+            for _ in get_small_neighours(in_data, in_pos)]
 
 
-def is_minimum(in_data, in_row, in_col):
+def is_minimum(in_data, in_pos):
     """
     checks if the value in_data[in_row][in_col] is a local minimum
     """
     return all(
-        in_data[in_row][in_col] < _
-        for _ in get_adjacent_values(in_data, in_row, in_col))
+        get_value(in_data, in_pos) < _
+        for _ in get_adjacent_values(in_data, in_pos))
 
 
 def _get_full_search_range(in_data):
@@ -61,7 +61,7 @@ def solve_a(in_str):
     data = parse_input(in_str)
     return sum(
         1+get_value(data, _) for
-        _ in _get_full_search_range(data) if is_minimum(data, *_))
+        _ in _get_full_search_range(data) if is_minimum(data, _))
 
 
 def get_all_basins(in_data):
@@ -74,7 +74,7 @@ def get_all_basins(in_data):
     def single_step(in_pos):
         if in_pos not in visited_set:
             visited_set.add(in_pos)
-            for new_pos in get_small_neighours(in_data, *in_pos):
+            for new_pos in get_small_neighours(in_data, in_pos):
                 if get_value(in_data, new_pos) != 9:
                     single_step(new_pos)
 
