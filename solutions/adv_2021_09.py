@@ -23,17 +23,22 @@ def get_value(in_data, in_pos):
     return in_data[in_pos[0]][in_pos[1]]
 
 
-def get_adjacent_values(in_data, in_row, in_col):
-    """
-    returns all of the values in the neighbouring cells (diagonal included)
-    """
-    search_range = set(itertools.product(
-        range(in_row-1, in_row+2),
-        range(in_col-1, in_col+2)))
-    search_range.remove((in_row, in_col))
-    return [get_value(in_data, (row, col)) for
+def get_small_neighours(in_data, in_row, in_col):
+    """returns the list of neighbouring positions (no diagonal)"""
+    search_range = [
+        (in_row-1, in_col),
+        (in_row+1, in_col),
+        (in_row, in_col-1),
+        (in_row, in_col+1)]
+    return [(row, col) for
             (row, col) in search_range
             if is_pos_valid(in_data, row, col)]
+
+
+def get_adjacent_values(in_data, in_row, in_col):
+    """returns all of the values in the neighbouring cells (no diagonal)"""
+    return [get_value(in_data, _)
+            for _ in get_small_neighours(in_data, in_row, in_col)]
 
 
 def is_minimum(in_data, in_row, in_col):
@@ -57,18 +62,6 @@ def solve_a(in_str):
     return sum(
         1+get_value(data, _) for
         _ in _get_full_search_range(data) if is_minimum(data, *_))
-
-
-def get_small_neighours(in_data, in_row, in_col):
-    """returns the list of neighbouring positions (no diagonal)"""
-    search_range = [
-        (in_row-1, in_col),
-        (in_row+1, in_col),
-        (in_row, in_col-1),
-        (in_row, in_col+1)]
-    return [(row, col) for
-            (row, col) in search_range
-            if is_pos_valid(in_data, row, col)]
 
 
 def get_all_basins(in_data):

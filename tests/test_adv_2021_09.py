@@ -19,15 +19,15 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
-    def test_get_adjacent_values(self):
-        """
-        test of get_adjacent_values
-        """
-        data = sol.parse_input(_data_small())
-        self.assertEqual(set(sol.get_adjacent_values(data, 0, 0)), {1, 9, 3})
-        self.assertEqual(
-            set(sol.get_adjacent_values(data, 2, 1)),
-            {3, 9, 8, 9, 5, 8, 7, 6})
+    # def test_get_adjacent_values(self):
+    #     """
+    #     test of get_adjacent_values
+    #     """
+    #     data = sol.parse_input(_data_small())
+    #     self.assertEqual(set(sol.get_adjacent_values(data, 0, 0)), {1, 9, 3})
+    #     self.assertEqual(
+    #         set(sol.get_adjacent_values(data, 2, 1)),
+    #         {3, 9, 8, 9, 5, 8, 7, 6})
 
     def test_data_small(self):
         """test agains example data"""
