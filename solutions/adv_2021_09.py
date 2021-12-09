@@ -51,9 +51,7 @@ def is_minimum(in_data, in_pos):
 
 
 def _get_full_search_range(in_data):
-    return itertools.product(
-        range(0, len(in_data)),
-        range(0, len(in_data[0])))
+    return itertools.product(range(0, len(in_data)), range(0, len(in_data[0])))
 
 
 def solve_a(in_str):
