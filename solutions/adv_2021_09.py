@@ -45,15 +45,18 @@ def is_minimum(in_data, in_row, in_col):
         for _ in get_adjacent_values(in_data, in_row, in_col))
 
 
+def _get_full_search_range(in_data):
+    return itertools.product(
+        range(0, len(in_data)),
+        range(0, len(in_data[0])))
+
+
 def solve_a(in_str):
     """solution function for part a"""
     data = parse_input(in_str)
-    search_range = itertools.product(
-        range(0, len(data)),
-        range(0, len(data[0])))
     return sum(
         1+get_value(data, _) for
-        _ in search_range if is_minimum(data, *_))
+        _ in _get_full_search_range(data) if is_minimum(data, *_))
 
 
 def get_small_neighours(in_data, in_row, in_col):
@@ -83,8 +86,7 @@ def get_all_basins(in_data):
                     single_step(new_pos)
 
     basins = []
-    for start_pos in itertools.product(
-            range(len(in_data)), range(len(in_data[0]))):
+    for start_pos in _get_full_search_range(in_data):
         if get_value(in_data, start_pos) != 9 and \
                 all(start_pos not in _ for _ in basins):
             single_step(start_pos)
