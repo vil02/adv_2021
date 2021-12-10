@@ -40,7 +40,7 @@ def find_line_completion(in_str):
     assert get_score(in_str) == 0
     stack_data = []
     for _ in in_str:
-        if _ in ['(', '[', '{', '<']:
+        if _ in _opposite_dict().values():
             stack_data.append(_)
         elif stack_data and _ in _opposite_dict() \
                 and _opposite_dict()[_] == stack_data[-1]:
