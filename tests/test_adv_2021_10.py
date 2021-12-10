@@ -15,6 +15,10 @@ def _data_p():
     return gu.read_input(10, 'p')
 
 
+def _data_m():
+    return gu.read_input(10, 'm')
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -26,6 +30,10 @@ class TestSolutionA(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_data_p()), 311895)
+
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_a(_data_m()), 168417)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -61,6 +69,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_data_p()), 2904180541)
+
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_data_m()), 2802519786)
 
 
 if __name__ == '__main__':
