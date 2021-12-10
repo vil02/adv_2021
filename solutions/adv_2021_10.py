@@ -22,7 +22,7 @@ def get_score(in_str):
             stack_data.append(_)
         elif stack_data and _ in _opposite_dict() \
                 and _opposite_dict()[_] == stack_data[-1]:
-            stack_data = stack_data[:-1]
+            stack_data.pop()
         else:
             res = _
             break
@@ -44,7 +44,7 @@ def find_line_completion(in_str):
             stack_data.append(_)
         elif stack_data and _ in _opposite_dict() \
                 and _opposite_dict()[_] == stack_data[-1]:
-            stack_data = stack_data[:-1]
+            stack_data.pop()
         else:
             assert False
     res = ''
