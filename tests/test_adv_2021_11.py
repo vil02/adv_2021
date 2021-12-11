@@ -31,6 +31,15 @@ class TestSolutionA(unittest.TestCase):
         data, number_of_flashes = sol.single_step(data)
         self.assertEqual(number_of_flashes, 0)
 
+    def test_single_step_small(self):
+        """tests single_step function with the example data"""
+        data = sol.parse_input(_data_small())
+        total_flashes = 0
+        for _ in range(10):
+            data, cur_flashes = sol.single_step(data)
+            total_flashes += cur_flashes
+        self.assertEqual(total_flashes, 204)
+
     def test_data_small(self):
         """test agains small data"""
         self.assertEqual(sol.solve_a(_data_small()), 1656)
