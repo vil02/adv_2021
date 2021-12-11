@@ -14,7 +14,8 @@ def parse_input(in_str):
     return res
 
 
-def get_all_adjacted_positions(in_data, in_center_pos):
+def get_all_adjacent_positions(in_data, in_center_pos):
+    """returns a list of coordinates of all adjacent positions"""
     def is_correct(in_pos):
         row_num, col_num = in_pos
         return in_pos != in_center_pos \
@@ -28,37 +29,40 @@ def get_all_adjacted_positions(in_data, in_center_pos):
 
 
 def get_value(in_data, in_pos):
+    """
+    returns the value stored as position in_pos =(row_num, col_num) in in_data
+    """
     return in_data[in_pos[0]][in_pos[1]]
 
 
 def set_value(data, in_pos, in_val):
+    """
+    sets the value in data at posiion in_pos to in_val
+    """
     data[in_pos[0]][in_pos[1]] = in_val
 
 
 def single_step(in_data):
+    """
+    simulates one energy step
+    returns the new power data and the number of flashes
+    """
     res_data = copy.deepcopy(in_data)
     flashed = set()
     search_range = list(
         itertools.product(range(0, len(in_data)), range(0, len(in_data[0]))))
     for cur_pos in search_range:
-        cur_val = get_value(in_data, cur_pos)
-    #    if cur_val <= 9:
-        set_value(res_data, cur_pos, cur_val+1)
-        # else:
-        #     for _ in get_all_adjacted_positions(in_data, cur_pos):
-        #         set_value(res_data, cur_pos, get_value(res_data, cur_pos)+1)
-        #     flashed.add(cur_pos)
+        set_value(res_data, cur_pos, get_value(in_data, cur_pos)+1)
 
     was_change = True
     while was_change:
         was_change = False
         for cur_pos in search_range:
             if cur_pos not in flashed and get_value(res_data, cur_pos) > 9:
-                for _ in get_all_adjacted_positions(in_data, cur_pos):
+                for _ in get_all_adjacent_positions(in_data, cur_pos):
                     set_value(res_data, _, get_value(res_data, _)+1)
                 flashed.add(cur_pos)
                 was_change = True
-    # print(flashed)
     for cur_pos in flashed:
         set_value(res_data, cur_pos, 0)
     return res_data, len(flashed)

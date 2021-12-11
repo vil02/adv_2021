@@ -32,6 +32,10 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+    def test_data_small(self):
+        """test agains small data"""
+        self.assertEqual(sol.solve_b(_data_small()), 195)
+
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_data_p()), 488)
