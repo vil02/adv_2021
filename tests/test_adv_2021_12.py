@@ -15,12 +15,28 @@ def _data_small():
     return gu.read_input(12, 'small')
 
 
+def _data_very_small():
+    return gu.read_input(12, 'very_small')
+
+
+def _data_very_small_2():
+    return gu.read_input(12, 'very_small_2')
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+    def test_data_very_small(self):
+        """test agains example data"""
+        self.assertEqual(sol.solve_a(_data_very_small()), 10)
+
+    def test_data_very_small_2(self):
+        """test agains example data"""
+        self.assertEqual(sol.solve_a(_data_very_small_2()), 19)
+
     def test_data_small(self):
-        """test agains full data"""
+        """test agains example data"""
         self.assertEqual(sol.solve_a(_data_small()), 226)
 
     def test_data_p(self):
@@ -32,8 +48,12 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+    def test_data_very_small(self):
+        """test agains example data"""
+        self.assertEqual(sol.solve_b(_data_very_small_2()), 103)
+
     def test_data_small(self):
-        """test agains full data"""
+        """test agains example data"""
         self.assertEqual(sol.solve_b(_data_small()), 3509)
 
     def test_data_p(self):
