@@ -43,6 +43,10 @@ class TestSolutionA(unittest.TestCase):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_data_p()), 638)
 
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_a(_data_m()), 847)
+
 
 class TestSolutionB(unittest.TestCase):
     """
