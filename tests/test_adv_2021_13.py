@@ -15,6 +15,14 @@ def _data_p_result():
     return gu.read_input(13, 'p_result').strip()
 
 
+def _data_m():
+    return gu.read_input(13, 'm')
+
+
+def _data_m_result():
+    return gu.read_input(13, 'm_result').strip()
+
+
 def _data_small():
     return gu.read_input(13, 'small')
 
@@ -43,6 +51,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_data_p()), _data_p_result())
+
+    def test_data_m(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_data_m()), _data_m_result())
 
     def test_data_small(self):
         """test example full data"""
