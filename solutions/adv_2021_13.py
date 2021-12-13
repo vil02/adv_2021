@@ -4,13 +4,18 @@ solution of adv_2021_13
 
 
 def parse_input(in_str):
+    """
+    Parses the input of the puzzle.
+    returns the set of all positions and the list of folds
+    """
     def proc_pos_str(in_str):
         x_pos, y_pos = in_str.split(',')
         return int(x_pos), int(y_pos)
 
     def proc_fold_str(in_str):
-        assert in_str.startswith('fold along ')
-        fold_str = in_str.replace('fold along ', '')
+        start_str = 'fold along '
+        assert in_str.startswith(start_str)
+        fold_str = in_str[len(start_str):]
         axis_str, pos_str = fold_str.split('=')
         return axis_str, int(pos_str)
     lines = in_str.splitlines()
@@ -21,6 +26,9 @@ def parse_input(in_str):
 
 
 def to_str(in_data):
+    """
+    returns a string illustrating the position set in_data
+    """
     x_max = max(_[0] for _ in in_data)
     y_max = max(_[1] for _ in in_data)
     res = [['.' for _ in range(x_max+1)] for _ in range(y_max+1)]
@@ -29,34 +37,34 @@ def to_str(in_data):
     return '\n'.join([''.join(_ for _ in cur_row) for cur_row in res])
 
 
-def transform_pos(in_pos, in_fold_pos):
+def _transform_pos(in_pos, in_fold_pos):
     res_pos = in_pos
     if in_pos > in_fold_pos:
         res_pos = in_fold_pos-abs(in_pos-in_fold_pos)
     return res_pos
 
 
-def transform_x(in_pos, in_fold_pos):
-    return transform_pos(in_pos[0], in_fold_pos), in_pos[1]
+def _transform_x(in_pos, in_fold_pos):
+    return _transform_pos(in_pos[0], in_fold_pos), in_pos[1]
 
 
-def transform_y(in_pos, in_fold_pos):
-    return in_pos[0], transform_pos(in_pos[1], in_fold_pos)
+def _transform_y(in_pos, in_fold_pos):
+    return in_pos[0], _transform_pos(in_pos[1], in_fold_pos)
 
 
 def make_transform(in_pos, in_fold_type, in_fold_pos):
+    """makes a transformation of a single point"""
     if in_fold_type == 'x':
-        res = transform_x(in_pos, in_fold_pos)
+        res = _transform_x(in_pos, in_fold_pos)
     else:
         assert in_fold_type == 'y'
-        res = transform_y(in_pos, in_fold_pos)
+        res = _transform_y(in_pos, in_fold_pos)
     return res
 
 
 def make_fold(in_data, in_fold):
-    res = {make_transform(_, *in_fold) for _ in in_data}
-
-    return res
+    """makes a fold for all of the point"""
+    return {make_transform(_, *in_fold) for _ in in_data}
 
 
 def solve_a(in_str):
