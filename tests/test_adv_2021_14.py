@@ -21,19 +21,6 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
-    def test_apply_single(self):
-        cur_str, transforms = sol.parse_input(_data_small())
-        rules = sol.Rules(transforms)
-        true_res_list = [
-            'NNCB',
-            'NCNBCHB',
-            'NBCCNBBBCBHCB',
-            'NBBBCNCCNBBNBNBBCHBHHBCHB',
-            'NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB']
-        for _ in true_res_list:
-            self.assertEqual(cur_str, _)
-            cur_str = rules.apply_single(cur_str)
-
 
     def test_data_p(self):
         """test agains full data"""
@@ -44,9 +31,9 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
-    # def test_data_p(self):
-    #     """test agains full data"""
-    #     self.assertEqual(sol.solve_b(_data_p()), -1)
+    def test_data_p(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_data_p()), 4110568157153)
 
 
 if __name__ == '__main__':

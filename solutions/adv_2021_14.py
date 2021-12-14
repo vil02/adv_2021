@@ -16,59 +16,66 @@ def parse_input(in_str):
     return start_str, transforms
 
 
-class Rules:
-    def __init__(self, in_rules):
-        self.rules = in_rules
-        self.res_data = {}
-
-    def apply_single(self, in_str):
-        if in_str in self.res_data:
-            res = self.res_data[in_str]
-        else:
-            if len(in_str) == 2:
-                middle_part = ''
-                if in_str in self.rules:
-                    middle_part = self.rules[in_str]
-                res = in_str[0]+middle_part+in_str[1]
-            else:
-                assert len(in_str) > 2
-                mid_point = len(in_str)//2
-                #print(in_str, in_str[:mid_point], in_str[mid_point:])
-                part_a = self.apply_single(in_str[:mid_point+1])
-                part_b = self.apply_single(in_str[mid_point:])
-                res = part_a[:-1]+part_b
-            self.res_data[in_str] = res
-        return res
-
-def calculate_histogram(in_str):
+def calculate_pair_count(in_str):
     res = {}
-    for _ in in_str:
-        if _ in res:
-            res[_] += 1
-        else:
-            res[_] = 1
+    for _ in range(len(in_str)-1):
+        cur_pair = in_str[_:_+2]
+        if cur_pair not in res:
+            res[cur_pair] = 0
+        res[cur_pair] += 1
     return res
 
-def get_res_val(in_str):
-    hist = calculate_histogram(in_str)
-    min_val = min(hist.values())
-    max_val = max(hist.values())
-    return max_val-min_val
+
+def iterate_pair_count_single(in_pair_count, in_rules):
+    res = {}
+    for cur_pair in in_pair_count:
+        new_char = in_rules[cur_pair]
+
+        if cur_pair[0]+new_char not in res:
+            res[cur_pair[0]+new_char] = 0
+        res[cur_pair[0]+new_char] += in_pair_count[cur_pair]
+
+        if new_char+cur_pair[1] not in res:
+            res[new_char+cur_pair[1]] = 0
+        res[new_char+cur_pair[1]] += in_pair_count[cur_pair]
+    return res
+
+
+def pair_count_to_hist(in_pair_count):
+    beg_count = {}
+    end_count = {}
+    for cur_pair in in_pair_count:
+        assert len(cur_pair) == 2
+        cur_beg = cur_pair[0]
+        cur_end = cur_pair[1]
+        if cur_beg not in beg_count:
+            beg_count[cur_beg] = 0
+        beg_count[cur_beg] += in_pair_count[cur_pair]
+
+        if cur_end not in end_count:
+            end_count[cur_end] = 0
+        end_count[cur_end] += in_pair_count[cur_pair]
+    common_key = set(beg_count) | set(end_count)
+    return {_: max(beg_count.get(_, 0), end_count.get(_, 0))
+            for _ in common_key}
+
+def get_res_val(in_pair_count):
+    hist = pair_count_to_hist(in_pair_count)
+    return max(hist.values())-min(hist.values())
 
 def solve_a(in_str):
     """solution function for part a"""
     cur_str, transforms = parse_input(in_str)
-    rules_obj = Rules(transforms)
+    pair_count = calculate_pair_count(cur_str)
     for _ in range(10):
-        cur_str = rules_obj.apply_single(cur_str)
-    return get_res_val(cur_str)
+        pair_count = iterate_pair_count_single(pair_count, transforms)
+    return get_res_val(pair_count)
 
 
 def solve_b(in_str):
     """solution function for part b"""
     cur_str, transforms = parse_input(in_str)
-    rules_obj = Rules(transforms)
+    pair_count = calculate_pair_count(cur_str)
     for _ in range(40):
-        cur_str = rules_obj.apply_single(cur_str)
-        print(_, len(rules_obj.res_data))
-    return get_res_val(cur_str)
+        pair_count = iterate_pair_count_single(pair_count, transforms)
+    return get_res_val(pair_count)
