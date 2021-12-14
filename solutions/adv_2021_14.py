@@ -1,10 +1,12 @@
 """
 solution of adv_2021_14
 """
-import functools
 
 
 def parse_input(in_str):
+    """
+    returns the starting string and a dictionary representing production rules
+    """
     def proc_single(in_str):
         pattern, result = in_str.split(' -> ')
         assert len(pattern) == 2
@@ -17,6 +19,9 @@ def parse_input(in_str):
 
 
 def calculate_pair_count(in_str):
+    """
+    returns a histogram for adjacent pairs in in_str
+    """
     res = {}
     for _ in range(len(in_str)-1):
         cur_pair = in_str[_:_+2]
@@ -27,6 +32,7 @@ def calculate_pair_count(in_str):
 
 
 def iterate_pair_count_single(in_pair_count, in_rules):
+    """caculates the next iteration for the pair count"""
     res = {}
     for cur_pair in in_pair_count:
         new_char = in_rules[cur_pair]
@@ -42,6 +48,9 @@ def iterate_pair_count_single(in_pair_count, in_rules):
 
 
 def pair_count_to_hist(in_pair_count):
+    """
+    calculates the histogram (for single characters) based on the pair count
+    """
     beg_count = {}
     end_count = {}
     for cur_pair in in_pair_count:
@@ -59,23 +68,28 @@ def pair_count_to_hist(in_pair_count):
     return {_: max(beg_count.get(_, 0), end_count.get(_, 0))
             for _ in common_key}
 
-def get_res_val(in_pair_count):
+
+def get_result_value(in_pair_count):
+    """
+    calculates the resulting value of the puzzle
+    """
     hist = pair_count_to_hist(in_pair_count)
     return max(hist.values())-min(hist.values())
 
-def solve_a(in_str):
-    """solution function for part a"""
+
+def _proc_data(in_str, in_number_of_iterations):
     cur_str, transforms = parse_input(in_str)
     pair_count = calculate_pair_count(cur_str)
-    for _ in range(10):
+    for _ in range(in_number_of_iterations):
         pair_count = iterate_pair_count_single(pair_count, transforms)
-    return get_res_val(pair_count)
+    return get_result_value(pair_count)
+
+
+def solve_a(in_str):
+    """solution function for part a"""
+    return _proc_data(in_str, 10)
 
 
 def solve_b(in_str):
     """solution function for part b"""
-    cur_str, transforms = parse_input(in_str)
-    pair_count = calculate_pair_count(cur_str)
-    for _ in range(40):
-        pair_count = iterate_pair_count_single(pair_count, transforms)
-    return get_res_val(pair_count)
+    return _proc_data(in_str, 40)
