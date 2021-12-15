@@ -35,9 +35,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_small(self):
         """test agains example data"""
         self.assertEqual(sol.solve_b(_data_small()), 315)
+
     def test_data_p(self):
         """test agains full data"""
-        self.assertEqual(sol.solve_b(_data_p()), -1)
+        self.assertEqual(sol.solve_b(_data_p()), 2948)
 
 
 if __name__ == '__main__':
