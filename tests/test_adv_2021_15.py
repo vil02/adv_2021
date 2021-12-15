@@ -15,6 +15,10 @@ def _data_small_b():
     return gu.read_input(15, 'small_b')
 
 
+def _data_other():
+    return gu.read_input(15, 'other')
+
+
 def _data_p():
     return gu.read_input(15, 'p')
 
@@ -30,6 +34,10 @@ class TestSolutionA(unittest.TestCase):
     def test_data_small_b(self):
         """test agains extented example data"""
         self.assertEqual(sol.solve_a(_data_small_b()), 315)
+
+    def test_data_other(self):
+        """test agains data with the minimal path going left or up"""
+        self.assertEqual(sol.solve_a(_data_other()), 12)
 
     def test_data_p(self):
         """test agains full data"""
