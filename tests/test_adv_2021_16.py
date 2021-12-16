@@ -51,7 +51,7 @@ class TestSolutionA(unittest.TestCase):
             check_single(in_str, *true_res)
 
     def test_example_data(self):
-        """test of solve_a adagins sexample data"""
+        """test of solve_a againts example data"""
         test_data = {
             '8A004A801A8002F478': 16,
             '620080001611562C8802118E34': 12,
@@ -70,7 +70,7 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_example_data(self):
-        """test of solve_a adagins sexample data"""
+        """test of solve_a against example data"""
         test_data = {
             'C200B40A82': 3,
             '04005AC33890': 54,
