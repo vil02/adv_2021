@@ -1,7 +1,7 @@
 """
 solution of adv_2021_16
 """
-import numpy
+import functools
 
 
 def parse_input(in_str):
@@ -126,6 +126,9 @@ def evaluate(in_data):
         assert len(in_num_list) == 2
         return 1 if in_num_list[0] == in_num_list[1] else 0
 
+    def prod_fun(in_num_list):
+        return functools.reduce(lambda a, b: a*b, in_num_list)
+
     assert 'id' in in_data
     cur_id = in_data['id']
     if cur_id == 4:
@@ -133,7 +136,7 @@ def evaluate(in_data):
     else:
         fun_dict = {
             0: sum,
-            1: numpy.prod,
+            1: prod_fun,
             2: min,
             3: max,
             5: greater_fun,
