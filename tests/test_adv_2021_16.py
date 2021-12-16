@@ -116,6 +116,20 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+    def test_example_data(self):
+        """test of solve_a adagins sexample data"""
+        test_data = {
+            'C200B40A82': 3,
+            '04005AC33890': 54,
+            '880086C3E88112': 7,
+            'CE00C43D881120': 9,
+            'D8005AC2A8F0': 1,
+            'F600BC2D8F': 0,
+            '9C005AC2F8F0': 0,
+            '9C0141080250320F1802104A08': 1}
+        for (cur_str, cur_res) in test_data.items():
+            self.assertEqual(sol.solve_b(cur_str), cur_res)
+
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_data_p()), 5390807940351)
