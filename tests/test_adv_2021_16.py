@@ -19,83 +19,36 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
-    def test_read_data_0(self):
-        res, rem_str = sol.read_data('110100101111111000101000')
-        self.assertEqual(res['version'], 6)
-        self.assertEqual(res['id'], 4)
-        self.assertEqual(res['value'], 2021)
-        #self.assertEqual(rem_str, '')
+    def test_read(self):
+        """test of the function read againd the example data"""
+        def check_single(in_str, in_true_res, in_true_rem_str):
+            res, rem_str = sol.read_data(in_str)
+            self.assertEqual(res, in_true_res)
+            self.assertEqual(rem_str, in_true_rem_str)
+        input_data = {
+            '110100101111111000101000':
+                ({'version': 6, 'id': 4, 'value': 2021}, '000'),
+            '11010001010':
+                ({'version': 6, 'id': 4, 'value': 10}, ''),
+            '0101001000100100':
+                ({'version': 2, 'id': 4, 'value': 20}, ''),
+            '1101000101001010010001001000000000':
+                ({'version': 6, 'id': 4, 'value': 10},
+                 '01010010001001000000000'),
+            '00111000000000000110111101000101001010010001001000000000':
+                ({'version': 1, 'id': 6,
+                  'operator_data':
+                      [{'version': 6, 'id': 4, 'value': 10},
+                       {'version': 2, 'id': 4, 'value': 20}]}, '0000000'),
+            '11101110000000001101010000001100100000100011000001100000':
+                ({'version': 7, 'id': 3,
+                  'operator_data': [
+                      {'version': 2, 'id': 4, 'value': 1},
+                      {'version': 4, 'id': 4, 'value': 2},
+                      {'version': 1, 'id': 4, 'value': 3}]}, '00000')}
 
-    def test_read_data_1(self):
-        res, rem_str = sol.read_data('11010001010')
-        self.assertEqual(res['version'], 6)
-        self.assertEqual(res['id'], 4)
-        self.assertEqual(res['value'], 10)
-        #self.assertFalse(rem_str)
-
-    def test_read_data_2(self):
-        res, rem_str = sol.read_data('0101001000100100')
-        self.assertEqual(res['version'], 2)
-        self.assertEqual(res['id'], 4)
-        self.assertEqual(res['value'], 20)
-        #self.assertFalse(rem_str)
-
-    # def test_read_3(self):
-    #     res, rem_str = sol.read_data('110100010100')
-    #     self.assertEqual(res['version'], 6)
-    #     self.assertEqual(res['id'], 4)
-    #     self.assertEqual(res['value'], 10)
-    #     self.assertFalse(rem_str)
-    #
-    # def test_read_4(self):
-    #     res, rem_str = sol.read_data('1101000101001')
-    #     self.assertEqual(res['version'], 6)
-    #     self.assertEqual(res['id'], 4)
-    #     self.assertEqual(res['value'], 10)
-    #     self.assertEqual(rem_str, '1')
-    #
-    # def test_read_5(self):
-    #     res, rem_str = sol.read_data('1101000101000')
-    #     self.assertEqual(res['version'], 6)
-    #     self.assertEqual(res['id'], 4)
-    #     self.assertEqual(res['value'], 10)
-    #     self.assertEqual(rem_str, '0')
-    #
-    # def test_read_6(self):
-    #     res, rem_str = sol.read_data('11010001010001')
-    #     self.assertEqual(res['version'], 6)
-    #     self.assertEqual(res['id'], 4)
-    #     self.assertEqual(res['value'], 10)
-    #     self.assertEqual(rem_str, '01')
-
-
-    def test_read_7(self):
-        res, rem_str = sol.read_data('1101000101001010010001001000000000')
-        self.assertEqual(res['version'], 6)
-        self.assertEqual(res['id'], 4)
-        self.assertEqual(res['value'], 10)
-        self.assertEqual(rem_str, '01010010001001000000000')
-
-    def test_read_data_8(self):
-        res, rem_str = sol.read_data('00111000000000000110111101000101001010010001001000000000')
-        self.assertEqual(res['version'], 1)
-        self.assertEqual(res['id'], 6)
-        self.assertEqual(len(res['operator_data']), 2)
-        self.assertEqual(res['operator_data'][0]['value'], 10)
-        self.assertEqual(res['operator_data'][1]['value'], 20)
-        self.assertEqual(rem_str, '0000000')
-
-    def test_read_data_9(self):
-        res, rem_str = sol.read_data('11101110000000001101010000001100100000100011000001100000')
-        true_res = {
-            'version': 7,
-            'id': 3,
-            'operator_data': [
-                {'version': 2, 'id': 4, 'value': 1},
-                {'version': 4, 'id': 4, 'value': 2},
-                {'version': 1, 'id': 4, 'value': 3}]}
-        self.assertEqual(res, true_res)
-        self.assertEqual(rem_str, '00000')
+        for (in_str, true_res) in input_data.items():
+            check_single(in_str, *true_res)
 
     def test_example_data(self):
         """test of solve_a adagins sexample data"""
