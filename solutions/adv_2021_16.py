@@ -115,30 +115,33 @@ def evaluate(in_data):
     """
     evaluates the in_data as described in part_b
     """
+    def greater_fun(in_num_list):
+        assert len(in_num_list) == 2
+        return 1 if in_num_list[0] > in_num_list[1] else 0
+
+    def less_fun(in_num_list):
+        return greater_fun(in_num_list[::-1])
+
+    def equal_fun(in_num_list):
+        assert len(in_num_list) == 2
+        return 1 if in_num_list[0] == in_num_list[1] else 0
+
     assert 'id' in in_data
-    if in_data['id'] == 4:
+    cur_id = in_data['id']
+    if cur_id == 4:
         res = in_data['value']
-    elif in_data['id'] == 0:
-        res = sum(evaluate(_) for _ in in_data['operator_data'])
-    elif in_data['id'] == 1:
-        num_list = [evaluate(_) for _ in in_data['operator_data']]
-        res = numpy.prod(num_list)
-    elif in_data['id'] == 2:
-        res = min(evaluate(_) for _ in in_data['operator_data'])
-    elif in_data['id'] == 3:
-        res = max(evaluate(_) for _ in in_data['operator_data'])
-    elif in_data['id'] == 5:
-        assert len(in_data['operator_data']) == 2
-        res = 1 if evaluate(in_data['operator_data'][0]) > evaluate(in_data['operator_data'][1]) else 0
-    elif in_data['id'] == 6:
-        assert len(in_data['operator_data']) == 2
-        res = 1 if evaluate(in_data['operator_data'][0]) < evaluate(in_data['operator_data'][1]) else 0
-    elif in_data['id'] == 7:
-        assert len(in_data['operator_data']) == 2
-        res = 1 if evaluate(in_data['operator_data'][0]) == evaluate(in_data['operator_data'][1]) else 0
     else:
-        assert False
+        fun_dict = {
+            0: sum,
+            1: numpy.prod,
+            2: min,
+            3: max,
+            5: greater_fun,
+            6: less_fun,
+            7: equal_fun}
+        res = fun_dict[cur_id]([evaluate(_) for _ in in_data['operator_data']])
     return res
+
 
 def solve_b(in_str):
     """solution function for part b"""
