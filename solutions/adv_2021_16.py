@@ -1,16 +1,18 @@
 """
-solution of adv_2021_template
+solution of adv_2021_16
 """
 import numpy
 
 
 def parse_input(in_str):
+    """parses the input hex string into a string of 0's and 1's"""
     def proc_single(in_char):
-        res = bin(int(in_char, 16))[2:]
-        while len(res) < 4:
-            res = '0'+res
+        res = bin(int(in_char, 16))
+        assert res.startswith('0b')
+        res = res[2:]
+        if len(res) < 4:
+            res = '0'*(4-len(res))+res
         return res
-
     return ''.join(proc_single(_) for _ in in_str.strip())
 
 
