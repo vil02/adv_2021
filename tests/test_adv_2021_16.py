@@ -98,10 +98,14 @@ class TestSolutionA(unittest.TestCase):
         self.assertEqual(rem_str, '00000')
 
     def test_example_data(self):
-        self.assertEqual(sol.solve_a('8A004A801A8002F478'), 16)
-        self.assertEqual(sol.solve_a('620080001611562C8802118E34'), 12)
-        self.assertEqual(sol.solve_a('C0015000016115A2E0802F182340'), 23)
-        self.assertEqual(sol.solve_a('A0016C880162017C3686B18A3D4780'), 31)
+        """test of solve_a adagins sexample data"""
+        test_data = {
+            '8A004A801A8002F478': 16,
+            '620080001611562C8802118E34': 12,
+            'C0015000016115A2E0802F182340': 23,
+            'A0016C880162017C3686B18A3D4780': 31}
+        for (cur_str, cur_res) in test_data.items():
+            self.assertEqual(sol.solve_a(cur_str), cur_res)
 
     def test_data_p(self):
         """test agains full data"""
