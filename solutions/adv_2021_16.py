@@ -17,37 +17,40 @@ def parse_input(in_str):
 
 
 def bin_to_int(in_str):
+    """returns the integer value represented by the binnary string in_str"""
     return int(in_str, 2)
 
 
-def make_read(in_tmp_data):
-    version = bin_to_int(''.join(in_tmp_data[0:3]))
-    packet_id = bin_to_int(''.join(in_tmp_data[3:6]))
-    rem_data = ''.join(in_tmp_data[6:])
+def read_header(in_data):
+    """reads the version and the packet_id"""
+    version = bin_to_int(''.join(in_data[0:3]))
+    packet_id = bin_to_int(''.join(in_data[3:6]))
+    rem_data = ''.join(in_data[6:])
     return version, packet_id, rem_data
 
 
-def read_literal(in_tmp_data):
-    def read_four(in_tmp_data_a):
+def read_literal(in_data):
+    """reads the literal from the begining of the in_data"""
+    def read_block(in_tmp_data):
         continue_reading = False
-        res = continue_reading, None, in_tmp_data_a
-        if len(in_tmp_data_a) >= 5:
-            if in_tmp_data_a[0] == '1':
+        res = continue_reading, None, in_tmp_data
+        if len(in_tmp_data) >= 5:
+            if in_tmp_data[0] == '1':
                 continue_reading = True
-            value = ''.join(in_tmp_data_a[1:5])
-            res = continue_reading, value, in_tmp_data_a[5:]
+            value = ''.join(in_tmp_data[1:5])
+            res = continue_reading, value, in_tmp_data[5:]
         return res
     literal_data = []
-    continue_reading, cur_val, tmp_data = read_four(in_tmp_data)
+    continue_reading, cur_val, tmp_data = read_block(in_data)
     literal_data.append(cur_val)
     while continue_reading:
-        continue_reading, cur_val, tmp_data = read_four(tmp_data)
+        continue_reading, cur_val, tmp_data = read_block(tmp_data)
         literal_data.append(cur_val)
-
     return bin_to_int(''.join(literal_data)), tmp_data
 
 
 def read_operator(in_data):
+    """reads the operator from the beginning of the in_data"""
     len_id = in_data[0]
     tmp_data = in_data[1:]
     if len_id == '0':
@@ -72,24 +75,35 @@ def read_operator(in_data):
 
 
 def read_data(in_data):
+    """parses the in_data into a dicitonary"""
+    assert set(list(in_data)).issubset({'0', '1'})
     tmp_data = ''.join(in_data)
+    res_data = {}
     if len(tmp_data) > 6:
-        cur_version, cur_id, tmp_data = make_read(tmp_data)
+        cur_version, cur_id, tmp_data = read_header(tmp_data)
         if cur_id == 4:
             literal_value, tmp_data = read_literal(tmp_data)
-            res_data = {'version': cur_version, 'id': cur_id, 'value': literal_value}
+            res_data = {
+                'version': cur_version, 'id': cur_id, 'value': literal_value}
         else:
             operator_data, tmp_data = read_operator(tmp_data)
-            res_data = {'version': cur_version, 'id': cur_id, 'operator_data': operator_data}
-        return res_data, ''.join(tmp_data)
-    return {}, in_data
+            res_data = {
+                'version': cur_version,
+                'id': cur_id,
+                'operator_data': operator_data}
+    return res_data, ''.join(tmp_data)
+
 
 def get_version_sum(in_data):
+    """
+    returns the sum of the values with the key 'version' stored in in_data
+    """
     assert 'version' in in_data
     res = in_data['version']
     if 'operator_data' in in_data:
         res += sum(get_version_sum(_) for _ in in_data['operator_data'])
     return res
+
 
 def solve_a(in_str):
     """solution function for part a"""
@@ -98,6 +112,9 @@ def solve_a(in_str):
 
 
 def evaluate(in_data):
+    """
+    evaluates the in_data as described in part_b
+    """
     assert 'id' in in_data
     if in_data['id'] == 4:
         res = in_data['value']
