@@ -13,6 +13,7 @@ def parse_input(in_str):
 
     return ''.join(proc_single(_) for _ in in_str.strip())
 
+
 def bin_to_int(in_str):
     return int(in_str, 2)
 
@@ -21,8 +22,8 @@ def make_read(in_tmp_data):
     version = bin_to_int(''.join(in_tmp_data[0:3]))
     packet_id = bin_to_int(''.join(in_tmp_data[3:6]))
     rem_data = ''.join(in_tmp_data[6:])
-    print('ver', version, 'id', packet_id, rem_data)
     return version, packet_id, rem_data
+
 
 def read_literal(in_tmp_data):
     def read_four(in_tmp_data_a):
@@ -41,14 +42,6 @@ def read_literal(in_tmp_data):
         continue_reading, cur_val, tmp_data = read_four(tmp_data)
         literal_data.append(cur_val)
 
-    bits_read = 5*len(literal_data)
-    padding_size = 0
-    #while (6+bits_read+padding_size) % 4 != 0:
-    #    padding_size += 1
-    #print('->', ''.join(in_tmp_data), ''.join(tmp_data), '0'*padding_size, padding_size, 'ps')
-    #assert ''.join(tmp_data).startswith('0'*padding_size)
-    #print(padding_size)
-    #return bin_to_int(''.join(literal_data)), tmp_data[padding_size:]
     return bin_to_int(''.join(literal_data)), tmp_data
 
 
@@ -57,7 +50,6 @@ def read_operator(in_data):
     tmp_data = in_data[1:]
     if len_id == '0':
         total_len = bin_to_int(''.join(tmp_data[:15]))
-        print(tmp_data, total_len)
         tmp_data = tmp_data[15:]
         bits_read = 0
         res_data = []
@@ -87,7 +79,6 @@ def read_data(in_data):
         else:
             operator_data, tmp_data = read_operator(tmp_data)
             res_data = {'version': cur_version, 'id': cur_id, 'operator_data': operator_data}
-        # print(cur_version, cur_id)
         return res_data, ''.join(tmp_data)
     return {}, in_data
 
