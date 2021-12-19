@@ -3,7 +3,6 @@ solution of adv_2021_18
 """
 import json
 import math
-import functools
 import itertools
 
 def _to_hashable(in_data):
@@ -16,22 +15,20 @@ def _to_hashable(in_data):
 
 
 def parse_input(in_str):
+    """
+    parses the string input into a list of expressions/Snailfish numbers
+    """
     def proc_single_line(in_line):
         res = json.loads(in_line)
         res = _to_hashable(res)
-        # assert get_max_depth(res) <= 4
         return res
     return [proc_single_line(_) for _ in in_str.splitlines()]
 
-def get_max_depth(in_data, cur_depth=0):
-    if isinstance(in_data, int):
-        res = cur_depth
-    else:
-        res = max(get_max_depth(_, cur_depth+1) for _ in in_data)
-    return res
 
-@functools.lru_cache(None)
 def get_node(in_data, in_path):
+    """
+    returns the node in in_data described by in_path
+    """
     assert isinstance(in_path, tuple)
     if not in_path:
         res = in_data
@@ -39,10 +36,14 @@ def get_node(in_data, in_path):
         res = get_node(in_data[in_path[0]], in_path[1:])
     return res
 
+
 def find_path_do_expl_pair(in_data):
+    """
+    returns the path to the first exploding pair (if any)
+    """
     def is_atom(in_node):
         return isinstance(in_node, tuple) and \
-            isinstance(in_node[0], int) and isinstance(in_node[1], int)    
+            isinstance(in_node[0], int) and isinstance(in_node[1], int)
     def inner(in_path):
         cur_node = get_node(in_data, in_path)
         if is_atom(cur_node):
@@ -56,12 +57,14 @@ def find_path_do_expl_pair(in_data):
         return res
     return inner(tuple())
 
+
 def _extend_path(in_data, in_start_path, in_dir):
     assert in_dir in {0, 1}
     res = in_start_path
     while not isinstance(get_node(in_data, res), int):
         res += (in_dir, )
     return res
+
 
 def find_last(in_data, in_value):
     """
@@ -74,28 +77,38 @@ def find_last(in_data, in_value):
     assert in_data[res] == in_value
     return res
 
+
 def _find_first_path(in_data, in_path_to_expl, in_dir_a, in_dir_b):
     res = None
     if in_dir_a in in_path_to_expl:
         last_ind = find_last(in_path_to_expl, in_dir_a)
         res = in_path_to_expl[0:last_ind]+(in_dir_b, )
         res = _extend_path(in_data, res, in_dir_a)
-    return res    
+    return res
 
 
 def find_path_to_first_left(in_data, in_path_to_expl):
+    """
+    returns the path to the first number on the left from the given path
+    """
     res = _find_first_path(in_data, in_path_to_expl, 1, 0)
     assert res is None or res < in_path_to_expl
     return res
-        
+
 
 def find_path_to_first_right(in_data, in_path_to_expl):
+    """
+    returns the path to the first number on the right from the given path
+    """
     res = _find_first_path(in_data, in_path_to_expl, 0, 1)
     assert res is None or in_path_to_expl < res
     return res
 
-            
-def find_path_to_split(in_data):  
+
+def find_path_to_split(in_data):
+    """
+    returns the path to the first number to split
+    """
     def inner(in_path):
         cur_node = get_node(in_data, in_path)
         if isinstance(cur_node, int):
@@ -105,9 +118,15 @@ def find_path_to_split(in_data):
             if res is None:
                 res = inner(in_path+(1,))
         return res
-    return inner(tuple())        
+    return inner(tuple())
+
 
 def get_updated(in_data, in_update_dict):
+    """
+    Returns the data after changed described in in_update_dict.
+    keys in in_update_dict ar paths to the numbers.
+    values in in_update_dict are the new values of these numbers
+    """
     def inner(in_path):
         if in_path in in_update_dict:
             res = in_update_dict[in_path]
@@ -122,6 +141,7 @@ def get_updated(in_data, in_update_dict):
 
 
 def explode(in_data):
+    """returns in_data after single explode"""
     path_to_explode = find_path_do_expl_pair(in_data)
     first_left_path = find_path_to_first_left(in_data, path_to_explode)
     first_right_path = find_path_to_first_right(in_data, path_to_explode)
@@ -137,52 +157,49 @@ def explode(in_data):
     return get_updated(in_data, update_dict)
 
 
-#def make_split(data):
-#    if isinstance(data, int):
-#        res = (data//2, math.ceil(data/2)) if data >= 10 else data
-#    else:
-#        assert len(data) == 2
-#        tmp_res = make_split(data[0])
-#        if tmp_res != data[0]:
-#            res = (tmp_res, data[1])
-#        else:
-#            res = (data[0], make_split(data[1]))
-#    return res
-    
 def make_split(in_data):
+    """returns in_data after single split"""
     path_to_split = find_path_to_split(in_data)
     res = in_data
     if path_to_split is not None:
         splited_value = get_node(in_data, path_to_split)
         assert splited_value >= 10
-        update_dict = {path_to_split:
-            (splited_value//2, math.ceil(splited_value/2))}
+        update_dict = {
+            path_to_split: (splited_value//2, math.ceil(splited_value/2))}
         res = get_updated(in_data, update_dict)
     return res
 
-def simplify(in_value):
-    def single_simplify(in_value):
-        tmp_val = in_value
-        if find_path_do_expl_pair(in_value) is not None:
-            tmp_val = explode(in_value)
-        elif find_path_to_split(in_value) is not None:
-            tmp_val = make_split(in_value)
-        return tmp_val, in_value != tmp_val    
-    tmp_res, has_changed = single_simplify(in_value)
+
+def simplify(in_data):
+    """performs a full reduction of in_data"""
+    def single_simplify(in_data):
+        tmp_val = in_data
+        if find_path_do_expl_pair(in_data) is not None:
+            tmp_val = explode(in_data)
+        elif find_path_to_split(in_data) is not None:
+            tmp_val = make_split(in_data)
+        return tmp_val, in_data != tmp_val
+    tmp_res, has_changed = single_simplify(in_data)
     while has_changed:
         tmp_res, has_changed = single_simplify(tmp_res)
     return tmp_res
 
+
 def add_values(in_val_a, in_val_b):
+    """returns the simplified result of adding two Snailfish numbers"""
     return simplify((in_val_a, in_val_b))
 
+
 def add_all(in_value_list):
+    """returns the sum of all Snailfish numbers in in_value_list"""
     sum_value = in_value_list[0]
     for _ in in_value_list[1:]:
         sum_value = add_values(sum_value, _)
     return sum_value
 
-def magnitude(in_val):
+
+def magnitude(in_data):
+    """returns the magnitude of in_data"""
     def proc_single(in_x):
         if isinstance(in_x, int):
             res = in_x
@@ -190,7 +207,7 @@ def magnitude(in_val):
             res = magnitude(in_x)
         return res
 
-    return 3*proc_single(in_val[0])+2*proc_single(in_val[1])        
+    return 3*proc_single(in_data[0])+2*proc_single(in_data[1])
 
 def solve_a(in_str):
     """solution function for part a"""
@@ -200,5 +217,5 @@ def solve_a(in_str):
 def solve_b(in_str):
     """solution function for part b"""
     return max(
-        max(magnitude(add_values(a, b)), magnitude(add_values(b, a))) for 
+        max(magnitude(add_values(a, b)), magnitude(add_values(b, a))) for
         (a, b) in itertools.combinations(parse_input(in_str), 2))
