@@ -56,33 +56,27 @@ def get_bounds(in_pixel_data):
     return min_x, max_x, min_y, max_y
 
 
-@functools.lru_cache(None)
-def get_pixel(in_pos, in_pixel_data, in_alg_data, in_iteration):
-    """
-    returns the state of the pixel at in_position after in_iteration
-    steps of enhancement algorithm
-    """
+def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
     def to_char(in_val):
         return '1' if in_val else '0'
-    if in_iteration == 0:
-        res = in_pos in in_pixel_data
-    else:
-        bin_val_str = ''.join(
-            to_char(get_pixel(_, in_pixel_data, in_alg_data, in_iteration-1))
-            for _ in get_all_neighbours(in_pos))
-        res = int(bin_val_str, 2) in in_alg_data
-    return res
 
+    @functools.lru_cache(None)
+    def get_pixel_inner(in_pos, in_iteration):
+        if in_iteration == 0:
+            res = in_pos in in_pixel_data
+        else:
+            bin_val_str = ''.join(
+                to_char(get_pixel_inner(_, in_iteration-1))
+                for _ in get_all_neighbours(in_pos))
+            res = int(bin_val_str, 2) in in_alg_data
+        return res
 
-def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
     res = 0
     min_x, max_x, min_y, max_y = get_bounds(in_pixel_data)
     margin = in_max_iteration
     for cur_x in range(min_x-margin, max_x+margin+1):
         for cur_y in range(min_y-margin, max_y+margin+1):
-            if get_pixel(
-                    (cur_x, cur_y), in_pixel_data,
-                    in_alg_data, in_max_iteration):
+            if get_pixel_inner((cur_x, cur_y), in_max_iteration):
                 res += 1
     return res
 
