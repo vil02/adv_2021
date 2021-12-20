@@ -5,6 +5,7 @@ import json
 import math
 import itertools
 
+
 def _to_hashable(in_data):
     if isinstance(in_data, int):
         res = in_data
@@ -44,6 +45,7 @@ def find_path_do_expl_pair(in_data):
     def is_atom(in_node):
         return isinstance(in_node, tuple) and \
             isinstance(in_node[0], int) and isinstance(in_node[1], int)
+
     def inner(in_path):
         cur_node = get_node(in_data, in_path)
         if is_atom(cur_node):
@@ -208,6 +210,7 @@ def magnitude(in_data):
         return res
 
     return 3*proc_single(in_data[0])+2*proc_single(in_data[1])
+
 
 def solve_a(in_str):
     """solution function for part a"""

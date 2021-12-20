@@ -10,11 +10,14 @@ import solutions.adv_2021_18 as sol
 def _data_p():
     return gu.read_input(18, 'p')
 
+
 def _data_small():
     return gu.read_input(18, 'small')
 
+
 def _data_very_small():
     return gu.read_input(18, 'very_small')
+
 
 class TestSolutionA(unittest.TestCase):
     """
@@ -161,10 +164,10 @@ class TestSolutionA(unittest.TestCase):
         """test agains example data"""
         self.assertEqual(sol.solve_a(_data_small()), 4140)
 
-
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_data_p()), 3494)
+
 
 class TestSolutionB(unittest.TestCase):
     """
