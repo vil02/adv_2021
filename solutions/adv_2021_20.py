@@ -56,7 +56,7 @@ def get_bounds(in_pixel_data):
     return min_x, max_x, min_y, max_y
 
 
-def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
+def _make_double_iteration(in_alg_data, in_pixel_data):
     def to_char(in_val):
         return '1' if in_val else '0'
 
@@ -70,15 +70,24 @@ def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
                 for _ in get_all_neighbours(in_pos))
             res = int(bin_val_str, 2) in in_alg_data
         return res
-
-    res = 0
+    res = set()
     min_x, max_x, min_y, max_y = get_bounds(in_pixel_data)
-    margin = in_max_iteration
+    margin = 2
     for cur_x in range(min_x-margin, max_x+margin+1):
         for cur_y in range(min_y-margin, max_y+margin+1):
-            if get_pixel_inner((cur_x, cur_y), in_max_iteration):
-                res += 1
+            if get_pixel_inner((cur_x, cur_y), 2):
+                res.add((cur_x, cur_y))
     return res
+
+
+def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
+    def to_char(in_val):
+        return '1' if in_val else '0'
+    assert in_max_iteration % 2 == 0
+    pixel_data = in_pixel_data
+    for _ in range(in_max_iteration//2):
+        pixel_data = _make_double_iteration(in_alg_data, pixel_data)
+    return len(pixel_data)
 
 
 def solve_a(in_str):
