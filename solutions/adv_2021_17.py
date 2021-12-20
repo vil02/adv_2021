@@ -1,84 +1,83 @@
 """
 solution of adv_2021_17
 """
-import math
+import functools
 import itertools
 
 
-def get_max_height(in_min_x, in_max_x, in_min_y, in_max_y, in_vx, in_vy):
-    vx, vy = in_vx, in_vy
-
-    def dist_to_target(in_x, in_y):
-        def single_dir_dist(in_pos, in_min_t, in_max_t):
-            assert in_min_t < in_max_t
-            if in_min_t <= in_pos <= in_max_t:
-                res = 0
-            else:
-                res = min(abs(in_min_t-in_pos), abs(in_max_t-in_pos))
-            return res
-        return single_dir_dist(in_x, in_min_x, in_max_x) + \
-            single_dir_dist(in_y, in_min_y, in_max_y)
-
-    def single_move(in_x, in_y):
-        nonlocal vx
-        nonlocal vy
-        res_x = in_x+vx
-        res_y = in_y+vy
-        if vx != 0:
-            if vx > 0:
-                vx -= 1
-            else:
-                vx += 1
-        vy -= 1
-        return res_x, res_y
-    pos_list = []
-    cur_x, cur_y = 0, 0
-    is_hit = False
-    while True:
-        # print(cur_x, cur_y, vx, vy, dist_to_target(cur_x, cur_y))
-        pos_list.append((cur_x, cur_y))
-        cur_x, cur_y = single_move(cur_x, cur_y)
-        dist_b = dist_to_target(*pos_list[-1])
-        #print(cur_x, cur_y, dist_b)
-        if dist_b == 0:
-            is_hit = True
-            break
-        if len(pos_list) > 300:
-            dist_a = dist_to_target(*pos_list[-2])
-            if dist_a < dist_b and vy <= 0:
-                break
-    res = -math.inf
-    if is_hit:
-        print('*')
-        res = max(_[1] for _ in pos_list)
-    return res
+def get_next_state(in_pos, in_vel):
+    """returns the next position and nect velocity"""
+    res_pos = tuple(p+v for (p, v) in zip(in_pos, in_vel))
+    if in_vel[0] != 0:
+        if in_vel[0] > 0:
+            res_vel_x = in_vel[0]-1
+        else:
+            res_vel_x = in_vel[0]+1
+    else:
+        res_vel_x = in_vel[0]
+    res_vel = (res_vel_x, in_vel[1]-1)
+    return (res_pos, res_vel)
 
 
-def solve_a(in_str):
+def simulate(in_pos, in_vel, in_target_data):
+    """
+    smulates the flight of an object with statrting in_pos and in_vel
+    returns the information if it will hit the target and the flight path
+    """
+    def is_in_target(in_pos, in_target_data):
+        def is_between(in_val, in_range):
+            return in_range[0] <= in_val <= in_range[1]
+        return all(
+            is_between(in_pos[_], in_target_data[_])
+            for _ in range(len(in_pos)))
+    assert 0 < in_target_data[0][0] < in_target_data[0][1]
+    assert in_vel[0] >= 0
+    path = tuple()
+    if is_in_target(in_pos, in_target_data):
+        is_hit = True
+    elif in_vel[1] < 0 and in_pos[1] < in_target_data[1][0]:
+        # too far down
+        is_hit = False
+    elif in_pos[0] > in_target_data[0][1]:
+        # too far right
+        is_hit = False
+    else:
+        tmp_pos, tmp_vel = get_next_state(in_pos, in_vel)
+        is_hit, path = simulate(tmp_pos, tmp_vel, in_target_data)
+    return is_hit, (in_pos, )+path
+
+
+@functools.lru_cache(None)
+def get_all_hitting_paths(in_target_data):
+    """
+    returns the list of all paths hittig the target
+    """
+    def find_min_x_vel(in_target_min_x):
+        res = 1
+        if (res*(res+1))//2 <= in_target_min_x:
+            res += 1
+        return res-1
+    min_x_vel = find_min_x_vel(in_target_data[0][0])
+    max_x_vel = in_target_data[0][1]+1
+    max_y_vel = 2*abs(in_target_data[1][1])+1
+    vel_range = itertools.product(
+        range(min_x_vel, max_x_vel), range(-max_y_vel, max_y_vel))
+    res_list = []
+    for _ in vel_range:
+        is_hit, cur_path = simulate((0, 0), _, in_target_data)
+        if is_hit:
+            res_list.append(cur_path)
+    return res_list
+
+
+def solve_a(in_target_data):
     """solution function for part a"""
-    max_val = -math.inf
-    best_vx = None
-    best_vy = None
-    for (vx, vy) in itertools.product(range(0, 100), range(-200, 200)):
-        cur_val = get_max_height(156, 202, -110, -69, vx, vy)
-        #cur_val = get_max_height(20, 30, -10, -5, vx, vy)
-        if max_val < cur_val:
-            max_val = cur_val
-            best_vx = vx
-            best_vy = vy
-    return max_val
+    def get_max_height(in_path):
+        return max(_[1] for _ in in_path)
+    paths = get_all_hitting_paths(in_target_data)
+    return max(get_max_height(_) for _ in paths)
 
 
-
-def solve_b(in_str):
+def solve_b(in_target_data):
     """solution function for part b"""
-    max_val = -math.inf
-    best_vx = None
-    best_vy = None
-    hit_numbers = 0
-    for (vx, vy) in itertools.product(range(0, 205), range(-350, 350)):
-        cur_val = get_max_height(156, 202, -110, -69, vx, vy)
-        #cur_val = get_max_height(20, 30, -10, -5, vx, vy)
-        if cur_val > -math.inf:
-            hit_numbers += 1
-    return hit_numbers
+    return len(get_all_hitting_paths(in_target_data))
