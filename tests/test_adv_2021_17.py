@@ -15,6 +15,10 @@ def _data_p():
     return ((156, 202), (-110, -69))
 
 
+def _data_o():
+    return ((57, 116), (-198, -148))
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -26,6 +30,10 @@ class TestSolutionA(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_a(_data_p()), 5995)
+
+    def test_data_o(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_a(_data_o()), 19503)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -39,6 +47,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_p(self):
         """test agains full data"""
         self.assertEqual(sol.solve_b(_data_p()), 3202)
+
+    def test_data_o(self):
+        """test agains full data"""
+        self.assertEqual(sol.solve_b(_data_o()), 5200)
 
 
 if __name__ == '__main__':
