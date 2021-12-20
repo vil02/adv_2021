@@ -81,8 +81,6 @@ def _make_double_iteration(in_alg_data, in_pixel_data):
 
 
 def _count_pixels(in_alg_data, in_pixel_data, in_max_iteration):
-    def to_char(in_val):
-        return '1' if in_val else '0'
     assert in_max_iteration % 2 == 0
     pixel_data = in_pixel_data
     for _ in range(in_max_iteration//2):
