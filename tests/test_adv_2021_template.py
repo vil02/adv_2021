@@ -16,7 +16,7 @@ class TestSolutionA(unittest.TestCase):
     unit tests for part a
     """
     # def test_data_p(self):
-    #     """test agains full data"""
+    #     """test against full data"""
     #     self.assertEqual(sol.solve_a(_data_p()), -1)
 
 
@@ -25,7 +25,7 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     # def test_data_p(self):
-    #     """test agains full data"""
+    #     """test against full data"""
     #     self.assertEqual(sol.solve_b(_data_p()), -1)
 
 
