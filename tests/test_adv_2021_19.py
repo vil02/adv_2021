@@ -9,6 +9,10 @@ import numpy
 import itertools
 
 
+def _data_small():
+    return gu.read_input(19, 'small')
+
+
 def _data_p():
     return gu.read_input(19, 'p')
 
@@ -29,6 +33,13 @@ class TestSolutionA(unittest.TestCase):
             self.assertTrue(any(
                 numpy.array_equal(_[0]@_[1], cur_rot)
                 for cur_rot in rotations))
+
+    def test_parse_input(self):
+        res = sol.parse_input(_data_small())
+        self.assertEqual(len(res), 4)
+        for _ in res:
+            self.assertTrue(_)
+
 
 
     # def test_data_p(self):

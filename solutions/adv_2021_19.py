@@ -4,7 +4,7 @@ solution of adv_2021_19
 
 import numpy
 import functools
-
+import re
 
 @functools.lru_cache(1)
 def get_all_rotations_3d():
@@ -48,7 +48,23 @@ def get_all_rotations_3d():
         x_rot@y_rot@y_rot@y_rot@x_rot]
 
 
-get_all_rotations_3d()
+def parse_input(in_str):
+    """
+    returns a list of measurments from each scanner
+    """
+    res_list = []
+    for cur_line in in_str.splitlines():
+        if 'scanner' in cur_line:
+            scanner_data = []
+        elif not cur_line:
+            res_list.append(scanner_data)
+        else:
+            cur_row = [int(_) for _ in cur_line.split(',')]
+            scanner_data.append(numpy.array(cur_row))
+            assert scanner_data[-1].shape == (3,)
+            assert scanner_data[-1].size == 3
+    return res_list
+
 
 # def solve_a(in_str):
 #     """solution function for part a"""
