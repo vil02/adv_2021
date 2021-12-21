@@ -18,7 +18,7 @@ def get_all_rotations_3d():
     y_rot = numpy.array([
         [0, 0, 1],
         [0, 1, 0],
-        [-1, 0, 1]])
+        [-1, 0, 0]])
     return [
         id_mat,
         x_rot,
@@ -43,7 +43,7 @@ def get_all_rotations_3d():
         y_rot@y_rot@y_rot@x_rot,
         x_rot@x_rot@x_rot@y_rot@x_rot,
         x_rot@y_rot@x_rot@x_rot@x_rot,
-        x_rot@y_rot@x_rot@y_rot@x_rot]
+        x_rot@y_rot@y_rot@y_rot@x_rot]
 
 
 get_all_rotations_3d()
