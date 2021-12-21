@@ -66,6 +66,18 @@ def parse_input(in_str):
     return res_list
 
 
+def extract_x(in_data):
+    return [_[0] for _ in in_data]
+
+
+def merge_single(in_merged_data, in_scanner_data):
+    pass
+
+
+def merge_data(in_scanner_data_list):
+    pass
+
+
 # def solve_a(in_str):
 #     """solution function for part a"""
 #     pass
