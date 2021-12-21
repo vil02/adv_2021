@@ -3,6 +3,7 @@ solutions of adv_2021_21
 """
 import itertools
 import functools
+import copy
 
 
 def parse_input(in_str):
@@ -23,7 +24,7 @@ def simulate_a(in_pos_list):
             yield 1+(cur_val % 100)
             cur_val += 1
     score_list = [0 for _ in in_pos_list]
-    pos_list = [_ for _ in in_pos_list]
+    pos_list = copy.deepcopy(in_pos_list)
     cur_player = 0
     cur_die = test_die()
     roll_num = 0
