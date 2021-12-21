@@ -67,7 +67,15 @@ def parse_input(in_str):
 
 
 def extract_x(in_data):
+    """returns the list of x-coordinates from the vectors stored in in_data"""
     return [_[0] for _ in in_data]
+
+
+def extract_xy(in_data):
+    """
+    returns the list of xy-coordinates from the vectors stored in in_data
+    """
+    return [numpy.array(_[0:2]) for _ in in_data]
 
 
 def merge_single(in_merged_data, in_scanner_data):

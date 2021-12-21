@@ -53,6 +53,20 @@ class TestSolutionA(unittest.TestCase):
         res_data = sol.extract_x(test_data)
         self.assertEqual(res_data, [1, 10, 100])
 
+    def test_extract_xy(self):
+        """test of the function extract_xy"""
+        test_data = [
+            numpy.array([1, 2, 3]),
+            numpy.array([10, 20, 30]),
+            numpy.array([100, 200, 300])]
+        true_res = [
+                numpy.array([1, 2]),
+                numpy.array([10, 20]),
+                numpy.array([100, 200])]
+        res_data = sol.extract_xy(test_data)
+        for (a, b) in zip(res_data, true_res):
+            self.assertTrue(numpy.array_equal(a, b))
+
     # def test_data_p(self):
     #     """test agains full data"""
     #     self.assertEqual(sol.solve_a(_data_p()), -1)
