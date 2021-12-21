@@ -3,8 +3,10 @@ solution of adv_2021_19
 """
 
 import numpy
+import functools
 
 
+@functools.lru_cache(1)
 def get_all_rotations_3d():
     """returns matrices of all 90-degree trotations in 3d"""
     id_mat = numpy.array([
