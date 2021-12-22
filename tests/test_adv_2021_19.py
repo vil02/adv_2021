@@ -67,28 +67,29 @@ class TestSolutionA(unittest.TestCase):
         for (a, b) in zip(res_data, true_res):
             self.assertTrue(numpy.array_equal(a, b))
 
-    def test_get_suitable_x_shifts(self):
-        def get_search_range():
-            return range(-1600, 1600)
-        test_data = sol.parse_input(_data_small())
-        merged_data = test_data[0]
-        cur_data_tmp = test_data[1]
-        for cur_rot in sol.get_all_rotations_3d():
-            cur_data = [cur_rot@_ for _ in cur_data_tmp]
-            x_shifts = sol.get_suitable_x_shifts(merged_data, cur_data, get_search_range())
-            for x_shift in x_shifts:
-                cur_data_xy = [_+numpy.array([x_shift, 0, 0]) for _ in cur_data]
-                y_shifts = sol.get_suitable_y_shifts(merged_data, cur_data_xy, get_search_range())
-                for y_shift in y_shifts:
-                    cur_data_xyz = [_+numpy.array([x_shift, y_shift, 0]) for _ in cur_data]
-                    z_shifts = sol.get_suitable_y_shifts(merged_data, cur_data_xyz, get_search_range())
-                    if z_shifts:
-                        print(cur_rot, x_shift, y_shift, z_shifts)
+#    def test_get_suitable_x_shifts(self):
+#        def get_search_range():
+#            return range(-1600, 1600)
+#        test_data = sol.parse_input(_data_small())
+#        merged_data = set(test_data[0])
+#        cur_data_tmp = test_data[1]
+#        for cur_rot in sol.get_all_rotations_3d()[0:1]:
+#            cur_data = sol.rotate_data(cur_rot, cur_data_tmp)
+#            x_shifts = sol.get_suitable_x_shifts(merged_data, cur_data, get_search_range())
+#            for x_shift in x_shifts:
+#                cur_data_xy = sol.shift_data(cur_data, (x_shift, 0, 0))
+#                y_shifts = sol.get_suitable_y_shifts(merged_data, cur_data_xy, get_search_range())
+#                #print(len(y_shifts))
+#                for y_shift in y_shifts:
+#                    cur_data_xyz =  sol.shift_data(cur_data, (x_shift, y_shift, 0))
+#                    z_shifts = sol.get_suitable_y_shifts(merged_data, cur_data_xyz, get_search_range())
+#                    if z_shifts:
+#                        print(cur_rot, x_shift, y_shift, z_shifts)
 
 
-    # def test_data_p(self):
-    #     """test agains full data"""
-    #     self.assertEqual(sol.solve_a(_data_p()), -1)
+    def test_data_small(self):
+        """test against example data"""
+        self.assertEqual(sol.solve_a(_data_small()), -1)
 
 
 class TestSolutionB(unittest.TestCase):
