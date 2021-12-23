@@ -28,11 +28,11 @@ class TestSolutionA(unittest.TestCase):
         self.assertEqual(set(sol.get_adjacent_values(data, (2, 1))), {5, 7, 9})
 
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_a(_data_small()), 15)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_a(_data_p()), 516)
 
 
@@ -41,11 +41,11 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 1134)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_b(_data_p()), 1023660)
 
 

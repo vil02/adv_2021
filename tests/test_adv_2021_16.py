@@ -61,7 +61,7 @@ class TestSolutionA(unittest.TestCase):
             self.assertEqual(sol.solve_a(cur_str), cur_res)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_a(_data_p()), 843)
 
 
@@ -84,7 +84,7 @@ class TestSolutionB(unittest.TestCase):
             self.assertEqual(sol.solve_b(cur_str), cur_res)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_b(_data_p()), 5390807940351)
 
 

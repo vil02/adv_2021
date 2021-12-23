@@ -19,11 +19,11 @@ class TestSolutionA(unittest.TestCase):
     unit tests for part a
     """
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_a(_data_small()), 1588)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_a(_data_p()), 3247)
 
 
@@ -32,11 +32,11 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 2188189693529)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_b(_data_p()), 4110568157153)
 
 

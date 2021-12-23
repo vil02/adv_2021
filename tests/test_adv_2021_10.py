@@ -24,15 +24,15 @@ class TestSolutionA(unittest.TestCase):
     unit tests for part a
     """
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_a(_data_small()), 26397)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_a(_data_p()), 311895)
 
     def test_data_m(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_a(_data_m()), 168417)
 
 
@@ -41,7 +41,7 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_find_line_completion(self):
-        """tests find_line_completion agains example data"""
+        """tests find_line_completion against example data"""
         input_data = {
             '[({(<(())[]>[[{[]{<()<>>': '}}]])})]',
             '[(()[<>])]({[<{<<[]>>(': ')}>]})',
@@ -52,7 +52,7 @@ class TestSolutionB(unittest.TestCase):
             self.assertEqual(sol.find_line_completion(test_input), res)
 
     def test_get_completion_score(self):
-        """tests get_completion_score agains example data"""
+        """tests get_completion_score against example data"""
         input_data = {
             '}}]])})]': 288957,
             ')}>]})': 5566,
@@ -63,15 +63,15 @@ class TestSolutionB(unittest.TestCase):
             self.assertEqual(sol.get_completion_score(test_input), res)
 
     def test_data_small(self):
-        """test agains example data"""
+        """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 288957)
 
     def test_data_p(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_b(_data_p()), 2904180541)
 
     def test_data_m(self):
-        """test agains full data"""
+        """test against full data"""
         self.assertEqual(sol.solve_b(_data_m()), 2802519786)
 
 
