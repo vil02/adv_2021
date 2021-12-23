@@ -176,10 +176,22 @@ def find_min_cost(in_rooms, in_corridor=_empty_corridor()):
 
 def solve_a(in_str):
     """solution function for part a"""
-    data = parse_input(in_str)
-    return find_min_cost(data)
-#
-#
-# def solve_b(in_str):
-#     """solution function for part b"""
-#     pass
+    return find_min_cost(parse_input(in_str))
+
+
+def extend_data(in_rooms):
+    def proc_single_room(in_room, in_ext):
+        beg, end = in_room
+        assert len(in_ext) == 2
+        return beg, in_ext[0], in_ext[1], end
+    ext_data = (
+        ('D', 'D'),
+        ('C', 'B'),
+        ('B', 'A'),
+        ('A', 'C'))
+    return tuple(proc_single_room(*_) for _ in zip(in_rooms, ext_data))
+
+
+def solve_b(in_str):
+    """solution function for part b"""
+    return find_min_cost(extend_data(parse_input(in_str)))

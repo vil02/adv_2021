@@ -147,13 +147,21 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
-#    def test_data_small(self):
-#        """test against example data"""
-#        self.assertEqual(sol.solve_b(_data_small()), 44169)
-#
-#    def test_data_p(self):
-#        """test against full data"""
-#        self.assertEqual(sol.solve_b(_data_p()), 49232)
+    def test_extend_data(self):
+        room_a, room_b, room_c, room_d = sol.extend_data(
+            sol.parse_input(_data_small()))
+        self.assertEqual(room_a, ('B', 'D', 'D', 'A'))
+        self.assertEqual(room_b, ('C', 'C', 'B', 'D'))
+        self.assertEqual(room_c, ('B', 'B', 'A', 'C'))
+        self.assertEqual(room_d, ('D', 'A', 'C', 'A'))
+
+    def test_data_small(self):
+        """test against example data"""
+        self.assertEqual(sol.solve_b(_data_small()), 44169)
+
+    def test_data_p(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_p()), 49232)
 
 
 if __name__ == '__main__':
