@@ -22,17 +22,17 @@ class TestSolutionA(unittest.TestCase):
     def test_parse_input(self):
         """test function parse_input against example data"""
         room_a, room_b, room_c, room_d = sol.parse_input(_data_small())
-        self.assertEqual(room_a, ['A', 'B'])
-        self.assertEqual(room_b, ['D', 'C'])
-        self.assertEqual(room_c, ['C', 'B'])
-        self.assertEqual(room_d, ['A', 'D'])
+        self.assertEqual(room_a, ['B', 'A'])
+        self.assertEqual(room_b, ['C', 'D'])
+        self.assertEqual(room_c, ['B', 'C'])
+        self.assertEqual(room_d, ['D', 'A'])
 
     def test_calculate_move_length(self):
         """test of calculate_move_length"""
         test_data = {
-            ('A', 0, 0): 6,
-            ('B', 2, 5): 3,
-            ('C', 3, 0): 7}
+            ('A', 0, 0): 3,
+            ('B', 2, 5): 4,
+            ('C', 3, 0): 10}
         for (cur_arg, true_res) in test_data.items():
             self.assertEqual(sol.calculate_move_length(*cur_arg), true_res)
 
@@ -63,6 +63,14 @@ class TestSolutionA(unittest.TestCase):
             ('D', 0), ('D', 1), ('D', 3), ('D', 5), ('D', 10)]
         for _ in test_data:
             self.assertFalse(sol.is_move_possible(*_, test_corridor))
+
+    def test_find_min_cost_trivial_input(self):
+        solved_rooms = (
+                ('A', 'A', 'A', 'A'),
+                ('B', 'B', 'B', 'B'),
+                ('C', 'C', 'C', 'C'),
+                ('D', 'D', 'D', 'D'))
+        self.assertEqual(sol.find_min_cost(solved_rooms), 0)
 
 #    def test_data_small(self):
 #        """test against example data"""
