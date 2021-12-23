@@ -22,10 +22,11 @@ class TestSolutionA(unittest.TestCase):
     def test_parse_input(self):
         """test function parse_input against example data"""
         room_a, room_b, room_c, room_d = sol.parse_input(_data_small())
-        self.assertEqual(room_a, ['B', 'A'])
-        self.assertEqual(room_b, ['C', 'D'])
-        self.assertEqual(room_c, ['B', 'C'])
-        self.assertEqual(room_d, ['D', 'A'])
+        self.assertEqual(room_a, ['A', 'B'])
+        self.assertEqual(room_b, ['D', 'C'])
+        self.assertEqual(room_c, ['C', 'B'])
+        self.assertEqual(room_d, ['A', 'D'])
+
 #    def test_data_small(self):
 #        """test against example data"""
 #        self.assertEqual(sol.solve_a(_data_small()), 12521)
