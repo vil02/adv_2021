@@ -16,13 +16,25 @@ def parse_input(in_str):
     room_d = [char_list[7], char_list[3]]
     return room_a, room_b, room_c, room_d
 
+def _join_pos_dict():
+    return {'A': 2, 'B': 4, 'C': 6, 'D': 8}
+
 
 def calculate_move_length(in_room_name, in_room_index, in_end_pos):
-    joint_pos_dict = {'A': 2, 'B': 4, 'C': 6, 'D': 8}
-    assert in_end_pos not in joint_pos_dict.values()
+    assert in_end_pos not in _join_pos_dict().values()
     vert_part = 4-in_room_index
-    horz_part = abs(joint_pos_dict[in_room_name]-in_end_pos)
+    horz_part = abs(_join_pos_dict()[in_room_name]-in_end_pos)
     return vert_part+horz_part
+
+
+def is_move_possible(in_room_name, in_end_pos, in_corridor):
+    def get_search_range(in_pos_a, in_pos_b):
+        return range(min(in_pos_a, in_pos_b), max(in_pos_a, in_pos_b)+1)
+    assert len(in_corridor) == 11
+    joint_pos = _join_pos_dict()[in_room_name]
+    return all(in_corridor[_] == ''
+               for _ in get_search_range(joint_pos, in_end_pos))
+
 #
 #def get_cost_():
 #    """returns the dictionary """
