@@ -4,7 +4,7 @@ test for adv_2021_23
 
 import unittest
 import general_utils as gu
-import solutions.adv_2021_23 as sol
+# import solutions.adv_2021_23 as sol
 
 
 def _data_small():
