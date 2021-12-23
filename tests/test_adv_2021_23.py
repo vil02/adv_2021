@@ -6,6 +6,8 @@ import unittest
 import general_utils as gu
 import solutions.adv_2021_23 as sol
 
+import sys
+sys.setrecursionlimit(2300)
 
 def _data_small():
     return gu.read_input(23, 'small')
@@ -22,10 +24,10 @@ class TestSolutionA(unittest.TestCase):
     def test_parse_input(self):
         """test function parse_input against example data"""
         room_a, room_b, room_c, room_d = sol.parse_input(_data_small())
-        self.assertEqual(room_a, ['B', 'A'])
-        self.assertEqual(room_b, ['C', 'D'])
-        self.assertEqual(room_c, ['B', 'C'])
-        self.assertEqual(room_d, ['D', 'A'])
+        self.assertEqual(room_a, ('B', 'A'))
+        self.assertEqual(room_b, ('C', 'D'))
+        self.assertEqual(room_c, ('B', 'C'))
+        self.assertEqual(room_d, ('D', 'A'))
 
     def test_calculate_move_length(self):
         """test of calculate_move_length"""
@@ -72,13 +74,73 @@ class TestSolutionA(unittest.TestCase):
                 ('D', 'D', 'D', 'D'))
         self.assertEqual(sol.find_min_cost(solved_rooms), 0)
 
-#    def test_data_small(self):
-#        """test against example data"""
-#        self.assertEqual(sol.solve_a(_data_small()), 12521)
-#
-#    def test_data_p(self):
-#        """test against full data"""
-#        self.assertEqual(sol.solve_a(_data_p()), 11120)
+    def test_is_room_done_positive(self):
+        test_data = [
+            (0, ('A', 'A')),
+            (0, ('A', 'A', 'A', 'A')),
+            (1, ('B', 'B')),
+            (3, ('D', 'D'))]
+        for _ in test_data:
+            self.assertTrue(sol.is_room_done(*_))
+
+    def test_is_room_done_negative(self):
+        test_data = [
+            (0, ('', 'A')),
+            (0, ('A', 'B')),
+            (0, ('', '')),
+            (0, ('A', 'B', 'A', 'A')),
+            (1, ('B', 'D')),
+            (3, ('C', 'A'))]
+        for _ in test_data:
+            self.assertFalse(sol.is_room_done(*_))
+
+    def test_can_go_home_positive(self):
+        test_rooms = (
+            ('', 'A'),
+            ('', 'B'),
+            ('', 'C'),
+            ('', 'D'))
+        test_corridor = ('A', '', '', 'B', '', '', '', 'C', '', '', 'D')
+        self.assertTrue(sol.can_go_home('A', 0, test_corridor, test_rooms))
+        self.assertTrue(sol.can_go_home('B', 3, test_corridor, test_rooms))
+        self.assertTrue(sol.can_go_home('C', 7, test_corridor, test_rooms))
+        self.assertTrue(sol.can_go_home('D', 10, test_corridor, test_rooms))
+
+    def test_is_room_almost_done_positive(self):
+        test_rooms = (
+            ('', '', '', 'A'),
+            ('', '', 'B', 'B'),
+            ('', 'C', 'C', 'C'),
+            ('', '', '', ''),)
+        for _ in range(4):
+            self.assertTrue(sol.is_room_almost_done(_, test_rooms))
+
+    def test_is_room_almost_done_negative(self):
+        test_rooms = (
+            ('', '', '', 'B'),
+            ('', '', 'A', 'B'),
+            ('C', 'C', 'C', 'C'),
+            ('', '', '', 'A'),)
+        for _ in range(4):
+            self.assertFalse(sol.is_room_almost_done(_, test_rooms))
+
+    def test_is_starting_room_positive(self):
+        test_rooms = (('A', 'B'), ('', 'C'), ('B', 'C'), ('D', 'A'))
+        for _ in range(4):
+            self.assertTrue(sol.is_starting_room(_, test_rooms))
+
+    def test_is_starting_room_negative(self):
+        test_rooms = (('', 'A'), ('B', 'B'), ('', ''), ('', 'D'))
+        for _ in range(4):
+            self.assertFalse(sol.is_starting_room(_, test_rooms))
+
+    def test_data_small(self):
+        """test against example data"""
+        self.assertEqual(sol.solve_a(_data_small()), 12521)
+
+    def test_data_p(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_p()), 11120)
 
 
 class TestSolutionB(unittest.TestCase):

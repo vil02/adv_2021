@@ -3,6 +3,7 @@ solution of adv_2021_23
 """
 import functools
 import math
+import copy
 
 
 def parse_input(in_str):
@@ -12,10 +13,10 @@ def parse_input(in_str):
     """
     char_list = [_ for _ in in_str if _ in {'A', 'B', 'C', 'D'}]
     assert len(char_list) == 8
-    room_a = [char_list[0], char_list[4]]
-    room_b = [char_list[1], char_list[5]]
-    room_c = [char_list[2], char_list[6]]
-    room_d = [char_list[3], char_list[7]]
+    room_a = (char_list[0], char_list[4])
+    room_b = (char_list[1], char_list[5])
+    room_c = (char_list[2], char_list[6])
+    room_d = (char_list[3], char_list[7])
     return room_a, room_b, room_c, room_d
 
 
@@ -52,52 +53,131 @@ def _get_room_name(in_room_id):
     return {0: 'A', 1: 'B', 2: 'C', 3: 'D'}[in_room_id]
 
 
-def _is_room_done(in_room_id, in_room_data):
+def _get_room_id(in_room_name):
+    res = {'A': 0, 'B': 1, 'C': 2, 'D': 3}[in_room_name]
+    assert _get_room_name(res) == in_room_name
+    return res
+
+
+def is_room_done(in_room_id, in_room_data):
     return all(_ == _get_room_name(in_room_id) for _ in in_room_data)
+
 
 def _is_room_empty(in_room):
     return all(_ == '' for _ in in_room)
 
 
+def is_room_almost_done(in_room_id, in_room_data):
+    cur_room = in_room_data[in_room_id]
+    return all(_ in {_get_room_name(in_room_id), ''} for _ in cur_room) \
+        and cur_room[0] == ''
+
+
+def is_starting_room(in_room_id, in_rooms):
+    return not is_room_almost_done(in_room_id, in_rooms) \
+        and not _is_room_empty(in_rooms[in_room_id]) \
+        and not is_room_done(in_room_id, in_rooms[in_room_id])
+
+
 def _get_all_moves_from_room(in_room_id, in_corridor):
     room_name = _get_room_name(in_room_id)
     return [_ for _ in range(len(in_corridor))
-            if is_move_possible(room_name, _, in_corridor)]
+            if is_move_possible(room_name, _, in_corridor)
+            and _ not in _joint_pos_dict().values()]
 
 
-#def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
-#    def move_out_from_the_room(in_room):
-#        new_room = list(in_room):
-#
-#    assert in_corridor[in_end_pos] == ''
-#    new_rooms = copy.deepcopy(in_rooms)
+def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
+    def move_out_from_the_room(in_room):
+        assert not _is_room_empty(in_room)
+        new_room = list(in_room)
+        start_ind = 0
+        while new_room[start_ind] == '':
+            start_ind += 1
+        obj_name = new_room[start_ind]
+        new_room[start_ind] = ''
+        return tuple(new_room), obj_name, start_ind
 
+    assert in_corridor[in_end_pos] == ''
+    assert is_move_possible(
+        _get_room_name(in_room_id), in_end_pos, in_corridor)
+    new_rooms = list(copy.deepcopy(in_rooms))
+    new_corridor = list(in_corridor)
+
+    new_rooms[in_room_id], new_corridor[in_end_pos], start_ind = \
+        move_out_from_the_room(new_rooms[in_room_id])
+
+    new_rooms = tuple(new_rooms)
+    new_corridor = tuple(new_corridor)
+
+    cost = calculate_move_cost(
+        new_corridor[in_end_pos],
+        calculate_move_length(
+            _get_room_name(in_room_id), start_ind, in_end_pos))
+    return new_rooms, new_corridor, cost
+
+
+def can_go_home(in_name, in_pos, in_corridor, in_room_data):
+    def call_is_move_possible():
+        tmp_corridor = list(in_corridor)
+        tmp_corridor[in_pos] = ''
+        return is_move_possible(in_name, in_pos, tuple(tmp_corridor))
+    return call_is_move_possible() \
+        and is_room_almost_done(_get_room_id(in_name), in_room_data)
+
+
+def _go_home(in_name, in_pos, in_rooms, in_corridor):
+    home_id = _get_room_id(in_name)
+    assert is_room_almost_done(home_id, in_rooms)
+    assert in_corridor[in_pos] == in_name
+    new_corridor = list(in_corridor)
+    new_corridor[in_pos] = ''
+    new_corridor = tuple(new_corridor)
+
+    room_pos = 0
+    while room_pos < len(in_rooms[home_id])-1 \
+            and in_rooms[home_id][room_pos+1] == '':
+        room_pos += 1
+
+    new_rooms = list(copy.deepcopy(in_rooms))
+    new_rooms[home_id] = list(new_rooms[home_id])
+    new_rooms[home_id][room_pos] = in_name
+    new_rooms[home_id] = tuple(new_rooms[home_id])
+    new_rooms = tuple(new_rooms)
+
+    cost = calculate_move_cost(
+        in_name,
+        calculate_move_length(in_name, room_pos, in_pos))
+    return new_rooms, new_corridor, cost
 
 
 @functools.lru_cache(None)
 def find_min_cost(in_rooms, in_corridor=_empty_corridor()):
-    if all(_is_room_done(*_) for _ in enumerate(in_rooms)):
+    if all(is_room_done(*_) for _ in enumerate(in_rooms)):
         assert all(_ == '' for _ in in_corridor)
         res = 0
     else:
-        cur_res = math.inf
-        for (room_id, room_data) in enumerate(in_rooms):
-            if not _is_room_done(room_id, room_data) and not _is_room_empty(in_rooms[room_id]):
+        res = math.inf
+        for room_id in range(len(in_rooms)):
+            if is_starting_room(room_id, in_rooms):
                 for end_pos in _get_all_moves_from_room(room_id, in_corridor):
-                    pass
-
-
-
+                    new_rooms, new_corridor, cost = make_move_from_room(
+                        in_rooms, in_corridor, room_id, end_pos)
+                    res = min(
+                        res, cost+find_min_cost(new_rooms, new_corridor))
+        for (obj_pos, obj_name) in enumerate(in_corridor):
+            if obj_name != '' \
+                    and can_go_home(obj_name, obj_pos, in_corridor, in_rooms):
+                new_rooms, new_corridor, cost = _go_home(
+                    obj_name, obj_pos, in_rooms, in_corridor)
+                res = min(
+                    res, cost+find_min_cost(new_rooms, new_corridor))
     return res
 
-#
-#def get_cost_():
-#    """returns the dictionary """
-#    return {'A': 1, 'B': 10, 'C': 100, 'D': 1000}
 
-# def solve_a(in_str):
-#     """solution function for part a"""
-#     pass
+def solve_a(in_str):
+    """solution function for part a"""
+    data = parse_input(in_str)
+    return find_min_cost(data)
 #
 #
 # def solve_b(in_str):
