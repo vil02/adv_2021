@@ -27,6 +27,13 @@ class TestSolutionA(unittest.TestCase):
         self.assertEqual(room_c, ['C', 'B'])
         self.assertEqual(room_d, ['A', 'D'])
 
+    def test_calculate_move_length(self):
+        test_data = {
+            ('A', 0, 0): 6,
+            ('B', 2, 5): 3,
+            ('C', 3, 0): 7}
+        for (cur_arg, true_res) in test_data.items():
+            self.assertEqual(sol.calculate_move_length(*cur_arg), true_res)
 #    def test_data_small(self):
 #        """test against example data"""
 #        self.assertEqual(sol.solve_a(_data_small()), 12521)

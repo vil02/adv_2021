@@ -16,6 +16,13 @@ def parse_input(in_str):
     room_d = [char_list[7], char_list[3]]
     return room_a, room_b, room_c, room_d
 
+
+def calculate_move_length(in_room_name, in_room_index, in_end_pos):
+    joint_pos_dict = {'A': 2, 'B': 4, 'C': 6, 'D': 8}
+    assert in_end_pos not in joint_pos_dict.values()
+    vert_part = 4-in_room_index
+    horz_part = abs(joint_pos_dict[in_room_name]-in_end_pos)
+    return vert_part+horz_part
 #
 #def get_cost_():
 #    """returns the dictionary """
