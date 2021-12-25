@@ -6,8 +6,6 @@ import unittest
 import general_utils as gu
 import solutions.adv_2021_23 as sol
 
-import sys
-sys.setrecursionlimit(2300)
 
 def _data_small():
     return gu.read_input(23, 'small')
@@ -113,12 +111,12 @@ class TestSolutionA(unittest.TestCase):
         self.assertTrue(sol.can_go_home('D', 10, test_corridor, test_rooms))
 
     def test_is_room_almost_done_positive(self):
-         """positive test of the function is_room_almost_done"""
+        """positive test of the function is_room_almost_done"""
         test_rooms = (
             ('', '', '', 'A'),
             ('', '', 'B', 'B'),
             ('', 'C', 'C', 'C'),
-            ('', '', '', ''),)
+            ('', '', '', ''))
         for _ in range(4):
             self.assertTrue(sol.is_room_almost_done(_, test_rooms))
 
@@ -128,7 +126,7 @@ class TestSolutionA(unittest.TestCase):
             ('', '', '', 'B'),
             ('', '', 'A', 'B'),
             ('C', 'C', 'C', 'C'),
-            ('', '', '', 'A'),)
+            ('', '', '', 'A'))
         for _ in range(4):
             self.assertFalse(sol.is_room_almost_done(_, test_rooms))
 

@@ -1,7 +1,6 @@
 """
 solution of adv_2021_23
 """
-import copy
 import heapq
 import functools
 
@@ -31,6 +30,10 @@ def _empty_corridor():
 
 
 def calculate_move_length(in_room_name, in_room_index, in_end_pos):
+    """
+    returns the length of the move from the given position in the given room
+    to the given destination
+    """
     assert in_end_pos not in _joint_pos_dict().values()
     vert_part = 1+in_room_index
     horz_part = abs(_joint_pos_dict()[in_room_name]-in_end_pos)
@@ -39,6 +42,10 @@ def calculate_move_length(in_room_name, in_room_index, in_end_pos):
 
 @functools.lru_cache(None)
 def is_move_possible(in_room_name, in_end_pos, in_corridor):
+    """
+    checks if the move from given room to given position in the corridor
+    is possible
+    """
     def get_search_range(in_pos_a, in_pos_b):
         return range(min(in_pos_a, in_pos_b), max(in_pos_a, in_pos_b)+1)
     assert len(in_corridor) == _corridor_len()
@@ -48,6 +55,7 @@ def is_move_possible(in_room_name, in_end_pos, in_corridor):
 
 
 def calculate_move_cost(in_name, in_len):
+    """returns the cost of the move of given length"""
     single_move_cost = {'A': 1, 'B': 10, 'C': 100, 'D': 1000}
     return single_move_cost[in_name]*in_len
 
@@ -63,6 +71,7 @@ def _get_room_id(in_room_name):
 
 
 def is_room_done(in_room_id, in_room_data):
+    """checks if the room with given id is in ints final state"""
     return all(_ == _get_room_name(in_room_id) for _ in in_room_data)
 
 
@@ -71,12 +80,19 @@ def _is_room_empty(in_room):
 
 
 def is_room_almost_done(in_room_id, in_room_data):
+    """
+    checks if the room is "almost done", i.e.
+    if all of the objects in are of the desired type and it is not full
+    """
     cur_room = in_room_data[in_room_id]
     return all(_ in {_get_room_name(in_room_id), ''} for _ in cur_room) \
         and cur_room[0] == ''
 
 
 def is_starting_room(in_room_id, in_rooms):
+    """
+    checks if it is possible to move top objext out of the room
+    """
     return not is_room_almost_done(in_room_id, in_rooms) \
         and not _is_room_empty(in_rooms[in_room_id]) \
         and not is_room_done(in_room_id, in_rooms[in_room_id])
@@ -90,6 +106,9 @@ def _get_all_moves_from_room(in_room_id, in_corridor):
 
 
 def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
+    """
+    returns the data after moving specified object from the room
+    """
     def move_out_from_the_room(in_room):
         assert not _is_room_empty(in_room)
         new_room = list(in_room)
@@ -120,6 +139,7 @@ def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
 
 
 def can_go_home(in_name, in_pos, in_corridor, in_room_data):
+    """checks if given object in the corridor can go into its home"""
     def call_is_move_possible():
         tmp_corridor = list(in_corridor)
         tmp_corridor[in_pos] = ''
@@ -174,6 +194,10 @@ def _gen_new_states(in_cost, in_rooms, in_corridor):
 
 
 def find_min_cost(in_rooms):
+    """
+    returns the minimal energy requierd
+    to move all of the objects into their homes
+    """
     known_states = [(0, (in_rooms, _empty_corridor()))]
     visited = set()
     while True:
@@ -194,6 +218,9 @@ def solve_a(in_str):
 
 
 def extend_data(in_rooms):
+    """
+    extend the puzzle data for the part_b
+    """
     def proc_single_room(in_room, in_ext):
         beg, end = in_room
         assert len(in_ext) == 2
