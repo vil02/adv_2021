@@ -20,7 +20,7 @@ def parse_input(in_str):
                 set_y.add(cur_pos)
             else:
                 assert cur_val == '.'
-
+    assert not set_x & set_y
     return (limit_x, limit_y), (set_x, set_y)
 
 
@@ -42,37 +42,28 @@ def next_pos_y(in_limit_y, in_pos):
     return (in_pos[0], _next_pos(in_limit_y, in_pos[1]))
 
 
-def _is_free(in_pos, in_set_x, in_set_y):
-    return in_pos not in in_set_x and in_pos not in in_set_y
-
-
-def can_move_x(in_pos, in_set_x, in_set_y, in_limit_x):
-    """checks if it possible to move horizontally from in_pos"""
-    return _is_free(next_pos_x(in_limit_x, in_pos), in_set_x, in_set_y)
-
-
-def can_move_y(in_pos, in_set_x, in_set_y, in_limit_y):
-    """checks if it possible to move vertically from in_pos"""
-    return _is_free(next_pos_y(in_limit_y, in_pos), in_set_x, in_set_y)
-
-
 def single_step(in_limit_x, in_limit_y, in_set_x, in_set_y):
     """simulates a single step of all of the cucambers"""
     assert not in_set_x & in_set_y
-    new_set_x = set()
 
-    for cur_pos in in_set_x:
-        if can_move_x(cur_pos, in_set_x, in_set_y, in_limit_x):
-            new_set_x.add(next_pos_x(in_limit_x, cur_pos))
-        else:
-            new_set_x.add(cur_pos)
+    def is_free(in_pos, in_set_x, in_set_y):
+        return in_pos not in in_set_x and in_pos not in in_set_y
 
-    new_set_y = set()
-    for cur_pos in in_set_y:
-        if can_move_y(cur_pos, new_set_x, in_set_y, in_limit_y):
-            new_set_y.add(next_pos_y(in_limit_y, cur_pos))
-        else:
-            new_set_y.add(cur_pos)
+    def half_step(in_main_set, in_other_set, in_next_pos_fun):
+        res_set = set()
+        for cur_pos in in_main_set:
+            next_pos = in_next_pos_fun(cur_pos)
+            if is_free(next_pos, in_main_set, in_other_set):
+                res_set.add(next_pos)
+            else:
+                res_set.add(cur_pos)
+        assert len(res_set) == len(in_main_set)
+        return res_set
+
+    new_set_x = half_step(
+        in_set_x, in_set_y, lambda in_pos: next_pos_x(in_limit_x, in_pos))
+    new_set_y = half_step(
+        in_set_y, new_set_x, lambda in_pos: next_pos_y(in_limit_y, in_pos))
     return new_set_x, new_set_y
 
 
