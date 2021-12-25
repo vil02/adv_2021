@@ -69,14 +69,16 @@ class TestSolutionA(unittest.TestCase):
             self.assertFalse(sol.is_move_possible(*_, test_corridor))
 
     def test_find_min_cost_trivial_input(self):
+        """test of the function find_min_cost against trivial data"""
         solved_rooms = (
-                ('A', 'A', 'A', 'A'),
-                ('B', 'B', 'B', 'B'),
-                ('C', 'C', 'C', 'C'),
-                ('D', 'D', 'D', 'D'))
+            ('A', 'A', 'A', 'A'),
+            ('B', 'B', 'B', 'B'),
+            ('C', 'C', 'C', 'C'),
+            ('D', 'D', 'D', 'D'))
         self.assertEqual(sol.find_min_cost(solved_rooms), 0)
 
     def test_is_room_done_positive(self):
+        """positive test of the function is_room_done"""
         test_data = [
             (0, ('A', 'A')),
             (0, ('A', 'A', 'A', 'A')),
@@ -86,6 +88,7 @@ class TestSolutionA(unittest.TestCase):
             self.assertTrue(sol.is_room_done(*_))
 
     def test_is_room_done_negative(self):
+        """negative test of the function is_room_done"""
         test_data = [
             (0, ('', 'A')),
             (0, ('A', 'B')),
@@ -97,6 +100,7 @@ class TestSolutionA(unittest.TestCase):
             self.assertFalse(sol.is_room_done(*_))
 
     def test_can_go_home_positive(self):
+        """positive test of the function can_go_home"""
         test_rooms = (
             ('', 'A'),
             ('', 'B'),
@@ -109,6 +113,7 @@ class TestSolutionA(unittest.TestCase):
         self.assertTrue(sol.can_go_home('D', 10, test_corridor, test_rooms))
 
     def test_is_room_almost_done_positive(self):
+         """positive test of the function is_room_almost_done"""
         test_rooms = (
             ('', '', '', 'A'),
             ('', '', 'B', 'B'),
@@ -118,6 +123,7 @@ class TestSolutionA(unittest.TestCase):
             self.assertTrue(sol.is_room_almost_done(_, test_rooms))
 
     def test_is_room_almost_done_negative(self):
+        """negative test of the function is_room_almost_done"""
         test_rooms = (
             ('', '', '', 'B'),
             ('', '', 'A', 'B'),
@@ -127,11 +133,13 @@ class TestSolutionA(unittest.TestCase):
             self.assertFalse(sol.is_room_almost_done(_, test_rooms))
 
     def test_is_starting_room_positive(self):
+        """positive test of the function is_starting_room"""
         test_rooms = (('A', 'B'), ('', 'C'), ('B', 'C'), ('D', 'A'))
         for _ in range(4):
             self.assertTrue(sol.is_starting_room(_, test_rooms))
 
     def test_is_starting_room_negative(self):
+        """negative test of the function is_starting_room"""
         test_rooms = (('', 'A'), ('B', 'B'), ('', ''), ('', 'D'))
         for _ in range(4):
             self.assertFalse(sol.is_starting_room(_, test_rooms))
@@ -150,6 +158,7 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_extend_data(self):
+        """test of the function extend_data"""
         room_a, room_b, room_c, room_d = sol.extend_data(
             sol.parse_input(_data_small()))
         self.assertEqual(room_a, ('B', 'D', 'D', 'A'))
