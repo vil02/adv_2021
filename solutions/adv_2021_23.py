@@ -3,6 +3,7 @@ solution of adv_2021_23
 """
 import copy
 import heapq
+import functools
 
 
 def parse_input(in_str):
@@ -22,9 +23,11 @@ def parse_input(in_str):
 def _joint_pos_dict():
     return {'A': 2, 'B': 4, 'C': 6, 'D': 8}
 
+def _corridor_len():
+    return 11
 
 def _empty_corridor():
-    return tuple('' for _ in range(11))
+    return tuple('' for _ in range(_corridor_len()))
 
 
 def calculate_move_length(in_room_name, in_room_index, in_end_pos):
@@ -34,10 +37,11 @@ def calculate_move_length(in_room_name, in_room_index, in_end_pos):
     return vert_part+horz_part
 
 
+@functools.lru_cache(None)
 def is_move_possible(in_room_name, in_end_pos, in_corridor):
     def get_search_range(in_pos_a, in_pos_b):
         return range(min(in_pos_a, in_pos_b), max(in_pos_a, in_pos_b)+1)
-    assert len(in_corridor) == len(_empty_corridor())
+    assert len(in_corridor) == _corridor_len()
     joint_pos = _joint_pos_dict()[in_room_name]
     return all(in_corridor[_] == ''
                for _ in get_search_range(joint_pos, in_end_pos))
@@ -99,7 +103,7 @@ def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
     assert in_corridor[in_end_pos] == ''
     assert is_move_possible(
         _get_room_name(in_room_id), in_end_pos, in_corridor)
-    new_rooms = list(copy.deepcopy(in_rooms))
+    new_rooms = list(in_rooms)
     new_corridor = list(in_corridor)
 
     new_rooms[in_room_id], new_corridor[in_end_pos], start_ind = \
@@ -137,7 +141,7 @@ def _go_home(in_name, in_pos, in_rooms, in_corridor):
             and in_rooms[home_id][room_pos+1] == '':
         room_pos += 1
 
-    new_rooms = list(copy.deepcopy(in_rooms))
+    new_rooms = list(in_rooms)
     new_rooms[home_id] = list(new_rooms[home_id])
     new_rooms[home_id][room_pos] = in_name
     new_rooms[home_id] = tuple(new_rooms[home_id])
@@ -149,28 +153,25 @@ def _go_home(in_name, in_pos, in_rooms, in_corridor):
     return new_rooms, new_corridor, cost
 
 
-#@functools.lru_cache(None)
-#def find_min_cost(in_rooms, in_corridor=_empty_corridor()):
-#    if all(is_room_done(*_) for _ in enumerate(in_rooms)):
-#        assert all(_ == '' for _ in in_corridor)
-#        res = 0
-#    else:
-#        res = math.inf
-#        for room_id in range(len(in_rooms)):
-#            if is_starting_room(room_id, in_rooms):
-#                for end_pos in _get_all_moves_from_room(room_id, in_corridor):
-#                    new_rooms, new_corridor, cost = make_move_from_room(
-#                        in_rooms, in_corridor, room_id, end_pos)
-#                    res = min(
-#                        res, cost+find_min_cost(new_rooms, new_corridor))
-#        for (obj_pos, obj_name) in enumerate(in_corridor):
-#            if obj_name != '' \
-#                    and can_go_home(obj_name, obj_pos, in_corridor, in_rooms):
-#                new_rooms, new_corridor, cost = _go_home(
-#                    obj_name, obj_pos, in_rooms, in_corridor)
-#                res = min(
-#                    res, cost+find_min_cost(new_rooms, new_corridor))
-#    return res
+def _is_done(in_rooms):
+    return all(is_room_done(*_) for _ in enumerate(in_rooms))
+
+
+def _gen_new_states(in_cost, in_rooms, in_corridor):
+    for room_id in range(len(in_rooms)):
+        if is_starting_room(room_id, in_rooms):
+            for end_pos in _get_all_moves_from_room(room_id, in_corridor):
+                new_rooms, new_corridor, cost = make_move_from_room(
+                    in_rooms, in_corridor, room_id, end_pos)
+                yield (in_cost+cost, (new_rooms, new_corridor))
+
+    for (obj_pos, obj_name) in enumerate(in_corridor):
+        if obj_name != '' and \
+                can_go_home(obj_name, obj_pos, in_corridor, in_rooms):
+            new_rooms, new_corridor, cost = _go_home(
+                obj_name, obj_pos, in_rooms, in_corridor)
+            yield (in_cost+cost, (new_rooms, new_corridor))
+
 
 def find_min_cost(in_rooms):
     known_states = [(0, (in_rooms, _empty_corridor()))]
@@ -179,24 +180,12 @@ def find_min_cost(in_rooms):
         cur_cost, (cur_rooms, cur_corridor) = heapq.heappop(known_states)
         if (cur_rooms, cur_corridor) in visited:
             continue
-        if all(is_room_done(*_) for _ in enumerate(cur_rooms)):
+        if _is_done(cur_rooms):
             assert all(_ == '' for _ in cur_corridor)
             return cur_cost
         visited.add((cur_rooms, cur_corridor))
-        for room_id in range(len(cur_rooms)):
-            if is_starting_room(room_id, cur_rooms):
-                for end_pos in _get_all_moves_from_room(room_id, cur_corridor):
-                    new_rooms, new_corridor, cost = make_move_from_room(
-                        cur_rooms, cur_corridor, room_id, end_pos)
-                    new_state = (cur_cost+cost, (new_rooms, new_corridor))
-                    heapq.heappush(known_states, new_state)
-        for (obj_pos, obj_name) in enumerate(cur_corridor):
-            if obj_name != '' and \
-                    can_go_home(obj_name, obj_pos, cur_corridor, cur_rooms):
-                new_rooms, new_corridor, cost = _go_home(
-                    obj_name, obj_pos, cur_rooms, cur_corridor)
-                new_state = (cur_cost+cost, (new_rooms, new_corridor))
-                heapq.heappush(known_states, new_state)
+        for _ in _gen_new_states(cur_cost, cur_rooms, cur_corridor):
+            heapq.heappush(known_states, _)
 
 
 def solve_a(in_str):

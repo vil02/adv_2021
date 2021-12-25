@@ -44,6 +44,7 @@ class TestSolutionA(unittest.TestCase):
         test_corridor[0] = 'X'
         test_corridor[9] = 'X'
         test_corridor[5] = 'X'
+        test_corridor = tuple(test_corridor)
         test_data = [
             ('A', 1), ('A', 3),
             ('B', 1), ('B', 3),
@@ -58,6 +59,7 @@ class TestSolutionA(unittest.TestCase):
         test_corridor[0] = 'X'
         test_corridor[9] = 'X'
         test_corridor[5] = 'X'
+        test_corridor = tuple(test_corridor)
         test_data = [
             ('A', 7), ('A', 10), ('A', 0),
             ('B', 0), ('B', 7), ('B', 9), ('B', 10),
