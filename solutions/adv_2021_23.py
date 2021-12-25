@@ -6,10 +6,7 @@ import functools
 
 
 def parse_input(in_str):
-    """
-    Parses the input into rooms.
-    Object at index 0 is the deepest.
-    """
+    """Parses the input into rooms."""
     char_list = [_ for _ in in_str if _ in {'A', 'B', 'C', 'D'}]
     assert len(char_list) == 8
     room_a = (char_list[0], char_list[4])
@@ -22,8 +19,10 @@ def parse_input(in_str):
 def _joint_pos_dict():
     return {'A': 2, 'B': 4, 'C': 6, 'D': 8}
 
+
 def _corridor_len():
     return 11
+
 
 def _empty_corridor():
     return tuple('' for _ in range(_corridor_len()))
@@ -71,7 +70,7 @@ def _get_room_id(in_room_name):
 
 
 def is_room_done(in_room_id, in_room_data):
-    """checks if the room with given id is in ints final state"""
+    """checks if the room with given id is in its final state"""
     return all(_ == _get_room_name(in_room_id) for _ in in_room_data)
 
 
@@ -91,7 +90,7 @@ def is_room_almost_done(in_room_id, in_room_data):
 
 def is_starting_room(in_room_id, in_rooms):
     """
-    checks if it is possible to move top objext out of the room
+    checks if it is possible to move top object out of the room
     """
     return not is_room_almost_done(in_room_id, in_rooms) \
         and not _is_room_empty(in_rooms[in_room_id]) \
@@ -195,7 +194,7 @@ def _gen_new_states(in_cost, in_rooms, in_corridor):
 
 def find_min_cost(in_rooms):
     """
-    returns the minimal energy requierd
+    returns the minimal energy required
     to move all of the objects into their homes
     """
     known_states = [(0, (in_rooms, _empty_corridor()))]

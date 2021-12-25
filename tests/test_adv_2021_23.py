@@ -52,7 +52,7 @@ class TestSolutionA(unittest.TestCase):
             self.assertTrue(sol.is_move_possible(*_, test_corridor))
 
     def test_is_move_possible_negative(self):
-        """negatve tests of is_move_possible"""
+        """negative tests of is_move_possible"""
         test_corridor = ['' for _ in range(11)]
         test_corridor[0] = 'X'
         test_corridor[9] = 'X'
