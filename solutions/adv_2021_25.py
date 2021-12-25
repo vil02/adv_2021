@@ -5,96 +5,84 @@ solution of adv_2021_25
 
 def parse_input(in_str):
     """parses the input into a list of rows"""
-    res = tuple(tuple(cur_row) for cur_row in in_str.splitlines())
-    assert len(set(len(_) for _ in res)) == 1
-    assert all(set(_).issubset({'.', 'v', '>'}) for _ in res)
-    return res
+    set_x = set()
+    set_y = set()
+    lines = in_str.splitlines()
+    limit_y = len(lines)
+    limit_x = len(lines[0])
+    for (cur_y, cur_row) in enumerate(in_str.splitlines()):
+        for (cur_x, cur_val) in enumerate(cur_row):
+            assert cur_x < limit_x
+            cur_pos = (cur_x, cur_y)
+            if cur_val == '>':
+                set_x.add(cur_pos)
+            elif cur_val == 'v':
+                set_y.add(cur_pos)
+            else:
+                assert cur_val == '.'
+
+    return (limit_x, limit_y), (set_x, set_y)
 
 
-def next_pos_x(in_data, in_pos):
+def _next_pos(in_limit, in_pos):
+    assert in_pos < in_limit
+    res_pos = in_pos+1
+    if res_pos == in_limit:
+        res_pos = 0
+    return res_pos
+
+
+def next_pos_x(in_limit_x, in_pos):
     """calculates the next position of horizontally moving cucumber"""
-    res = [in_pos[0], in_pos[1]+1]
-    if res[1] >= len(in_data[in_pos[0]]):
-        res[1] = 0
-    return res
+    return (_next_pos(in_limit_x, in_pos[0]), in_pos[1])
 
 
-def next_pos_y(in_data, in_pos):
+def next_pos_y(in_limit_y, in_pos):
     """calculates the next position of vertically moving cucumber"""
-    res = [in_pos[0]+1, in_pos[1]]
-    if res[0] >= len(in_data):
-        res[0] = 0
-    return res
+    return (in_pos[0], _next_pos(in_limit_y, in_pos[1]))
 
 
-def get_value(in_data, in_pos):
-    """
-    returns the position stored in in_data
-    in row in_pos[0] and column in_pos[1]
-    """
-    return in_data[in_pos[0]][in_pos[1]]
+def _is_free(in_pos, in_set_x, in_set_y):
+    return in_pos not in in_set_x and in_pos not in in_set_y
 
 
-def set_value(data, in_pos, in_val):
-    """
-    sets value in data at position in_pos to in_val
-    """
-    data[in_pos[0]][in_pos[1]] = in_val
-
-
-def _is_empty(in_data, in_pos):
-    return get_value(in_data, in_pos) == '.'
-
-
-def can_move_x(in_data, in_pos):
+def can_move_x(in_pos, in_set_x, in_set_y, in_limit_x):
     """checks if it possible to move horizontally from in_pos"""
-    return _is_empty(in_data, next_pos_x(in_data, in_pos))
+    return _is_free(next_pos_x(in_limit_x, in_pos), in_set_x, in_set_y)
 
 
-def can_move_y(in_data, in_pos):
+def can_move_y(in_pos, in_set_x, in_set_y, in_limit_y):
     """checks if it possible to move vertically from in_pos"""
-    return _is_empty(in_data, next_pos_y(in_data, in_pos))
+    return _is_free(next_pos_y(in_limit_y, in_pos), in_set_x, in_set_y)
 
 
-def _to_pos(in_pos_x, in_pos_y):
-    return (in_pos_y, in_pos_x)
-
-
-def single_step(in_data):
+def single_step(in_limit_x, in_limit_y, in_set_x, in_set_y):
     """simulates a single step of all of the cucambers"""
-    res_hor = [['.' for _ in cur_row] for cur_row in in_data]
-    for (pos_y, cur_row) in enumerate(in_data):
-        for (pos_x, cur_val) in enumerate(cur_row):
-            cur_pos = _to_pos(pos_x, pos_y)
-            if cur_val == '>':
-                if can_move_x(in_data, cur_pos):
-                    set_value(res_hor, next_pos_x(in_data, cur_pos), '>')
-                else:
-                    set_value(res_hor, cur_pos, '>')
-            elif cur_val == 'v':
-                set_value(res_hor, cur_pos, 'v')
+    assert not in_set_x & in_set_y
+    new_set_x = set()
 
-    res_ver = [['.' for _ in cur_row] for cur_row in res_hor]
-    for (pos_y, cur_row) in enumerate(res_hor):
-        for (pos_x, cur_val) in enumerate(cur_row):
-            cur_pos = _to_pos(pos_x, pos_y)
-            if cur_val == '>':
-                set_value(res_ver, cur_pos, '>')
-            elif cur_val == 'v':
-                if can_move_y(res_hor, cur_pos):
-                    set_value(res_ver, next_pos_y(res_hor, cur_pos), 'v')
-                else:
-                    set_value(res_ver, cur_pos, 'v')
-    return tuple(tuple(_) for _ in res_ver)
+    for cur_pos in in_set_x:
+        if can_move_x(cur_pos, in_set_x, in_set_y, in_limit_x):
+            new_set_x.add(next_pos_x(in_limit_x, cur_pos))
+        else:
+            new_set_x.add(cur_pos)
+
+    new_set_y = set()
+    for cur_pos in in_set_y:
+        if can_move_y(cur_pos, new_set_x, in_set_y, in_limit_y):
+            new_set_y.add(next_pos_y(in_limit_y, cur_pos))
+        else:
+            new_set_y.add(cur_pos)
+    return new_set_x, new_set_y
 
 
 def solve_a(in_str):
     """solution function for part a"""
-    data = parse_input(in_str)
-    tmp_data = single_step(data)
+    limits, set_data = parse_input(in_str)
+    tmp_set_data = single_step(*limits, *set_data)
     step_num = 1
-    while tmp_data != data:
+    while tmp_set_data != set_data:
         step_num += 1
-        data = tmp_data
-        tmp_data = single_step(data)
+        set_data = tmp_set_data
+        tmp_set_data = single_step(*limits, *set_data)
     return step_num
