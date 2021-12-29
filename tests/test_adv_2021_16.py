@@ -19,6 +19,14 @@ def _data_o_1():
     return gu.read_input(16, 'o_1')
 
 
+def _data_o_2():
+    return gu.read_input(16, 'o_2')
+
+
+def _data_o_3():
+    return gu.read_input(16, 'o_3')
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -72,6 +80,14 @@ class TestSolutionA(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_o_1()), 852)
 
+    def test_data_o_2(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_o_2()), 923)
+
+    def test_data_o_3(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_o_3()), 895)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -106,6 +122,14 @@ class TestSolutionB(unittest.TestCase):
     def test_data_o_1(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_o_1()), 19348959966392)
+
+    def test_data_o_2(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_o_2()), 258888628940)
+
+    def test_data_o_3(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_o_3()), 1148595959144)
 
 
 if __name__ == '__main__':
