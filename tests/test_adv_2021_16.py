@@ -70,7 +70,7 @@ class TestSolutionB(unittest.TestCase):
     unit tests for part b
     """
     def test_example_data(self):
-        """test of solve_a against example data"""
+        """test of solve_a against example data and some other data"""
         test_data = {
             'C200B40A82': 3,
             '04005AC33890': 54,
@@ -79,7 +79,15 @@ class TestSolutionB(unittest.TestCase):
             'D8005AC2A8F0': 1,
             'F600BC2D8F': 0,
             '9C005AC2F8F0': 0,
-            '9C0141080250320F1802104A08': 1}
+            '9C0141080250320F1802104A08': 1,
+            '000294200841022044088110220440881102204408811020': 2,
+            '3232D42BF9400': 5000000000,
+            '32F5DF3B128': 123456789,
+            '0600878021220122E1273080': 0,
+            '26008C8E2DA0191C5B400': 10000000000,
+            '8A004A801A8002F478': 15,
+            '02008180210420C4200': 10,
+            '0000404E00': 192}
         for (cur_str, cur_res) in test_data.items():
             self.assertEqual(sol.solve_b(cur_str), cur_res)
 
