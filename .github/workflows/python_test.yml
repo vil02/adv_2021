@@ -9,7 +9,7 @@ on:
 jobs:
   python_test:
     runs-on: ${{matrix.os}}
-    timeout-minutes: 8
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
