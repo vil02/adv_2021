@@ -28,7 +28,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Generate coverage data
         run: |
-          coverage run -m pytest
+          coverage run --branch -m pytest
           coverage xml --omit="*/test_*"
           coverage report --omit="*/test_*"
       - name: SonarCloud Scan
