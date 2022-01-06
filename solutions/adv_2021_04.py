@@ -85,11 +85,13 @@ def _single_step(in_data, in_num):
 def solve_a(in_str):
     """solution function for part a"""
     numbers, data = parse_input(in_str)
+    res = None
     for cur_num in numbers:
         data, winner = _single_step(data, cur_num)
         if winner is not None:
-            return count_score(winner, cur_num)
-    return None
+            res = count_score(winner, cur_num)
+            break
+    return res
 
 
 def solve_b(in_str):
