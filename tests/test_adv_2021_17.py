@@ -84,5 +84,6 @@ class TestSolutionB(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_t()), 3282)
 
+
 if __name__ == '__main__':
     unittest.main()
