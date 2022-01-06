@@ -81,9 +81,9 @@ def get_all_hitting_paths(in_target_data):
     """
     def find_min_x_vel(in_target_min_x):
         res = 1
-        if (res*(res+1))//2 <= in_target_min_x:
+        while (res*(res+1))//2 <= in_target_min_x:
             res += 1
-        return res-1
+        return res
 
     def get_x_vel_list(in_target_data_x):
         min_x_vel = find_min_x_vel(in_target_data_x[0])
