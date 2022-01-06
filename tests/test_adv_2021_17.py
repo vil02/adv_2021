@@ -24,9 +24,24 @@ class TestSolutionA(unittest.TestCase):
     unit tests for part a
     """
     def test_get_next_state_x_negative_vel(self):
+        """
+        test of the function get_next_state_x with in_vel_x being negative
+        """
         new_pos, new_vel = sol.get_next_state_x(10, -5)
         self.assertEqual(new_pos, 5)
         self.assertEqual(new_vel, -4)
+
+    def test_positive_is_hit_x_zero_vel(self):
+        """positive test of is_hit_x with in_vel_x being 0"""
+        target_data = (5, 10)
+        for _ in range(target_data[0], target_data[1]+1):
+            self.assertTrue(sol.is_hit_x(_, 0, target_data))
+
+    def test_negative_is_hit_x_zero_vel(self):
+        """negative test of is_hit_x with in_vel_x being 0"""
+        target_data = (5, 10)
+        self.assertFalse(sol.is_hit_x(4, 0, target_data))
+        self.assertFalse(sol.is_hit_x(11, 0, target_data))
 
     def test_data_small(self):
         """test against example data"""
