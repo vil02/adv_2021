@@ -42,11 +42,10 @@ def find_line_completion(in_str):
     for _ in in_str:
         if _ in _opposite_dict().values():
             stack_data.append(_)
-        elif stack_data and _ in _opposite_dict() \
-                and _opposite_dict()[_] == stack_data[-1]:
-            stack_data.pop()
         else:
-            assert False
+            assert stack_data and _ in _opposite_dict() \
+                and _opposite_dict()[_] == stack_data[-1]
+            stack_data.pop()
     res = ''
     inv_opposite_dict = dict(
         zip(_opposite_dict().values(), _opposite_dict().keys()))
