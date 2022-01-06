@@ -23,6 +23,11 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+    def test_get_next_state_x_negative_vel(self):
+        new_pos, new_vel = sol.get_next_state_x(10, -5)
+        self.assertEqual(new_pos, 5)
+        self.assertEqual(new_vel, -4)
+
     def test_data_small(self):
         """test against example data"""
         self.assertEqual(sol.solve_a(_data_small()), 45)
