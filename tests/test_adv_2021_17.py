@@ -19,6 +19,10 @@ def _data_o():
     return ((57, 116), (-198, -148))
 
 
+def _data_t():
+    return ((14, 50), (-267, -225))
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -55,6 +59,10 @@ class TestSolutionA(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_o()), 19503)
 
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_t()), 35511)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -72,6 +80,9 @@ class TestSolutionB(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_o()), 5200)
 
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_t()), 3282)
 
 if __name__ == '__main__':
     unittest.main()
