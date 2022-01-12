@@ -98,8 +98,7 @@ def _find_all_permutations_with_bounds(in_bounds):
                     new_bounds = copy.deepcopy(cur_bounds)
                     for _ in cur_bounds:
                         new_bounds[_].discard(cur_val)
-                    for _ in inner(new_perm, available_keys[1:], new_bounds):
-                        yield _
+                    yield from inner(new_perm, available_keys[1:], new_bounds)
     return inner({}, list(in_bounds.keys()), in_bounds)
 
 
