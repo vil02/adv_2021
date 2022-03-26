@@ -5,6 +5,8 @@ name: python_test
 on:
   workflow_dispatch:
   push:
+  schedule:
+    - cron: '15 1 * * 1,4'
 
 jobs:
   python_test:
