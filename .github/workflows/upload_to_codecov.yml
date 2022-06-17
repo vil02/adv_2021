@@ -1,0 +1,38 @@
+---
+name: upload_to_codecov
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  codecov:
+    name: upload_to_codecov_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest numpy coverage
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Generate coverage data
+        run: |
+          coverage run -m pytest
+
+      - name: Upload coverage to Codecov
+          uses: codecov/codecov-action@v2
+...
