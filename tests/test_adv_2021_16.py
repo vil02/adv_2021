@@ -7,10 +7,6 @@ import general_utils as gu
 import solutions.adv_2021_16 as sol
 
 
-def _data_small():
-    return gu.read_input(16, 'small')
-
-
 def _data_p():
     return gu.read_input(16, 'p')
 
