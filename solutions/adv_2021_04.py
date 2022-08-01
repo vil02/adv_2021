@@ -16,7 +16,7 @@ def parse_input(in_str):
             cur_line_res = []
             for cur_num_str in cur_line.split():
                 cur_line_res.append((int(cur_num_str), False))
-            assert(len(cur_line_res)) == _board_size()
+            assert len(cur_line_res) == _board_size()
             res.append(cur_line_res)
         return res
     lines = [_ for _ in in_str.splitlines() if _]
