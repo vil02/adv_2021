@@ -33,11 +33,6 @@ jobs:
           python -m pip install numpy pytest coverage
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install language dependencies
-        working-directory: ${{github.workspace}}/system_setup_scripts
-        run: |
-          ./install_all.sh
-
       - name: Generate coverage data
         run: |
           coverage run --branch -m pytest
