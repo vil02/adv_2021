@@ -69,10 +69,8 @@ def find_number_of_paths_b(in_data):
                         and is_worth_visit(new_cave, visited_small_caves):
                     tmp_visited_small_caves = \
                         copy.deepcopy(visited_small_caves)
-                    if new_cave in tmp_visited_small_caves:
-                        tmp_visited_small_caves[new_cave] += 1
-                    else:
-                        tmp_visited_small_caves[new_cave] = 1
+                    tmp_visited_small_caves[new_cave] = \
+                        tmp_visited_small_caves.get(new_cave, 0)+1
                     inner(
                         new_cave, cur_path+[new_cave], tmp_visited_small_caves)
                 elif not is_cave_small(new_cave):
