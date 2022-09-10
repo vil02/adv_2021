@@ -12,6 +12,7 @@ numpy = "*"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
+pytest-xdist = "*"
 pylint = "*"
 flake8 = "*"
 coverage = "*"
