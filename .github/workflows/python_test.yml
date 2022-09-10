@@ -30,11 +30,9 @@ jobs:
           python-version: ${{matrix.python-version}}
 
       - name: Install dependencies
-        shell: bash
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install flake8 pylint pytest numpy pytest-xdist
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry install
 
       - name: Run liter
         run: |
@@ -42,5 +40,5 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest -n 2
+          poetry run pytest -n 2
 ...
