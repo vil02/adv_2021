@@ -26,7 +26,7 @@ def read_to_string(in_file_path):
     assert in_file_path.is_file()
     with open(in_file_path, 'r', encoding='utf-8') as in_file:
         data_str = in_file.read()
-    assert len(data_str) > 0
+    assert data_str
     return data_str
 
 
