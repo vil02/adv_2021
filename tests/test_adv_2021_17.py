@@ -3,7 +3,6 @@ test for adv_2021_17
 """
 
 import unittest
-import general_utils as gu  # noqa # pylint: disable=unused-import
 import solutions.adv_2021_17 as sol
 
 
