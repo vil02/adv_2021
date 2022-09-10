@@ -2,7 +2,6 @@
 general utilities for advent of code
 """
 import pathlib
-import sys
 import functools
 
 
@@ -20,9 +19,6 @@ def project_folder():
     else:
         raise RuntimeError('Wrong folder structure')
     return res.resolve()
-
-
-sys.path.insert(0, str(project_folder()))
 
 
 def read_to_string(in_file_path):
