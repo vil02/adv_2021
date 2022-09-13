@@ -4,8 +4,8 @@ set -euo pipefail
 
 function check_single()
 {
-    declare -r in_path="$1"
-    declare -i result_val=0
+    local -r in_path="$1"
+    local -i result_val=0
     printf "Checking \"%s\"\n" "${in_path}"
     printf "Checking with pylint:\n"
     if ! poetry run pylint "$in_path" ; then
@@ -13,10 +13,9 @@ function check_single()
     fi
 
     printf "Checking with flake8:\n"
-    declare -r flake8_opts="--count --max-line-length=80 --show-source --ignore=E203"
-    declare -r flake8_cmd="poetry run flake8 $in_path $flake8_opts"
-    declare -r flake8_res=$($flake8_cmd)
-    if [ "$flake8_res" -ne 0 ]; then
+    local -r flake8_opts="--count --max-line-length=80 --show-source --ignore=E203,W503"
+    local -r flake8_cmd="poetry run flake8 $in_path $flake8_opts"
+    if ! $flake8_cmd ; then
         result_val=1
     fi
     printf "...done\n\n\n"
