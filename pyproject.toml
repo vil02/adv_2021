@@ -16,6 +16,7 @@ pytest-xdist = "*"
 pylint = "*"
 flake8 = "*"
 coverage = "*"
+black = "*"
 
 [build-system]
 requires = ["poetry-core"]
