@@ -7,8 +7,10 @@ import copy
 
 def parse_input(in_str):
     """parses the input into a list of rows"""
+
     def proc_single_line(in_line):
         return [int(_) for _ in in_line]
+
     res = [proc_single_line(_) for _ in in_str.splitlines()]
     assert len(set(len(_) for _ in res)) == 1
     return res
@@ -16,15 +18,19 @@ def parse_input(in_str):
 
 def get_all_adjacent_positions(in_data, in_center_pos):
     """returns a list of coordinates of all adjacent positions"""
+
     def is_correct(in_pos):
         row_num, col_num = in_pos
-        return in_pos != in_center_pos \
-            and 0 <= row_num < len(in_data) \
+        return (
+            in_pos != in_center_pos
+            and 0 <= row_num < len(in_data)
             and 0 <= col_num < len(in_data[0])
+        )
 
     search_range = itertools.product(
-        range(in_center_pos[0]-1, in_center_pos[0]+2),
-        range(in_center_pos[1]-1, in_center_pos[1]+2))
+        range(in_center_pos[0] - 1, in_center_pos[0] + 2),
+        range(in_center_pos[1] - 1, in_center_pos[1] + 2),
+    )
     return [_ for _ in search_range if is_correct(_)]
 
 
@@ -50,9 +56,10 @@ def single_step(in_data):
     res_data = copy.deepcopy(in_data)
     flashed = set()
     search_range = list(
-        itertools.product(range(0, len(in_data)), range(0, len(in_data[0]))))
+        itertools.product(range(0, len(in_data)), range(0, len(in_data[0])))
+    )
     for cur_pos in search_range:
-        set_value(res_data, cur_pos, get_value(in_data, cur_pos)+1)
+        set_value(res_data, cur_pos, get_value(in_data, cur_pos) + 1)
 
     was_change = True
     while was_change:
@@ -60,7 +67,7 @@ def single_step(in_data):
         for cur_pos in search_range:
             if cur_pos not in flashed and get_value(res_data, cur_pos) > 9:
                 for _ in get_all_adjacent_positions(in_data, cur_pos):
-                    set_value(res_data, _, get_value(res_data, _)+1)
+                    set_value(res_data, _, get_value(res_data, _) + 1)
                 flashed.add(cur_pos)
                 was_change = True
     for cur_pos in flashed:

@@ -8,21 +8,22 @@ import solutions.adv_2021_03 as sol
 
 
 def _data_small():
-    return gu.read_input(3, 'small')
+    return gu.read_input(3, "small")
 
 
 def _data_p():
-    return gu.read_input(3, 'p')
+    return gu.read_input(3, "p")
 
 
 def _data_m():
-    return gu.read_input(3, 'm')
+    return gu.read_input(3, "m")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_calculate_gamma(self):
         """tests calculate_gamma against the example data"""
         self.assertEqual(sol.calculate_gamma(_data_small().split()), 22)
@@ -48,6 +49,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_calculate_oxygen(self):
         """tests calculate_gamma against the example data"""
         self.assertEqual(sol.calculate_oxygen(_data_small().split()), 23)
@@ -69,5 +71,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_m()), 2775870)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

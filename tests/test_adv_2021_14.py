@@ -7,17 +7,18 @@ import solutions.adv_2021_14 as sol
 
 
 def _data_small():
-    return gu.read_input(14, 'small')
+    return gu.read_input(14, "small")
 
 
 def _data_p():
-    return gu.read_input(14, 'p')
+    return gu.read_input(14, "p")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_data_small(self):
         """test against example data"""
         self.assertEqual(sol.solve_a(_data_small()), 1588)
@@ -31,6 +32,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 2188189693529)
@@ -40,5 +42,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_p()), 4110568157153)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -26,6 +26,7 @@ class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_get_next_state_x_negative_vel(self):
         """
         test of the function get_next_state_x with in_vel_x being negative
@@ -37,7 +38,7 @@ class TestSolutionA(unittest.TestCase):
     def test_positive_is_hit_x_zero_vel(self):
         """positive test of is_hit_x with in_vel_x being 0"""
         target_data = (5, 10)
-        for _ in range(target_data[0], target_data[1]+1):
+        for _ in range(target_data[0], target_data[1] + 1):
             self.assertTrue(sol.is_hit_x(_, 0, target_data))
 
     def test_negative_is_hit_x_zero_vel(self):
@@ -67,6 +68,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 112)
@@ -84,5 +86,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_t()), 3282)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

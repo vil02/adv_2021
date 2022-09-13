@@ -8,21 +8,22 @@ import solutions.adv_2021_06 as sol
 
 
 def _data_small():
-    return '3,4,3,1,2'
+    return "3,4,3,1,2"
 
 
 def _data_p():
-    return gu.read_input(6, 'p')
+    return gu.read_input(6, "p")
 
 
 def _data_m():
-    return gu.read_input(6, 'm')
+    return gu.read_input(6, "m")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_parse_input(self):
         """tests parse_input function"""
         self.assertEqual(sol.parse_input(_data_small()), [3, 4, 3, 1, 2])
@@ -30,8 +31,8 @@ class TestSolutionA(unittest.TestCase):
     def test_count_number_of_all_fish(self):
         """tests count_number_of_all_fish function with example data"""
         self.assertEqual(
-            sol.count_number_of_all_fish(sol.parse_input(_data_small()), 18),
-            26)
+            sol.count_number_of_all_fish(sol.parse_input(_data_small()), 18), 26
+        )
 
     def test_basic(self):
         """test against the example data"""
@@ -50,6 +51,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_basic(self):
         """test against the example data"""
         self.assertEqual(sol.solve_b(_data_small()), 26984457539)
@@ -63,5 +65,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_m()), 1644874076764)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

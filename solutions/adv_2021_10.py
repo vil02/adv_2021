@@ -10,7 +10,7 @@ def parse_input(in_str):
 
 
 def _opposite_dict():
-    return {')': '(', ']': '[', '>': '<', '}': '{'}
+    return {")": "(", "]": "[", ">": "<", "}": "{"}
 
 
 def get_score(in_str):
@@ -20,13 +20,16 @@ def get_score(in_str):
     for _ in in_str:
         if _ in _opposite_dict().values():
             stack_data.append(_)
-        elif stack_data and _ in _opposite_dict() \
-                and _opposite_dict()[_] == stack_data[-1]:
+        elif (
+            stack_data
+            and _ in _opposite_dict()
+            and _opposite_dict()[_] == stack_data[-1]
+        ):
             stack_data.pop()
         else:
             res = _
             break
-    score_dict = {None: 0, ')': 3, ']': 57, '}': 1197, '>': 25137}
+    score_dict = {None: 0, ")": 3, "]": 57, "}": 1197, ">": 25137}
     return score_dict[res]
 
 
@@ -43,12 +46,16 @@ def find_line_completion(in_str):
         if _ in _opposite_dict().values():
             stack_data.append(_)
         else:
-            assert stack_data and _ in _opposite_dict() \
+            assert (
+                stack_data
+                and _ in _opposite_dict()
                 and _opposite_dict()[_] == stack_data[-1]
+            )
             stack_data.pop()
-    res = ''
+    res = ""
     inv_opposite_dict = dict(
-        zip(_opposite_dict().values(), _opposite_dict().keys()))
+        zip(_opposite_dict().values(), _opposite_dict().keys())
+    )
     for _ in reversed(stack_data):
         res += inv_opposite_dict[_]
     return res
@@ -57,7 +64,7 @@ def find_line_completion(in_str):
 def get_completion_score(in_str):
     """returns the score of the completion string as in part b"""
     cur_score = 0
-    score_dict = {')': 1, ']': 2, '}': 3, '>': 4}
+    score_dict = {")": 1, "]": 2, "}": 3, ">": 4}
     for _ in in_str:
         cur_score *= 5
         cur_score += score_dict[_]

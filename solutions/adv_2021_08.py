@@ -6,9 +6,11 @@ import copy
 
 def parse_input_a(in_str):
     """parses input for part a"""
+
     def proc_single_line(in_line):
-        _, part_b = in_line.split(' | ')
+        _, part_b = in_line.split(" | ")
         return part_b.split()
+
     res = []
     for _ in in_str.splitlines():
         res += proc_single_line(_)
@@ -23,9 +25,11 @@ def solve_a(in_str):
 
 def parse_input_b(in_str):
     """parses input for part b"""
+
     def proc_single_line(in_line):
-        part_a, part_b = in_line.split(' | ')
+        part_a, part_b = in_line.split(" | ")
         return part_a.split(), part_b.split()
+
     return [proc_single_line(_) for _ in in_str.splitlines()]
 
 
@@ -40,7 +44,8 @@ def _display_numbers():
         "abdefg",
         "acf",
         "abcdefg",
-        "abcdfg"]
+        "abcdfg",
+    ]
 
 
 def _display_numbers_set():
@@ -49,8 +54,10 @@ def _display_numbers_set():
 
 def apply_permutation(in_perm_data, in_str_list):
     """applies given permutation"""
+
     def proc_single_str(in_str):
-        return ''.join(sorted(in_perm_data[_] for _ in in_str))
+        return "".join(sorted(in_perm_data[_] for _ in in_str))
+
     return [proc_single_str(_) for _ in in_str_list]
 
 
@@ -62,25 +69,25 @@ def _find_bounds(in_2, in_3, in_4, in_7):
     assert len(set_7) == 7
 
     res = {}
-    val_of_a = list(set_3-set_2)
+    val_of_a = list(set_3 - set_2)
     assert len(val_of_a) == 1
     val_of_a = val_of_a[0]
-    res[val_of_a] = 'a'
+    res[val_of_a] = "a"
     set_3.remove(val_of_a)
     assert val_of_a not in set_4
     set_7.remove(val_of_a)
     assert set_2 == set_3
     for _ in set_2:
-        res[_] = 'cf'
+        res[_] = "cf"
         set_4.remove(_)
         set_7.remove(_)
     for _ in set_4:
-        res[_] = 'bd'
+        res[_] = "bd"
         set_7.remove(_)
     for _ in set_7:
-        res[_] = 'deg'
-    assert set(''.join(res.values())) == set(''.join(_display_numbers()))
-    assert set(res.keys()) == set(''.join(_display_numbers()))
+        res[_] = "deg"
+    assert set("".join(res.values())) == set("".join(_display_numbers()))
+    assert set(res.keys()) == set("".join(_display_numbers()))
     res = {key: set(val) for (key, val) in res.items()}
     return res
 
@@ -99,11 +106,13 @@ def _find_all_permutations_with_bounds(in_bounds):
                     for _ in cur_bounds:
                         new_bounds[_].discard(cur_val)
                     yield from inner(new_perm, available_keys[1:], new_bounds)
+
     return inner({}, list(in_bounds.keys()), in_bounds)
 
 
 def find_pemutation(in_str_list):
     """finds pemutation of the wires"""
+
     def find_str_of_len(in_len):
         res = [_ for _ in in_str_list if len(_) == in_len]
         assert len(res) == 1
@@ -121,7 +130,7 @@ def find_pemutation(in_str_list):
 def get_value(in_str_list):
     """returns a displayed number"""
     digit_list = [str(_display_numbers().index(_)) for _ in in_str_list]
-    return int(''.join(digit_list))
+    return int("".join(digit_list))
 
 
 def solve_single_line(in_part_a, in_part_b):

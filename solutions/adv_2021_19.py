@@ -11,43 +11,35 @@ import numpy
 @functools.lru_cache(1)
 def get_all_rotations_3d():
     """returns matrices of all 90-degree trotations in 3d"""
-    id_mat = numpy.array([
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1]])
-    x_rot = numpy.array([
-        [1, 0, 0],
-        [0, 0, -1],
-        [0, 1, 0]])
-    y_rot = numpy.array([
-        [0, 0, 1],
-        [0, 1, 0],
-        [-1, 0, 0]])
+    id_mat = numpy.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+    x_rot = numpy.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]])
+    y_rot = numpy.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
     return [
         id_mat,
         x_rot,
         y_rot,
-        x_rot@x_rot,
-        x_rot@y_rot,
-        y_rot@x_rot,
-        y_rot@y_rot,
-        x_rot@x_rot@x_rot,
-        x_rot@x_rot@y_rot,
-        x_rot@y_rot@x_rot,
-        x_rot@y_rot@y_rot,
-        y_rot@x_rot@x_rot,
-        y_rot@y_rot@x_rot,
-        y_rot@y_rot@y_rot,
-        x_rot@x_rot@x_rot@y_rot,
-        x_rot@x_rot@y_rot@x_rot,
-        x_rot@x_rot@y_rot@y_rot,
-        x_rot@y_rot@x_rot@x_rot,
-        x_rot@y_rot@y_rot@y_rot,
-        y_rot@x_rot@x_rot@x_rot,
-        y_rot@y_rot@y_rot@x_rot,
-        x_rot@x_rot@x_rot@y_rot@x_rot,
-        x_rot@y_rot@x_rot@x_rot@x_rot,
-        x_rot@y_rot@y_rot@y_rot@x_rot]
+        x_rot @ x_rot,
+        x_rot @ y_rot,
+        y_rot @ x_rot,
+        y_rot @ y_rot,
+        x_rot @ x_rot @ x_rot,
+        x_rot @ x_rot @ y_rot,
+        x_rot @ y_rot @ x_rot,
+        x_rot @ y_rot @ y_rot,
+        y_rot @ x_rot @ x_rot,
+        y_rot @ y_rot @ x_rot,
+        y_rot @ y_rot @ y_rot,
+        x_rot @ x_rot @ x_rot @ y_rot,
+        x_rot @ x_rot @ y_rot @ x_rot,
+        x_rot @ x_rot @ y_rot @ y_rot,
+        x_rot @ y_rot @ x_rot @ x_rot,
+        x_rot @ y_rot @ y_rot @ y_rot,
+        y_rot @ x_rot @ x_rot @ x_rot,
+        y_rot @ y_rot @ y_rot @ x_rot,
+        x_rot @ x_rot @ x_rot @ y_rot @ x_rot,
+        x_rot @ y_rot @ x_rot @ x_rot @ x_rot,
+        x_rot @ y_rot @ y_rot @ y_rot @ x_rot,
+    ]
 
 
 def parse_input(in_str):
@@ -56,14 +48,15 @@ def parse_input(in_str):
 
     def append_result(in_scanner_data):
         res_list.append(tuple(in_scanner_data))
+
     for cur_line in in_str.splitlines():
-        if 'scanner' in cur_line:
+        if "scanner" in cur_line:
             scanner_data = []
         elif not cur_line:
             append_result(scanner_data)
             scanner_data = []
         else:
-            cur_row = tuple(int(_) for _ in cur_line.split(','))
+            cur_row = tuple(int(_) for _ in cur_line.split(","))
             scanner_data.append(tuple(cur_row))
             assert len(scanner_data[-1]) == 3
     append_result(scanner_data)
@@ -72,16 +65,20 @@ def parse_input(in_str):
 
 def shift_data(in_data, in_shift):
     """returns in_data shifted by the vector in_shift"""
+
     def proc_single_vec(in_vec):
-        return tuple(v+s for (v, s) in zip(in_vec, in_shift))
+        return tuple(v + s for (v, s) in zip(in_vec, in_shift))
+
     return tuple(proc_single_vec(_) for _ in in_data)
 
 
 def rotate_data(in_rotation, in_data):
     """returns in_data rotated by in_rotation"""
+
     def proc_vec(in_vec):
         return tuple(int(_) for _ in in_vec)
-    tmp_data = in_rotation@numpy.array(in_data).transpose()
+
+    tmp_data = in_rotation @ numpy.array(in_data).transpose()
     return tuple(proc_vec(_) for _ in tmp_data.transpose())
 
 
@@ -96,7 +93,7 @@ def minus(in_vec_a, in_vec_b):
     """
     returns the vector in_vec_a - in_vec_b
     """
-    return tuple(a-b for (a, b) in zip(in_vec_a, in_vec_b))
+    return tuple(a - b for (a, b) in zip(in_vec_a, in_vec_b))
 
 
 def get_shift_dict(in_merged_data, in_scanner_data):
@@ -106,7 +103,8 @@ def get_shift_dict(in_merged_data, in_scanner_data):
     """
     return collections.Counter(
         minus(a, b)
-        for (a, b) in itertools.product(in_merged_data, in_scanner_data))
+        for (a, b) in itertools.product(in_merged_data, in_scanner_data)
+    )
 
 
 def merge_single(in_merged_data, in_scanner_data, in_rotation, in_shift):
@@ -130,12 +128,13 @@ def calculate_result(in_all_data):
         was_fit = False
         for cur_rot in get_all_rotations_3d():
             shift_dict = get_shift_dict(
-                merged_data,
-                rotate_data(cur_rot, cur_scanner_data))
+                merged_data, rotate_data(cur_rot, cur_scanner_data)
+            )
             if max(shift_dict.values()) >= 8:
                 best_shift = max(shift_dict, key=shift_dict.get)
                 merged_data = merge_single(
-                    merged_data, cur_scanner_data, cur_rot, best_shift)
+                    merged_data, cur_scanner_data, cur_rot, best_shift
+                )
                 scanner_pos_list.append(best_shift)
                 was_fit = True
                 break
@@ -154,8 +153,10 @@ def find_max_dist(in_list):
     """
     returns the maximum Manhattan distance between the vectors in the in_list
     """
+
     def m_dist(in_vec_a, in_vec_b):
         return sum(abs(_) for _ in minus(in_vec_a, in_vec_b))
+
     return max(m_dist(*_) for _ in itertools.combinations(in_list, 2))
 
 

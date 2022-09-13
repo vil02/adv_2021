@@ -10,8 +10,10 @@ def parse_input(in_str):
     Parses the input.
     Returns the "list of rows". Each row is a list of numbers
     """
+
     def proc_row(in_row):
         return [int(_) for _ in in_row]
+
     res = [proc_row(_) for _ in in_str.splitlines()]
     assert len({len(_) for _ in res}) == 1
     return res
@@ -26,17 +28,21 @@ def get_value(in_data, in_pos):
 
 def get_all_adjacent_positions(in_data, in_center_pos):
     """returns a list of coordinates of all adjacent positions"""
+
     def is_correct(in_pos):
         row_num, col_num = in_pos
-        return in_pos != in_center_pos \
-            and 0 <= row_num < len(in_data) \
+        return (
+            in_pos != in_center_pos
+            and 0 <= row_num < len(in_data)
             and 0 <= col_num < len(in_data[0])
+        )
 
     search_range = [
-        (in_center_pos[0]-1, in_center_pos[1]),
-        (in_center_pos[0]+1, in_center_pos[1]),
-        (in_center_pos[0], in_center_pos[1]-1),
-        (in_center_pos[0], in_center_pos[1]+1)]
+        (in_center_pos[0] - 1, in_center_pos[1]),
+        (in_center_pos[0] + 1, in_center_pos[1]),
+        (in_center_pos[0], in_center_pos[1] - 1),
+        (in_center_pos[0], in_center_pos[1] + 1),
+    ]
     return [_ for _ in search_range if is_correct(_)]
 
 
@@ -51,14 +57,15 @@ def find_minimum_risk(in_data):
         cur_risk, cur_pos = heapq.heappop(known_states)
         if cur_pos in visited:
             continue
-        if cur_pos == (len(in_data)-1, len(in_data[cur_pos[0]])-1):
+        if cur_pos == (len(in_data) - 1, len(in_data[cur_pos[0]]) - 1):
             return cur_risk
         visited.add(cur_pos)
         for new_pos in get_all_adjacent_positions(in_data, cur_pos):
             if new_pos not in visited:
                 heapq.heappush(
                     known_states,
-                    (cur_risk + get_value(in_data, new_pos), new_pos))
+                    (cur_risk + get_value(in_data, new_pos), new_pos),
+                )
 
 
 def solve_a(in_str):
@@ -71,8 +78,10 @@ def make_plus(in_data):
     Increases every value in in_data by 1.
     If the new value is >= 9 it sets it to 1
     """
+
     def proc_single(in_row):
-        return [_ % 9+1 for _ in in_row]
+        return [_ % 9 + 1 for _ in in_row]
+
     return [proc_single(_) for _ in in_data]
 
 
@@ -80,11 +89,13 @@ def extend_data(in_data):
     """
     extends the in_data for the part_b
     """
+
     def merge_hor(in_data_a, in_data_b):
-        return [a+b for (a, b) in zip(in_data_a, in_data_b)]
+        return [a + b for (a, b) in zip(in_data_a, in_data_b)]
 
     def merge_vert(in_data_a, in_data_b):
-        return in_data_a+in_data_b
+        return in_data_a + in_data_b
+
     tmp_data = copy.deepcopy(in_data)
     res_data = copy.deepcopy(in_data)
     extension_size = 4
