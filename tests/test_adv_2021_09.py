@@ -8,17 +8,18 @@ import solutions.adv_2021_09 as sol
 
 
 def _data_small():
-    return gu.read_input(9, 'small')
+    return gu.read_input(9, "small")
 
 
 def _data_p():
-    return gu.read_input(9, 'p')
+    return gu.read_input(9, "p")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_get_adjacent_values(self):
         """
         test of get_adjacent_values
@@ -40,6 +41,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against example data"""
         self.assertEqual(sol.solve_b(_data_small()), 1134)
@@ -49,5 +51,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_p()), 1023660)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

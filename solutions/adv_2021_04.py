@@ -9,6 +9,7 @@ def _board_size():
 
 def parse_input(in_str):
     """parses the input of the puzzle"""
+
     def proc_square(in_lines):
         assert len(in_lines) == _board_size()
         res = []
@@ -19,13 +20,14 @@ def parse_input(in_str):
             assert len(cur_line_res) == _board_size()
             res.append(cur_line_res)
         return res
+
     lines = [_ for _ in in_str.splitlines() if _]
-    numbers = [int(_) for _ in lines[0].split(',')]
+    numbers = [int(_) for _ in lines[0].split(",")]
     lines = lines[1:]
     assert len(lines) % _board_size() == 0
     res = []
     for start_num in range(0, len(lines), _board_size()):
-        res.append(proc_square(lines[start_num:start_num+_board_size()]))
+        res.append(proc_square(lines[start_num : start_num + _board_size()]))
     return numbers, res
 
 
@@ -47,14 +49,17 @@ def is_winning(in_square):
     """
     checks if in_square wins
     """
+
     def is_row_marked(in_row_num):
         return all(_[1] for _ in in_square[in_row_num])
 
     def is_col_marked(in_col_num):
         cur_col = [in_square[_][in_col_num] for _ in range(_board_size())]
         return all(_[1] for _ in cur_col)
-    return any(is_row_marked(_) for _ in range(_board_size())) or \
-        any(is_col_marked(_) for _ in range(_board_size()))
+
+    return any(is_row_marked(_) for _ in range(_board_size())) or any(
+        is_col_marked(_) for _ in range(_board_size())
+    )
 
 
 def find_winning(in_data):
@@ -69,12 +74,15 @@ def find_winning(in_data):
 
 def count_score(in_data, in_num):
     """returns the score of the winning square"""
+
     def count_unmarked_sum(in_data):
         """retuns the sum of unmarked fields"""
         return sum(
-            sum(_[0] for _ in cur_row if not _[1]) for cur_row in in_data)
+            sum(_[0] for _ in cur_row if not _[1]) for cur_row in in_data
+        )
+
     assert is_winning(in_data)
-    return count_unmarked_sum(in_data)*in_num
+    return count_unmarked_sum(in_data) * in_num
 
 
 def _single_step(in_data, in_num):

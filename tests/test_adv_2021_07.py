@@ -8,25 +8,27 @@ import solutions.adv_2021_07 as sol
 
 
 def _data_small():
-    return '16,1,2,0,4,2,7,1,2,14'
+    return "16,1,2,0,4,2,7,1,2,14"
 
 
 def _data_p():
-    return gu.read_input(7, 'p')
+    return gu.read_input(7, "p")
 
 
 def _data_m():
-    return gu.read_input(7, 'm')
+    return gu.read_input(7, "m")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_parse_input(self):
         """test parse_input against the example data"""
         self.assertEqual(
-            sol.parse_input(_data_small()), [16, 1, 2, 0, 4, 2, 7, 1, 2, 14])
+            sol.parse_input(_data_small()), [16, 1, 2, 0, 4, 2, 7, 1, 2, 14]
+        )
 
     def test_data_small(self):
         """test against the example data"""
@@ -45,6 +47,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against the example data"""
         self.assertEqual(sol.solve_b(_data_small()), 168)
@@ -58,5 +61,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_m()), 95851339)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

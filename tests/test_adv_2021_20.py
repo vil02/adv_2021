@@ -8,24 +8,32 @@ import solutions.adv_2021_20 as sol
 
 
 def _data_p():
-    return gu.read_input(20, 'p')
+    return gu.read_input(20, "p")
 
 
 def _data_small():
-    return gu.read_input(20, 'small')
+    return gu.read_input(20, "small")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_get_all_neighbours(self):
         """test of get_all_neighbours function"""
         test_pos = (1, 3)
         true_res = (
-            (0, 4), (1, 4), (2, 4),
-            (0, 3), (1, 3), (2, 3),
-            (0, 2), (1, 2), (2, 2))
+            (0, 4),
+            (1, 4),
+            (2, 4),
+            (0, 3),
+            (1, 3),
+            (2, 3),
+            (0, 2),
+            (1, 2),
+            (2, 2),
+        )
         self.assertIn(test_pos, true_res)
         self.assertEqual(sol.get_all_neighbours(test_pos), true_res)
 
@@ -51,6 +59,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_small()), 3351)
@@ -60,5 +69,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_p()), 16605)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

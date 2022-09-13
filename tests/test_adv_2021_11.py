@@ -8,25 +8,26 @@ import solutions.adv_2021_11 as sol
 
 
 def _data_very_small():
-    return gu.read_input(11, 'very_small')
+    return gu.read_input(11, "very_small")
 
 
 def _data_small():
-    return gu.read_input(11, 'small')
+    return gu.read_input(11, "small")
 
 
 def _data_p():
-    return gu.read_input(11, 'p')
+    return gu.read_input(11, "p")
 
 
 def _data_m():
-    return gu.read_input(11, 'm')
+    return gu.read_input(11, "m")
 
 
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
     """
+
     def test_single_step_very_small(self):
         """tests single_step function with the very small example data"""
         data = sol.parse_input(_data_very_small())
@@ -61,6 +62,7 @@ class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
     """
+
     def test_data_small(self):
         """test against small data"""
         self.assertEqual(sol.solve_b(_data_small()), 195)
@@ -74,5 +76,5 @@ class TestSolutionB(unittest.TestCase):
         self.assertEqual(sol.solve_b(_data_m()), 517)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

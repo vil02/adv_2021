@@ -14,19 +14,19 @@ def parse_input(in_str):
         for (cur_x, cur_val) in enumerate(cur_row):
             assert cur_x < limit_x
             cur_pos = (cur_x, cur_y)
-            if cur_val == '>':
+            if cur_val == ">":
                 set_x.add(cur_pos)
-            elif cur_val == 'v':
+            elif cur_val == "v":
                 set_y.add(cur_pos)
             else:
-                assert cur_val == '.'
+                assert cur_val == "."
     assert not set_x & set_y
     return (limit_x, limit_y), (set_x, set_y)
 
 
 def _next_pos(in_limit, in_pos):
     assert in_pos < in_limit
-    res_pos = in_pos+1
+    res_pos = in_pos + 1
     if res_pos == in_limit:
         res_pos = 0
     return res_pos
@@ -61,9 +61,11 @@ def single_step(in_limit_x, in_limit_y, in_set_x, in_set_y):
         return res_set
 
     new_set_x = half_step(
-        in_set_x, in_set_y, lambda in_pos: next_pos_x(in_limit_x, in_pos))
+        in_set_x, in_set_y, lambda in_pos: next_pos_x(in_limit_x, in_pos)
+    )
     new_set_y = half_step(
-        in_set_y, new_set_x, lambda in_pos: next_pos_y(in_limit_y, in_pos))
+        in_set_y, new_set_x, lambda in_pos: next_pos_y(in_limit_y, in_pos)
+    )
     return new_set_x, new_set_y
 
 

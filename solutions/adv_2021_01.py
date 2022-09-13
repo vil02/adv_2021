@@ -7,7 +7,7 @@ def count_a(in_list):
     """counts the value from part a"""
     res = 0
     for cur_num in range(1, len(in_list)):
-        if in_list[cur_num-1] < in_list[cur_num]:
+        if in_list[cur_num - 1] < in_list[cur_num]:
             res += 1
     return res
 
@@ -24,7 +24,8 @@ def count_b(in_list):
     sum_list = [sum(in_list[0:window_size])]
     for cur_pos in range(window_size, len(in_list)):
         sum_list.append(
-            sum_list[-1]-in_list[cur_pos-window_size]+in_list[cur_pos])
+            sum_list[-1] - in_list[cur_pos - window_size] + in_list[cur_pos]
+        )
     return count_a(sum_list)
 
 

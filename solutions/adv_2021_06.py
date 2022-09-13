@@ -6,7 +6,7 @@ import functools
 
 def parse_input(in_str):
     """parses the input"""
-    return [int(_) for _ in in_str.split(',')]
+    return [int(_) for _ in in_str.split(",")]
 
 
 @functools.lru_cache(None)
@@ -16,11 +16,11 @@ def simulate_fish(in_value, in_days):
     inner counter starting at in_value after in_days
     """
     if in_value == 0 and in_days > 0:
-        res = simulate_fish(8, in_days-1)+simulate_fish(6, in_days-1)
+        res = simulate_fish(8, in_days - 1) + simulate_fish(6, in_days - 1)
     elif in_value == 0 or in_days == 0:
         res = 1
     else:
-        res = simulate_fish(in_value-1, in_days-1)
+        res = simulate_fish(in_value - 1, in_days - 1)
     return res
 
 
