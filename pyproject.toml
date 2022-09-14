@@ -10,6 +10,9 @@ packages = [{include = "solutions"}]
 python = ">=3.7"
 numpy = "*"
 
+[tool.poetry.group.dev]
+optional = true
+
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
 pytest-xdist = "*"
