@@ -5,8 +5,9 @@ name: python_test
 on:
   workflow_dispatch:
   push:
-  schedule:
-    - cron: '15 1 * * 1,4'
+    branches:
+      - master
+  pull_request:
 
 jobs:
   python_test:
@@ -18,7 +19,7 @@ jobs:
         os:
           - ubuntu-20.04
           - ubuntu-22.04
-        python-version: [3.7, 3.8, 3.9, '3.10']
+        python-version: [3.7, '3.10']
 
     steps:
       - name: Checkout
