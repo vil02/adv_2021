@@ -49,7 +49,6 @@ class TestSolutionA(unittest.TestCase):
         self.assertEqual(sol.solve_a(_data_s()), 2036120)
 
 
-
 class TestSolutionB(unittest.TestCase):
     """
     unit tests for part b
