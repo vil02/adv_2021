@@ -6,13 +6,19 @@ import unittest
 import general_utils as gu
 import solutions.adv_2021_01 as sol
 
+_DAY_NUM = 1
+
 
 def _data_p():
-    return gu.read_input(1, "p")
+    return gu.read_input(_DAY_NUM, "p")
 
 
 def _data_m():
-    return gu.read_input(1, "m")
+    return gu.read_input(_DAY_NUM, "m")
+
+
+def _data_s():
+    return gu.read_input(_DAY_NUM, "s")
 
 
 class TestSolutionA(unittest.TestCase):
@@ -33,6 +39,10 @@ class TestSolutionA(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_m()), 1448)
 
+    def test_data_s(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_s()), 1527)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -51,6 +61,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_m(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_m()), 1471)
+
+    def test_data_s(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_s()), 1575)
 
 
 if __name__ == "__main__":
