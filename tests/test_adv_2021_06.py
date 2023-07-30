@@ -11,12 +11,20 @@ def _data_small():
     return "3,4,3,1,2"
 
 
+def _read_input(input_id):
+    return gu.read_input(6, input_id)
+
+
 def _data_p():
-    return gu.read_input(6, "p")
+    return _read_input("p")
 
 
 def _data_m():
-    return gu.read_input(6, "m")
+    return _read_input("m")
+
+
+def _data_s():
+    return _read_input("s")
 
 
 class TestSolutionA(unittest.TestCase):
@@ -46,6 +54,10 @@ class TestSolutionA(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_m()), 362740)
 
+    def test_data_s(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_s()), 358214)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -63,6 +75,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_m(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_m()), 1644874076764)
+
+    def test_data_s(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_s()), 1622533344325)
 
 
 if __name__ == "__main__":
