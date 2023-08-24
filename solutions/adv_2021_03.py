@@ -23,13 +23,19 @@ def calculate_gamma(in_str_list):
     return int(res_bits, 2)
 
 
+def _pad_leading_zeros(in_str, in_target_len):
+    pad_size = in_target_len - len(in_str)
+    assert pad_size >= 0
+    return "0" * pad_size + in_str
+
+
 def calculate_epsilon(in_str_list):
     """returns the value of epsilon rate"""
     gamma_val = calculate_gamma(in_str_list)
     assert gamma_val >= 0
     gamma_bin_str = bin(gamma_val)
     assert gamma_bin_str.startswith("0b")
-    gamma_bin_str = gamma_bin_str[2:]
+    gamma_bin_str = _pad_leading_zeros(gamma_bin_str[2:], len(in_str_list[0]))
     flip_dict = {"0": "1", "1": "0"}
     return int("".join(flip_dict[_] for _ in gamma_bin_str), 2)
 
