@@ -21,6 +21,10 @@ def _data_s():
     return gu.read_input(_DAY_NUM, "s")
 
 
+def _data_t():
+    return gu.read_input(_DAY_NUM, "t")
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -42,6 +46,10 @@ class TestSolutionA(unittest.TestCase):
     def test_data_s(self):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_s()), 1527)
+
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_t()), 1316)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -65,6 +73,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_s(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_s()), 1575)
+
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_t()), 1344)
 
 
 if __name__ == "__main__":
