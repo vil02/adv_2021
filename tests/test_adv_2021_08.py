@@ -31,6 +31,10 @@ def _data_t():
     return _read_input("t")
 
 
+def _data_a():
+    return _read_input("a")
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -55,6 +59,10 @@ class TestSolutionA(unittest.TestCase):
     def test_data_t(self):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_t()), 387)
+
+    def test_data_a(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_a()), 318)
 
 
 class TestSolutionB(unittest.TestCase):
@@ -96,6 +104,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_t(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_t()), 986034)
+
+    def test_data_a(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_a()), 996280)
 
 
 if __name__ == "__main__":
