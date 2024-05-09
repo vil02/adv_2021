@@ -65,7 +65,7 @@ class TestSolutionA(unittest.TestCase):
             if path_to_first_left is None:
                 self.assertIsNone(true_res)
             else:
-                self.assertTrue(path_to_first_left < cur_path)
+                self.assertLess(path_to_first_left, cur_path)
                 self.assertEqual(
                     sol.get_node(cur_arg, path_to_first_left), true_res
                 )
@@ -87,7 +87,7 @@ class TestSolutionA(unittest.TestCase):
             if path_to_first_right is None:
                 self.assertIsNone(true_res)
             else:
-                self.assertTrue(cur_path < path_to_first_right)
+                self.assertLess(cur_path, path_to_first_right)
                 self.assertEqual(
                     sol.get_node(cur_arg, path_to_first_right), true_res
                 )
