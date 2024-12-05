@@ -1,6 +1,7 @@
 """
 solution of adv_2021_19
 """
+
 import functools
 import itertools
 import collections
@@ -102,8 +103,7 @@ def get_shift_dict(in_merged_data, in_scanner_data):
     in in_merged_data and in_scanner_data
     """
     return collections.Counter(
-        minus(a, b)
-        for (a, b) in itertools.product(in_merged_data, in_scanner_data)
+        minus(a, b) for (a, b) in itertools.product(in_merged_data, in_scanner_data)
     )
 
 

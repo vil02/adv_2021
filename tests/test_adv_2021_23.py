@@ -31,7 +31,7 @@ class TestSolutionA(unittest.TestCase):
     def test_calculate_move_length(self):
         """test of calculate_move_length"""
         test_data = {("A", 0, 0): 3, ("B", 2, 5): 4, ("C", 3, 0): 10}
-        for (cur_arg, true_res) in test_data.items():
+        for cur_arg, true_res in test_data.items():
             self.assertEqual(sol.calculate_move_length(*cur_arg), true_res)
 
     def test_is_move_possible_postive(self):
@@ -167,9 +167,7 @@ class TestSolutionB(unittest.TestCase):
 
     def test_extend_data(self):
         """test of the function extend_data"""
-        room_a, room_b, room_c, room_d = sol.extend_data(
-            sol.parse_input(_data_small())
-        )
+        room_a, room_b, room_c, room_d = sol.extend_data(sol.parse_input(_data_small()))
         self.assertEqual(room_a, ("B", "D", "D", "A"))
         self.assertEqual(room_b, ("C", "C", "B", "D"))
         self.assertEqual(room_c, ("B", "B", "A", "C"))

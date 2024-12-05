@@ -64,15 +64,11 @@ class TestSolutionB(unittest.TestCase):
 
     def test_small_example(self):
         """test against small example in part b"""
-        input_string = (
-            "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab"
-        )
+        input_string = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab"
         permutation = sol.find_pemutation(input_string.split(" "))
 
         def get_value(in_str):
-            return sol.get_value(
-                sol.apply_permutation(permutation, in_str.split())
-            )
+            return sol.get_value(sol.apply_permutation(permutation, in_str.split()))
 
         self.assertEqual(get_value(input_string), 8523796401)
         self.assertEqual(get_value("cdfeb fcadb cdfeb cdbaf"), 5353)

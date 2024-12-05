@@ -34,7 +34,7 @@ def to_str(in_data):
     x_max = max(_[0] for _ in in_data)
     y_max = max(_[1] for _ in in_data)
     res = [["." for _ in range(x_max + 1)] for _ in range(y_max + 1)]
-    for (x_pos, y_pos) in in_data:
+    for x_pos, y_pos in in_data:
         res[y_pos][x_pos] = "#"
     return "\n".join(["".join(_ for _ in cur_row) for cur_row in res])
 

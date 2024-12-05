@@ -1,6 +1,7 @@
 """
 solution of adv_2021_12
 """
+
 import copy
 
 
@@ -79,9 +80,7 @@ def find_number_of_paths_b(in_data):
                     tmp_visited_small_caves[new_cave] = (
                         tmp_visited_small_caves.get(new_cave, 0) + 1
                     )
-                    inner(
-                        new_cave, cur_path + [new_cave], tmp_visited_small_caves
-                    )
+                    inner(new_cave, cur_path + [new_cave], tmp_visited_small_caves)
                 elif not is_cave_small(new_cave):
                     inner(new_cave, cur_path + [new_cave], visited_small_caves)
 

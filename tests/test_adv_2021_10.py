@@ -59,7 +59,7 @@ class TestSolutionB(unittest.TestCase):
             "{<[[]]>}<{[{[{[]{()[[[]": "]]}}]}]}>",
             "<{([{{}}[<[[[<>{}]]]>[]]": "])}>",
         }
-        for (test_input, res) in input_data.items():
+        for test_input, res in input_data.items():
             self.assertEqual(sol.find_line_completion(test_input), res)
 
     def test_get_completion_score(self):
@@ -71,7 +71,7 @@ class TestSolutionB(unittest.TestCase):
             "]]}}]}]}>": 995444,
             "])}>": 294,
         }
-        for (test_input, res) in input_data.items():
+        for test_input, res in input_data.items():
             self.assertEqual(sol.get_completion_score(test_input), res)
 
     def test_data_small(self):

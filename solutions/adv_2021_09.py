@@ -1,6 +1,7 @@
 """
 solution of adv_2021_09
 """
+
 import itertools
 
 
@@ -48,8 +49,7 @@ def is_minimum(in_data, in_pos):
     checks if the value in_data[in_row][in_col] is a local minimum
     """
     return all(
-        get_value(in_data, in_pos) < _
-        for _ in get_adjacent_values(in_data, in_pos)
+        get_value(in_data, in_pos) < _ for _ in get_adjacent_values(in_data, in_pos)
     )
 
 

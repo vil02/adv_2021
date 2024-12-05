@@ -77,9 +77,7 @@ def count_score(in_data, in_num):
 
     def count_unmarked_sum(in_data):
         """retuns the sum of unmarked fields"""
-        return sum(
-            sum(_[0] for _ in cur_row if not _[1]) for cur_row in in_data
-        )
+        return sum(sum(_[0] for _ in cur_row if not _[1]) for cur_row in in_data)
 
     assert is_winning(in_data)
     return count_unmarked_sum(in_data) * in_num
