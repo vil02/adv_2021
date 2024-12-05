@@ -1,6 +1,7 @@
 """
 solution of adv_2021_18
 """
+
 import json
 import math
 import itertools

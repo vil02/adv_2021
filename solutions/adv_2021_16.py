@@ -1,6 +1,7 @@
 """
 solution of adv_2021_16
 """
+
 import functools
 
 

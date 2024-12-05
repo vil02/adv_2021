@@ -1,6 +1,7 @@
 """
 solution of adv_2021_15
 """
+
 import copy
 import heapq
 

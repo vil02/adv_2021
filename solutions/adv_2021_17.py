@@ -1,6 +1,7 @@
 """
 solution of adv_2021_17
 """
+
 import functools
 import itertools
 
@@ -93,9 +94,7 @@ def get_all_hitting_paths(in_target_data):
         min_x_vel = find_min_x_vel(in_target_data_x[0])
         max_x_vel = in_target_data_x[1] + 1
         return [
-            _
-            for _ in range(min_x_vel, max_x_vel)
-            if is_hit_x(0, _, in_target_data_x)
+            _ for _ in range(min_x_vel, max_x_vel) if is_hit_x(0, _, in_target_data_x)
         ]
 
     max_y_vel = 2 * abs(in_target_data[1][1]) + 1

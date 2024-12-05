@@ -27,6 +27,10 @@ def _data_s():
     return _read_input("s")
 
 
+def _data_t():
+    return _read_input("t")
+
+
 class TestSolutionA(unittest.TestCase):
     """
     unit tests for part a
@@ -48,6 +52,10 @@ class TestSolutionA(unittest.TestCase):
         """test against full data"""
         self.assertEqual(sol.solve_a(_data_s()), 440)
 
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_a(_data_t()), 387)
+
 
 class TestSolutionB(unittest.TestCase):
     """
@@ -56,15 +64,11 @@ class TestSolutionB(unittest.TestCase):
 
     def test_small_example(self):
         """test against small example in part b"""
-        input_string = (
-            "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab"
-        )
+        input_string = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab"
         permutation = sol.find_pemutation(input_string.split(" "))
 
         def get_value(in_str):
-            return sol.get_value(
-                sol.apply_permutation(permutation, in_str.split())
-            )
+            return sol.get_value(sol.apply_permutation(permutation, in_str.split()))
 
         self.assertEqual(get_value(input_string), 8523796401)
         self.assertEqual(get_value("cdfeb fcadb cdfeb cdbaf"), 5353)
@@ -84,6 +88,10 @@ class TestSolutionB(unittest.TestCase):
     def test_data_s(self):
         """test against full data"""
         self.assertEqual(sol.solve_b(_data_s()), 1046281)
+
+    def test_data_t(self):
+        """test against full data"""
+        self.assertEqual(sol.solve_b(_data_t()), 986034)
 
 
 if __name__ == "__main__":

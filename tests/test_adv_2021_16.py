@@ -72,7 +72,7 @@ class TestSolutionA(unittest.TestCase):
             ),
         }
 
-        for (in_str, true_res) in input_data.items():
+        for in_str, true_res in input_data.items():
             check_single(in_str, *true_res)
 
     def test_example_data(self):
@@ -83,7 +83,7 @@ class TestSolutionA(unittest.TestCase):
             "C0015000016115A2E0802F182340": 23,
             "A0016C880162017C3686B18A3D4780": 31,
         }
-        for (cur_str, cur_res) in test_data.items():
+        for cur_str, cur_res in test_data.items():
             self.assertEqual(sol.solve_a(cur_str), cur_res)
 
     def test_data_p(self):
@@ -128,7 +128,7 @@ class TestSolutionB(unittest.TestCase):
             "02008180210420C4200": 10,
             "0000404E00": 192,
         }
-        for (cur_str, cur_res) in test_data.items():
+        for cur_str, cur_res in test_data.items():
             self.assertEqual(sol.solve_b(cur_str), cur_res)
 
     def test_data_p(self):

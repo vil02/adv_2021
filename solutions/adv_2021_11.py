@@ -1,6 +1,7 @@
 """
 solution of adv_2021_11
 """
+
 import itertools
 import copy
 

@@ -1,6 +1,7 @@
 """
 solution of adv_2021_23
 """
+
 import heapq
 import functools
 
@@ -51,9 +52,7 @@ def is_move_possible(in_room_name, in_end_pos, in_corridor):
 
     assert len(in_corridor) == _corridor_len()
     joint_pos = _joint_pos_dict()[in_room_name]
-    return all(
-        in_corridor[_] == "" for _ in get_search_range(joint_pos, in_end_pos)
-    )
+    return all(in_corridor[_] == "" for _ in get_search_range(joint_pos, in_end_pos))
 
 
 def calculate_move_cost(in_name, in_len):
@@ -145,9 +144,7 @@ def make_move_from_room(in_rooms, in_corridor, in_room_id, in_end_pos):
 
     cost = calculate_move_cost(
         new_corridor[in_end_pos],
-        calculate_move_length(
-            _get_room_name(in_room_id), start_ind, in_end_pos
-        ),
+        calculate_move_length(_get_room_name(in_room_id), start_ind, in_end_pos),
     )
     return new_rooms, new_corridor, cost
 
@@ -175,8 +172,7 @@ def _go_home(in_name, in_pos, in_rooms, in_corridor):
 
     room_pos = 0
     while (
-        room_pos < len(in_rooms[home_id]) - 1
-        and in_rooms[home_id][room_pos + 1] == ""
+        room_pos < len(in_rooms[home_id]) - 1 and in_rooms[home_id][room_pos + 1] == ""
     ):
         room_pos += 1
 
@@ -205,10 +201,8 @@ def _gen_new_states(in_cost, in_rooms, in_corridor):
                 )
                 yield (in_cost + cost, (new_rooms, new_corridor))
 
-    for (obj_pos, obj_name) in enumerate(in_corridor):
-        if obj_name != "" and can_go_home(
-            obj_name, obj_pos, in_corridor, in_rooms
-        ):
+    for obj_pos, obj_name in enumerate(in_corridor):
+        if obj_name != "" and can_go_home(obj_name, obj_pos, in_corridor, in_rooms):
             new_rooms, new_corridor, cost = _go_home(
                 obj_name, obj_pos, in_rooms, in_corridor
             )

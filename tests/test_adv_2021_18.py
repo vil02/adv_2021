@@ -45,7 +45,7 @@ class TestSolutionA(unittest.TestCase):
             ((3, (2, (1, (7, 3)))), (6, (5, (4, (3, 2))))): (7, 3),
             ((3, (2, (8, 0))), (9, (5, (4, (3, 2))))): (3, 2),
         }
-        for (cur_arg, true_res) in test_data.items():
+        for cur_arg, true_res in test_data.items():
             cur_path = sol.find_path_do_expl_pair(cur_arg)
             self.assertEqual(len(cur_path), 4)
             self.assertEqual(sol.get_node(cur_arg, cur_path), true_res)
@@ -59,16 +59,14 @@ class TestSolutionA(unittest.TestCase):
             ((3, (2, (1, (7, 3)))), (6, (5, (4, (3, 2))))): 1,
             ((3, (2, (8, 0))), (9, (5, (4, (3, 2))))): 4,
         }
-        for (cur_arg, true_res) in test_data.items():
+        for cur_arg, true_res in test_data.items():
             cur_path = sol.find_path_do_expl_pair(cur_arg)
             path_to_first_left = sol.find_path_to_first_left(cur_arg, cur_path)
             if path_to_first_left is None:
                 self.assertIsNone(true_res)
             else:
-                self.assertTrue(path_to_first_left < cur_path)
-                self.assertEqual(
-                    sol.get_node(cur_arg, path_to_first_left), true_res
-                )
+                self.assertLess(path_to_first_left, cur_path)
+                self.assertEqual(sol.get_node(cur_arg, path_to_first_left), true_res)
 
     def test_find_path_to_first_right(self):
         """test of the function find_path_to_first_right"""
@@ -79,18 +77,14 @@ class TestSolutionA(unittest.TestCase):
             ((3, (2, (1, (7, 3)))), (6, (5, (4, (3, 2))))): 6,
             ((3, (2, (8, 0))), (9, (5, (4, (3, 2))))): None,
         }
-        for (cur_arg, true_res) in test_data.items():
+        for cur_arg, true_res in test_data.items():
             cur_path = sol.find_path_do_expl_pair(cur_arg)
-            path_to_first_right = sol.find_path_to_first_right(
-                cur_arg, cur_path
-            )
+            path_to_first_right = sol.find_path_to_first_right(cur_arg, cur_path)
             if path_to_first_right is None:
                 self.assertIsNone(true_res)
             else:
-                self.assertTrue(cur_path < path_to_first_right)
-                self.assertEqual(
-                    sol.get_node(cur_arg, path_to_first_right), true_res
-                )
+                self.assertLess(cur_path, path_to_first_right)
+                self.assertEqual(sol.get_node(cur_arg, path_to_first_right), true_res)
 
     def test_find_path_to_expl_pair_2(self):
         """test of the function find_path_to_first_right"""
@@ -119,7 +113,7 @@ class TestSolutionA(unittest.TestCase):
                 (1, 1),
             ),
         }
-        for (cur_val, cur_res) in test_data.items():
+        for cur_val, cur_res in test_data.items():
             check_single(cur_val, cur_res)
 
     def test_explode(self):
@@ -138,7 +132,7 @@ class TestSolutionA(unittest.TestCase):
                 (8, 1),
             ),
         }
-        for (cur_arg, true_res) in test_data.items():
+        for cur_arg, true_res in test_data.items():
             self.assertEqual(sol.explode(cur_arg), true_res)
 
     def test_magnitude(self):
@@ -154,7 +148,7 @@ class TestSolutionA(unittest.TestCase):
                 (((0, 7), (6, 6)), (8, 7)),
             ): 3488,
         }
-        for (cur_arg, cur_val) in test_data.items():
+        for cur_arg, cur_val in test_data.items():
             self.assertEqual(sol.magnitude(cur_arg), cur_val)
 
     def test_add_all(self):
@@ -173,7 +167,7 @@ class TestSolutionA(unittest.TestCase):
                 (6, 6),
             ),
         }
-        for (cur_arg, cur_res) in test_data.items():
+        for cur_arg, cur_res in test_data.items():
             self.assertEqual(sol.add_all(cur_arg), cur_res)
 
     def test_add_all_very_small(self):

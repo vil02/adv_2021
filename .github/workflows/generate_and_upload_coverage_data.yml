@@ -1,8 +1,7 @@
 ---
 name: generate_and_upload_coverage_data
 
-# yamllint disable-line rule:truthy
-on:
+'on':
   workflow_dispatch:
   push:
     branches:
@@ -15,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,9 +23,9 @@ jobs:
           ./validate_codecov_yml.sh
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
@@ -43,35 +42,46 @@ jobs:
       - name: Fix code coverage paths for SonarCloud
         # yamllint disable rule:line-length
         run: |
-          cp coverage.xml coverage_for_sonacloud.xml
-          sed -i 's/\/home\/runner\/work\/adv_2021\/adv_2021/\/github\/workspace/g' coverage_for_sonacloud.xml
+          cp coverage.xml coverage_for_sonarcloud.xml
+          sed -i 's/\/home\/runner\/work\/adv_2021\/adv_2021/\/github\/workspace/g' coverage_for_sonarcloud.xml
         # yamllint enable rule:line-length
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        if: "! github.event.pull_request.head.repo.fork "
+        uses: SonarSource/sonarcloud-github-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Upload coverage report to Codecov
-        uses: codecov/codecov-action@v3
+        if: "! github.event.pull_request.head.repo.fork "
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
 
+      - name: Upload coverage report to Codecov (tokenless)
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name != github.repository
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+
       - name: Upload coverage report to Codacy
+        if: "! github.event.pull_request.head.repo.fork "
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
 
       - name: Upload coverage report as an artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage_report
           path: |
             coverage.xml
-            coverage_for_sonacloud.xml
+            coverage_for_sonarcloud.xml
             htmlcov
           if-no-files-found: error
           retention-days: 5

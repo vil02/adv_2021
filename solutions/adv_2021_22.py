@@ -1,6 +1,7 @@
 """
 solution of adv_2021_22
 """
+
 import itertools
 import functools
 
@@ -16,9 +17,7 @@ def parse_input_a(in_str):
             return tuple(int(_) for _ in num_str_list)
 
         new_state, num_data_str = in_line_str.split(" ")
-        range_data = tuple(
-            proc_single_piece(_) for _ in num_data_str.split(",")
-        )
+        range_data = tuple(proc_single_piece(_) for _ in num_data_str.split(","))
         return new_state, range_data
 
     return [proc_line(_) for _ in in_str.splitlines()]
@@ -34,7 +33,7 @@ def simulate_a(in_data):
         return itertools.product(*[my_range(*_) for _ in in_range_data])
 
     cubes_on = set()
-    for (cur_state, cur_range) in in_data:
+    for cur_state, cur_range in in_data:
         fun_dict = {
             "on": lambda elem, data_set=cubes_on: data_set.add(elem),
             "off": lambda elem, data_set=cubes_on: data_set.discard(elem),
@@ -96,20 +95,17 @@ def _get_grid(in_all_uniuqe_coordinates):
     y_grid_size = len(in_all_uniuqe_coordinates[1]) - 1
     z_grid_size = len(in_all_uniuqe_coordinates[2]) - 1
     return [
-        [[False] * z_grid_size for _ in range(y_grid_size)]
-        for _ in range(x_grid_size)
+        [[False] * z_grid_size for _ in range(y_grid_size)] for _ in range(x_grid_size)
     ]
 
 
 def _simulate_on_grid(in_all_data):
-    all_uniuqe_coordinates = [
-        _get_unique_coordinates(in_all_data, _) for _ in range(3)
-    ]
+    all_uniuqe_coordinates = [_get_unique_coordinates(in_all_data, _) for _ in range(3)]
     grid = _get_grid(all_uniuqe_coordinates)
     x_dict = _get_coordinate_dict(all_uniuqe_coordinates[0])
     y_dict = _get_coordinate_dict(all_uniuqe_coordinates[1])
     z_dict = _get_coordinate_dict(all_uniuqe_coordinates[2])
-    for (state_str, data) in in_all_data:
+    for state_str, data in in_all_data:
         for _ in itertools.product(
             range(x_dict[data[0][0]], x_dict[data[0][1]]),
             range(y_dict[data[1][0]], y_dict[data[1][1]]),
@@ -126,9 +122,9 @@ def solve_b(in_str):
     all_uniuqe_coordinates, grid = _simulate_on_grid(all_data)
 
     volume = 0
-    for (x_num, grid_data_x) in enumerate(grid):
-        for (y_num, grid_data_y) in enumerate(grid_data_x):
-            for (z_num, grid_state) in enumerate(grid_data_y):
+    for x_num, grid_data_x in enumerate(grid):
+        for y_num, grid_data_y in enumerate(grid_data_x):
+            for z_num, grid_state in enumerate(grid_data_y):
                 if grid_state:
                     volume += _get_grid_cell_volume(
                         all_uniuqe_coordinates, (x_num, y_num, z_num)
