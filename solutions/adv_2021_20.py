@@ -1,6 +1,7 @@
 """
 solution of adv_2021_20
 """
+
 import functools
 
 
@@ -9,7 +10,7 @@ def parse_input(in_str):
 
     def proc_alg_data(in_str):
         res = set()
-        for (bit_num, state) in enumerate(in_str):
+        for bit_num, state in enumerate(in_str):
             if state == "#":
                 res.add(bit_num)
         return frozenset(res)
@@ -17,8 +18,8 @@ def parse_input(in_str):
     def proc_image_data(in_str_list):
         res = set()
         assert len(set(len(_) for _ in in_str_list)) == 1
-        for (y_pos, cur_row) in enumerate(reversed(in_str_list)):
-            for (x_pos, state) in enumerate(cur_row):
+        for y_pos, cur_row in enumerate(reversed(in_str_list)):
+            for x_pos, state in enumerate(cur_row):
                 if state == "#":
                     res.add((x_pos, y_pos))
         return frozenset(res)
@@ -27,9 +28,7 @@ def parse_input(in_str):
     split_pos = str_line_list.index("")
     alg_data_str = "".join(str_line_list[:split_pos])
     assert len(alg_data_str) == 512
-    return proc_alg_data(alg_data_str), proc_image_data(
-        str_line_list[split_pos + 1 :]
-    )
+    return proc_alg_data(alg_data_str), proc_image_data(str_line_list[split_pos + 1 :])
 
 
 def get_all_neighbours(in_pos):

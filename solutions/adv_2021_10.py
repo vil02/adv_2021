@@ -1,6 +1,7 @@
 """
 solution of adv_2021_10
 """
+
 import statistics
 
 
@@ -53,9 +54,7 @@ def find_line_completion(in_str):
             )
             stack_data.pop()
     res = ""
-    inv_opposite_dict = dict(
-        zip(_opposite_dict().values(), _opposite_dict().keys())
-    )
+    inv_opposite_dict = dict(zip(_opposite_dict().values(), _opposite_dict().keys()))
     for _ in reversed(stack_data):
         res += inv_opposite_dict[_]
     return res

@@ -10,8 +10,8 @@ def parse_input(in_str):
     lines = in_str.splitlines()
     limit_y = len(lines)
     limit_x = len(lines[0])
-    for (cur_y, cur_row) in enumerate(in_str.splitlines()):
-        for (cur_x, cur_val) in enumerate(cur_row):
+    for cur_y, cur_row in enumerate(in_str.splitlines()):
+        for cur_x, cur_val in enumerate(cur_row):
             assert cur_x < limit_x
             cur_pos = (cur_x, cur_y)
             if cur_val == ">":

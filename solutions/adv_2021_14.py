@@ -68,9 +68,7 @@ def pair_count_to_hist(in_pair_count):
         end_count[cur_end] += in_pair_count[cur_pair]
     common_keys = set(beg_count) | set(end_count)
     assert sum(beg_count.values()) == sum(end_count.values())
-    return {
-        _: max(beg_count.get(_, 0), end_count.get(_, 0)) for _ in common_keys
-    }
+    return {_: max(beg_count.get(_, 0), end_count.get(_, 0)) for _ in common_keys}
 
 
 def get_result_value(in_pair_count):

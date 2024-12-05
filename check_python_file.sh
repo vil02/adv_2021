@@ -13,7 +13,7 @@ do
     fi
 
     printf "Checking with flake8:\n"
-    if ! poetry run flake8 "${cur_file}" --count --max-line-length=80 --show-source --ignore=E203,W503 ; then
+    if ! poetry run flake8 "${cur_file}" --count --max-line-length=88 --show-source --ignore=E203,W503 ; then
         exit_code=1
     fi
 done

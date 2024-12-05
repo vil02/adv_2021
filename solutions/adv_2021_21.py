@@ -1,6 +1,7 @@
 """
 solutions of adv_2021_21
 """
+
 import itertools
 import functools
 import copy
@@ -64,7 +65,7 @@ def simulate_b(in_pos_a, in_pos_b):
         pos_a, score_a = in_data_a
         win_uni_a = 0
         win_uni_b = 0
-        for (cur_shift, cur_count) in shift_dict.items():
+        for cur_shift, cur_count in shift_dict.items():
             new_pos = (pos_a + cur_shift - 1) % 10 + 1
             new_score = score_a + new_pos
             if new_score >= 21:

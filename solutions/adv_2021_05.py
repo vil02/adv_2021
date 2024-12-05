@@ -1,6 +1,7 @@
 """
 solution of adv_2021_05
 """
+
 import itertools
 
 
@@ -83,6 +84,4 @@ def solve_a(in_str):
 
 def solve_b(in_str):
     """solution function for part b"""
-    return _count_unsafe_points(
-        _visit_points(_pars_input(in_str), all_points_b)
-    )
+    return _count_unsafe_points(_visit_points(_pars_input(in_str), all_points_b))

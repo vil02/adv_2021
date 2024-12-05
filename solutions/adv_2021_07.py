@@ -1,6 +1,7 @@
 """
 solution of adv_2021_07
 """
+
 import statistics
 
 
@@ -21,9 +22,7 @@ def calculate_total_fuel_a(in_position_list, in_target_pos):
 def solve_a(in_str):
     """solution function for part a"""
     position_list = parse_input(in_str)
-    return calculate_total_fuel_a(
-        position_list, statistics.median(position_list)
-    )
+    return calculate_total_fuel_a(position_list, statistics.median(position_list))
 
 
 def calculate_total_fuel_b(in_hist, in_target_pos):
@@ -37,8 +36,7 @@ def calculate_total_fuel_b(in_hist, in_target_pos):
         return ((in_val + 1) * in_val) // 2
 
     return sum(
-        count * cost(abs(pos - in_target_pos))
-        for [pos, count] in in_hist.items()
+        count * cost(abs(pos - in_target_pos)) for [pos, count] in in_hist.items()
     )
 
 
@@ -49,9 +47,7 @@ def find_minimal_fuel_usage_hist(in_position_hist, in_cost_fun):
     """
     min_val = min(in_position_hist)
     max_val = max(in_position_hist)
-    return min(
-        in_cost_fun(in_position_hist, _) for _ in range(min_val, max_val + 1)
-    )
+    return min(in_cost_fun(in_position_hist, _) for _ in range(min_val, max_val + 1))
 
 
 def _calculate_histogram(in_num_list):

@@ -1,6 +1,7 @@
 """
 test for adv_2021_14
 """
+
 import unittest
 import general_utils as gu
 import solutions.adv_2021_14 as sol
