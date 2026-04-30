@@ -7,5 +7,3 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/3ef7f4a786c34c0092ff0ea289e5d089)](https://app.codacy.com/gh/vil02/adv_2021/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 Python solutions of [Advent of Code 2021](https://adventofcode.com/2021)
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vil02/adv_2021)
